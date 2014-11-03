@@ -1,0 +1,15 @@
+package com.supertrade.dkcode;
+
+public class getInfo {
+
+	public static void main(String[] args) {		
+		// Connection and session variables
+        String mUserID = "";
+        String mPassword = "";
+        String mURL = "";
+        String mConnection = "";
+        String mDBName = "";
+        String mPin = "";
+	}
+
+}

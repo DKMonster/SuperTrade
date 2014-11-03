@@ -3,6 +3,7 @@ package com.supertrade.dkcode;
 public class getAccount {
 	private String loadType;
 	private String userId , pwd , url , con;
+	
 	//getters & setters 
 	
 	public String getloadType(){

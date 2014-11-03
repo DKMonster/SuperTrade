@@ -1,0 +1,9 @@
+package com.supertrade.dkcode;
+
+public class getInfo {
+	
+	public getInfo(){
+		
+	}
+
+}

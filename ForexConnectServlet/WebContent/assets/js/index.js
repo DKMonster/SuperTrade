@@ -29,7 +29,7 @@ $(document).ready(function() {
 		obj_account.pwd = text_pwd.val();
 		obj_account.url = text_url.val();
 		obj_account.con = text_con.val();
-		ajaxGetAccount(obj_account);
+		ajaxGetInfo(obj_account);
 	});
 
 	btn_clear.on('click' , function(){
@@ -47,11 +47,10 @@ $(document).ready(function() {
 			mimeType: 'application/json',
 			success: function(data) {
 				console.log(data);
-				div_account.append("<div class='account' sytle='padding: 5px'>");
+				div_account.append('<span style="width: 100%; height: 5px; margin: 5px;"></span>');
 				$.each(data , function(index , value){
-					div_account.append("<p sytle='margin=top: 5px'>" + index + ": " + value + "</p>");
+					div_account.append("<p style='padding-left: 20px; margin-top: 5px; border-bottom: 1px solid #333'>" + index + ": " + value + "</p>");
 				});
-				div_account.append('</div>');
 			},
 			error: function (xhr, ajaxOptions, thrownError) {
 				console.log(xhr.status);
@@ -75,11 +74,10 @@ $(document).ready(function() {
 			mimeType: 'application/json',
 			success: function(data) {
 				console.log(data);
-				div_account.append("<div class='account' sytle='padding: 5px'>");
+				div_account.append('<span style="width: 100%; height: 2px; margin: 5px;"></span>');
 				$.each(data , function(index , value){
-					div_account.append("<p sytle='margin=top: 5px'>" + index + ": " + value + "</p>");
+					div_account.append("<p style='padding-left: 20px; margin-top: 5px; border-bottom: 1px solid #333'>" + index + ": " + value + "</p>");
 				});
-				div_account.append('</div>');
 			},
 			error: function (xhr, ajaxOptions, thrownError) {
 				console.log(xhr.status);
