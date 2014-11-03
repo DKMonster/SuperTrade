@@ -1,0 +1,92 @@
+/*  Image Background  */
+@mixin bg($name,$bg)   
+  background: url("../img/#{$name}.#{$bg}")  
+  width: image-width("../img/#{$name}.#{$bg}")  
+  height: image-height("../img/#{$name}.#{$bg}")  
+@mixin text-hide  
+  white-space: nowrap  
+  text-indent: 100%  
+  overflow: hidden  
+
+/*  不同單位加減乘除  */
+@mixin calc($property, $expression) 
+  #{$property}: -webkit-calc(#{$expression})
+  #{$property}: -moz-calc(#{$expression})
+  #{$property}: calc(#{$expression})
+
+/*  絕對定位 top right bottom left  */
+@mixin pos-ab($t , $r , $b , $l)
+  position: absolute
+
+  @if $t != ""
+    top: $t
+  @if $r != ""
+    right: $r
+  @if $b != ""
+    bottom: $b
+  @if $l != ""
+    left: $l
+
+  display: block
+
+/*  設定寬與高  */
+@mixin w-h($w , $h)
+  @if $w != ""
+    width: $w
+  @if $h != ""
+    height: $h
+
+/*  設定animation */
+@mixin animation($animate)
+  -webkit-animation: $animate
+  -moz-animation: $animate
+  animation: $animate
+
+@mixin animation-delay($animate)
+  -webkit-animation-delay: $animate
+  -moz-animation: $animate
+  animation-delay: $animate
+
+@mixin animation-name($animate)
+  -webkit-animation-name: $animate
+  -moz-animation-name: $animate
+  animation-name: $animate
+
+@mixin animation-duration($animate)
+  -webkit-animation-duration: $animate
+  -moz-animation-duration: $animate
+  animation-duration: $animate
+
+@mixin animation-timing-function($animate)
+  -webkit-animation-timing-function: $animate
+  -moz-animation-timing-function: $animate
+  animation-timing-function: $animate
+
+@mixin animation-iteration-count($animate)
+  -webkit-animation-iteration-count: $animate
+  -moz-animation-iteration-count: $animate
+  animation-iteration-count: $animate
+
+@mixin animation-direction($animate)
+  -webkit-animation-direction: $animate
+  -moz-animation-direction: $animate
+  animation-direction: $animate
+
+@mixin animation-play-state($animate)
+  -webkit-animation-play-state: $animate
+  -moz-animation-play-state: $animate
+  animation-play-state: $animate
+
+@mixin animation-fill-mode($animate)
+  -webkit-animation-fill-mode: $animate
+  -moz-animation-fill-mode: $animate
+  animation-fill-mode: $animate
+
+/*  Clearfix  */
+%clearfix
+  &:before , &:after
+    content: ""
+    display: table
+
+  &:after
+    clear: both

@@ -1,0 +1,16 @@
+package com.supertrade.dkcode;
+
+import java.util.List;
+
+public class getAccount {
+	private String userId , pwd , url , con;
+	//getters & setters 
+	
+	public String getuserId(String userId){
+		return userId;
+	}
+	
+	public void setuserId(String userId){
+		this.userId = userId;
+	}
+}
