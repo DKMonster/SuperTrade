@@ -75,8 +75,6 @@ public class AjaxServlet extends HttpServlet {
             
         }else if(account.getloadType().equals("getInfo")){
         	
-        	responseData.put("loadType", account.getloadType());
-        	
         	String[] accountData = new String[4];
         	
         	accountData[0] = account.getUserId();
@@ -84,7 +82,9 @@ public class AjaxServlet extends HttpServlet {
         	accountData[2] = account.getUrl();
         	accountData[3] = account.getCon();
         	
-        	getInfo.main(accountData);
+        	responseData = getInfo.main(accountData);
+        	
+        	responseData.put("loadType", account.getloadType());
             
             System.out.println(responseData);
         }
