@@ -65,7 +65,7 @@ public class AjaxServlet extends HttpServlet {
         
         if(account.getloadType().equals("getAccount")){
         	
-        	responseData.put("loadType", account.getloadType());
+//        	responseData.put("loadType", account.getloadType());
             responseData.put("userId" , account.getUserId());
             responseData.put("pwd" , account.getPwd());
             responseData.put("url" , account.getUrl());
@@ -84,7 +84,23 @@ public class AjaxServlet extends HttpServlet {
         	
         	responseData = getInfo.main(accountData);
         	
-        	responseData.put("loadType", account.getloadType());
+//        	responseData.put("loadType", account.getloadType());
+            
+            System.out.println(responseData);
+        
+        }else if(account.getloadType().equals("getOffers")){
+        	
+        	String[] accountData = new String[5];
+        	
+        	accountData[0] = account.getInstrument();
+        	accountData[1] = account.getUserId();
+        	accountData[2] = account.getPwd();
+        	accountData[3] = account.getUrl();
+        	accountData[4] = account.getCon();
+        	
+        	responseData = getOffers.main(accountData);
+        	
+//        	responseData.put("loadType", account.getloadType());
             
             System.out.println(responseData);
         }

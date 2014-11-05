@@ -1007,3 +1007,278 @@ Binding(CTRL+SHIFT+ARROW_DOWN,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+!SESSION 2014-11-03 22:41:22.709 -----------------------------------------------
+eclipse.buildId=4.4.0.I20140606-1215
+java.version=1.8.0_25
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=zh_TW
+Framework arguments:  -product org.eclipse.epp.package.jee.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.jee.product
+
+!ENTRY org.eclipse.jpt.dbws.eclipselink.ui 4 0 2014-11-03 22:41:24.146
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.jpt.dbws.eclipselink.ui [394]
+  Bundle was not resolved because of a uses contraint violation.
+  org.osgi.service.resolver.ResolutionException: Uses constraint violation. Unable to resolve resource org.eclipse.jpt.dbws.eclipselink.ui [osgi.identity; osgi.identity="org.eclipse.jpt.dbws.eclipselink.ui"; type="osgi.bundle"; version:Version="1.1.100.v201310142259"; singleton:="true"] because it is exposed to package 'javax.xml.bind' from resources org.eclipse.osgi [osgi.identity; osgi.identity="org.eclipse.osgi"; type="osgi.bundle"; version:Version="3.10.0.v20140606-1445"; singleton:="true"] and javax.xml.bind [osgi.identity; osgi.identity="javax.xml.bind"; type="osgi.bundle"; version:Version="2.1.9.v201005080401"] via two dependency chains.
+
+Chain 1:
+  org.eclipse.jpt.dbws.eclipselink.ui [osgi.identity; osgi.identity="org.eclipse.jpt.dbws.eclipselink.ui"; type="osgi.bundle"; version:Version="1.1.100.v201310142259"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=org.eclipse.wst.common.project.facet.ui)(&(bundle-version>=1.3.0)(!(bundle-version>=2.0.0))))
+     |
+    provide: osgi.wiring.bundle: org.eclipse.wst.common.project.facet.ui
+  org.eclipse.osgi [osgi.identity; osgi.identity="org.eclipse.osgi"; type="osgi.bundle"; version:Version="3.10.0.v20140606-1445"; singleton:="true"]
+
+Chain 2:
+  org.eclipse.jpt.dbws.eclipselink.ui [osgi.identity; osgi.identity="org.eclipse.jpt.dbws.eclipselink.ui"; type="osgi.bundle"; version:Version="1.1.100.v201310142259"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=org.eclipse.persistence.dbws.builder)(&(bundle-version>=2.3.0)(!(bundle-version>=3.0.0))))
+     |
+    provide: osgi.wiring.bundle; bundle-version:Version="2.6.0.v20130815-a4708b6"; osgi.wiring.bundle="org.eclipse.persistence.dbws.builder"
+  org.eclipse.persistence.dbws.builder [osgi.identity; osgi.identity="org.eclipse.persistence.dbws.builder"; type="osgi.bundle"; version:Version="2.6.0.v20130815-a4708b6"]
+    import: (osgi.wiring.package=javax.xml.bind)
+     |
+    export: osgi.wiring.package: javax.xml.bind
+  javax.xml.bind [osgi.identity; osgi.identity="javax.xml.bind"; type="osgi.bundle"; version:Version="2.1.9.v201005080401"]
+	at org.eclipse.osgi.container.Module.start(Module.java:434)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1582)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1561)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1533)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1476)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:340)
+
+!ENTRY org.eclipse.core.resources 2 10035 2014-11-03 22:41:27.768
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.jdt.core 4 4 2014-11-03 22:41:37.177
+!MESSAGE JavaBuilder handling ImageBuilderInternalException while building: ForexConnectServlet
+!STACK 1
+org.eclipse.core.internal.resources.ResourceException: Problems encountered while deleting resources.
+	at org.eclipse.core.internal.resources.Resource.delete(Resource.java:816)
+	at org.eclipse.jdt.internal.core.builder.BatchImageBuilder.cleanOutputFolders(BatchImageBuilder.java:115)
+	at org.eclipse.jdt.internal.core.builder.BatchImageBuilder.build(BatchImageBuilder.java:47)
+	at org.eclipse.jdt.internal.core.builder.JavaBuilder.buildAll(JavaBuilder.java:256)
+	at org.eclipse.jdt.internal.core.builder.JavaBuilder.build(JavaBuilder.java:175)
+	at org.eclipse.core.internal.events.BuildManager$2.run(BuildManager.java:734)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:206)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:246)
+	at org.eclipse.core.internal.events.BuildManager$1.run(BuildManager.java:299)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:302)
+	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:358)
+	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:381)
+	at org.eclipse.core.internal.events.AutoBuildJob.doBuild(AutoBuildJob.java:143)
+	at org.eclipse.core.internal.events.AutoBuildJob.run(AutoBuildJob.java:241)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+Contains: Could not delete '/ForexConnectServlet/build/classes/com'.
+org.eclipse.core.internal.resources.ResourceException: Problems encountered while deleting resources.
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.delete(FileSystemResourceManager.java:351)
+	at org.eclipse.core.internal.resources.ResourceTree.internalDeleteFolder(ResourceTree.java:352)
+	at org.eclipse.core.internal.resources.ResourceTree.standardDeleteFolder(ResourceTree.java:798)
+	at org.eclipse.core.internal.resources.Resource.unprotectedDelete(Resource.java:1983)
+	at org.eclipse.core.internal.resources.Resource.delete(Resource.java:803)
+	at org.eclipse.jdt.internal.core.builder.BatchImageBuilder.cleanOutputFolders(BatchImageBuilder.java:115)
+	at org.eclipse.jdt.internal.core.builder.BatchImageBuilder.build(BatchImageBuilder.java:47)
+	at org.eclipse.jdt.internal.core.builder.JavaBuilder.buildAll(JavaBuilder.java:256)
+	at org.eclipse.jdt.internal.core.builder.JavaBuilder.build(JavaBuilder.java:175)
+	at org.eclipse.core.internal.events.BuildManager$2.run(BuildManager.java:734)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:206)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:246)
+	at org.eclipse.core.internal.events.BuildManager$1.run(BuildManager.java:299)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:302)
+	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:358)
+	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:381)
+	at org.eclipse.core.internal.events.AutoBuildJob.doBuild(AutoBuildJob.java:143)
+	at org.eclipse.core.internal.events.AutoBuildJob.run(AutoBuildJob.java:241)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+Contains: Problems encountered while deleting files.
+Contains: Could not delete: C:\Users\mylyf_000\Dropbox\Project\SuperTrade\ForexConnectServlet\build\classes\com\supertrade.
+Contains: Could not delete: C:\Users\mylyf_000\Dropbox\Project\SuperTrade\ForexConnectServlet\build\classes\com.
+!SUBENTRY 1 org.eclipse.core.resources 4 273 2014-11-03 22:41:37.179
+!MESSAGE Problems encountered while deleting resources.
+!SUBENTRY 2 org.eclipse.core.resources 4 273 2014-11-03 22:41:37.179
+!MESSAGE Could not delete '/ForexConnectServlet/build/classes/com'.
+!STACK 1
+org.eclipse.core.internal.resources.ResourceException: Problems encountered while deleting resources.
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.delete(FileSystemResourceManager.java:351)
+	at org.eclipse.core.internal.resources.ResourceTree.internalDeleteFolder(ResourceTree.java:352)
+	at org.eclipse.core.internal.resources.ResourceTree.standardDeleteFolder(ResourceTree.java:798)
+	at org.eclipse.core.internal.resources.Resource.unprotectedDelete(Resource.java:1983)
+	at org.eclipse.core.internal.resources.Resource.delete(Resource.java:803)
+	at org.eclipse.jdt.internal.core.builder.BatchImageBuilder.cleanOutputFolders(BatchImageBuilder.java:115)
+	at org.eclipse.jdt.internal.core.builder.BatchImageBuilder.build(BatchImageBuilder.java:47)
+	at org.eclipse.jdt.internal.core.builder.JavaBuilder.buildAll(JavaBuilder.java:256)
+	at org.eclipse.jdt.internal.core.builder.JavaBuilder.build(JavaBuilder.java:175)
+	at org.eclipse.core.internal.events.BuildManager$2.run(BuildManager.java:734)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:206)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:246)
+	at org.eclipse.core.internal.events.BuildManager$1.run(BuildManager.java:299)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:302)
+	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:358)
+	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:381)
+	at org.eclipse.core.internal.events.AutoBuildJob.doBuild(AutoBuildJob.java:143)
+	at org.eclipse.core.internal.events.AutoBuildJob.run(AutoBuildJob.java:241)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+Contains: Problems encountered while deleting files.
+Contains: Could not delete: C:\Users\mylyf_000\Dropbox\Project\SuperTrade\ForexConnectServlet\build\classes\com\supertrade.
+Contains: Could not delete: C:\Users\mylyf_000\Dropbox\Project\SuperTrade\ForexConnectServlet\build\classes\com.
+!SUBENTRY 3 org.eclipse.core.resources 4 273 2014-11-03 22:41:37.180
+!MESSAGE Problems encountered while deleting resources.
+!SUBENTRY 4 org.eclipse.core.filesystem 4 273 2014-11-03 22:41:37.180
+!MESSAGE Problems encountered while deleting files.
+!SUBENTRY 5 org.eclipse.core.filesystem 4 273 2014-11-03 22:41:37.180
+!MESSAGE Could not delete: C:\Users\mylyf_000\Dropbox\Project\SuperTrade\ForexConnectServlet\build\classes\com\supertrade.
+!SUBENTRY 5 org.eclipse.core.filesystem 4 273 2014-11-03 22:41:37.180
+!MESSAGE Could not delete: C:\Users\mylyf_000\Dropbox\Project\SuperTrade\ForexConnectServlet\build\classes\com.
+
+!ENTRY org.eclipse.egit.ui 2 0 2014-11-03 22:41:46.500
+!MESSAGE Warning: EGit couldn't detect the installation path "gitPrefix" of native Git. Hence EGit can't respect system level
+Git settings which might be configured in ${gitPrefix}/etc/gitconfig under the native Git installation directory.
+The most important of these settings is core.autocrlf. Git for Windows by default sets this parameter to true in
+this system level configuration. The Git installation location can be configured on the
+Team > Git > Configuration preference page's 'System Settings' tab.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.egit.ui 2 0 2014-11-03 22:41:46.502
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\mylyf_000'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.jdt.ui 4 10001 2014-11-03 22:42:47.883
+!MESSAGE Failed to create image directory C:\Users\mylyf_000\Dropbox\Project\SuperTrade\.metadata\.plugins\org.eclipse.jdt.ui\jdt-images
+
+!ENTRY org.eclipse.jst.server.tomcat.core 4 0 2014-11-03 22:42:48.348
+!MESSAGE Several ports (8005, 8080, 8009) required by Tomcat v7.0 Server at localhost are already in use. The server may already be running in another process, or a system process may be using the port. To start this server you will need to stop the other process or change the port number(s).
+!SESSION 2014-11-03 22:50:22.669 -----------------------------------------------
+eclipse.buildId=4.4.0.I20140606-1215
+java.version=1.8.0_25
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=zh_TW
+Framework arguments:  -product org.eclipse.epp.package.jee.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.jee.product
+
+!ENTRY org.eclipse.jpt.dbws.eclipselink.ui 4 0 2014-11-03 22:50:32.462
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.jpt.dbws.eclipselink.ui [394]
+  Bundle was not resolved because of a uses contraint violation.
+  org.osgi.service.resolver.ResolutionException: Uses constraint violation. Unable to resolve resource org.eclipse.jpt.dbws.eclipselink.ui [osgi.identity; osgi.identity="org.eclipse.jpt.dbws.eclipselink.ui"; type="osgi.bundle"; version:Version="1.1.100.v201310142259"; singleton:="true"] because it is exposed to package 'javax.xml.bind' from resources org.eclipse.osgi [osgi.identity; osgi.identity="org.eclipse.osgi"; type="osgi.bundle"; version:Version="3.10.0.v20140606-1445"; singleton:="true"] and javax.xml.bind [osgi.identity; osgi.identity="javax.xml.bind"; type="osgi.bundle"; version:Version="2.1.9.v201005080401"] via two dependency chains.
+
+Chain 1:
+  org.eclipse.jpt.dbws.eclipselink.ui [osgi.identity; osgi.identity="org.eclipse.jpt.dbws.eclipselink.ui"; type="osgi.bundle"; version:Version="1.1.100.v201310142259"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=org.eclipse.wst.common.project.facet.ui)(&(bundle-version>=1.3.0)(!(bundle-version>=2.0.0))))
+     |
+    provide: osgi.wiring.bundle: org.eclipse.wst.common.project.facet.ui
+  org.eclipse.osgi [osgi.identity; osgi.identity="org.eclipse.osgi"; type="osgi.bundle"; version:Version="3.10.0.v20140606-1445"; singleton:="true"]
+
+Chain 2:
+  org.eclipse.jpt.dbws.eclipselink.ui [osgi.identity; osgi.identity="org.eclipse.jpt.dbws.eclipselink.ui"; type="osgi.bundle"; version:Version="1.1.100.v201310142259"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=org.eclipse.persistence.dbws.builder)(&(bundle-version>=2.3.0)(!(bundle-version>=3.0.0))))
+     |
+    provide: osgi.wiring.bundle; bundle-version:Version="2.6.0.v20130815-a4708b6"; osgi.wiring.bundle="org.eclipse.persistence.dbws.builder"
+  org.eclipse.persistence.dbws.builder [osgi.identity; osgi.identity="org.eclipse.persistence.dbws.builder"; type="osgi.bundle"; version:Version="2.6.0.v20130815-a4708b6"]
+    import: (osgi.wiring.package=javax.xml.bind)
+     |
+    export: osgi.wiring.package: javax.xml.bind
+  javax.xml.bind [osgi.identity; osgi.identity="javax.xml.bind"; type="osgi.bundle"; version:Version="2.1.9.v201005080401"]
+	at org.eclipse.osgi.container.Module.start(Module.java:434)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1582)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1561)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1533)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1476)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:340)
+
+!ENTRY org.eclipse.egit.ui 2 0 2014-11-03 22:52:31.106
+!MESSAGE Warning: EGit couldn't detect the installation path "gitPrefix" of native Git. Hence EGit can't respect system level
+Git settings which might be configured in ${gitPrefix}/etc/gitconfig under the native Git installation directory.
+The most important of these settings is core.autocrlf. Git for Windows by default sets this parameter to true in
+this system level configuration. The Git installation location can be configured on the
+Team > Git > Configuration preference page's 'System Settings' tab.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.egit.ui 2 0 2014-11-03 22:52:31.108
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\mylyf_000'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+!SESSION 2014-11-05 13:58:13.057 -----------------------------------------------
+eclipse.buildId=4.4.0.I20140606-1215
+java.version=1.8.0_25
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=zh_TW
+Framework arguments:  -product org.eclipse.epp.package.jee.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.jee.product
+
+!ENTRY org.eclipse.jpt.dbws.eclipselink.ui 4 0 2014-11-05 13:58:15.096
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.jpt.dbws.eclipselink.ui [394]
+  Bundle was not resolved because of a uses contraint violation.
+  org.osgi.service.resolver.ResolutionException: Uses constraint violation. Unable to resolve resource org.eclipse.jpt.dbws.eclipselink.ui [osgi.identity; osgi.identity="org.eclipse.jpt.dbws.eclipselink.ui"; type="osgi.bundle"; version:Version="1.1.100.v201310142259"; singleton:="true"] because it is exposed to package 'javax.xml.bind' from resources org.eclipse.osgi [osgi.identity; osgi.identity="org.eclipse.osgi"; type="osgi.bundle"; version:Version="3.10.0.v20140606-1445"; singleton:="true"] and javax.xml.bind [osgi.identity; osgi.identity="javax.xml.bind"; type="osgi.bundle"; version:Version="2.1.9.v201005080401"] via two dependency chains.
+
+Chain 1:
+  org.eclipse.jpt.dbws.eclipselink.ui [osgi.identity; osgi.identity="org.eclipse.jpt.dbws.eclipselink.ui"; type="osgi.bundle"; version:Version="1.1.100.v201310142259"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=org.eclipse.wst.common.project.facet.ui)(&(bundle-version>=1.3.0)(!(bundle-version>=2.0.0))))
+     |
+    provide: osgi.wiring.bundle: org.eclipse.wst.common.project.facet.ui
+  org.eclipse.osgi [osgi.identity; osgi.identity="org.eclipse.osgi"; type="osgi.bundle"; version:Version="3.10.0.v20140606-1445"; singleton:="true"]
+
+Chain 2:
+  org.eclipse.jpt.dbws.eclipselink.ui [osgi.identity; osgi.identity="org.eclipse.jpt.dbws.eclipselink.ui"; type="osgi.bundle"; version:Version="1.1.100.v201310142259"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=org.eclipse.persistence.dbws.builder)(&(bundle-version>=2.3.0)(!(bundle-version>=3.0.0))))
+     |
+    provide: osgi.wiring.bundle; bundle-version:Version="2.6.0.v20130815-a4708b6"; osgi.wiring.bundle="org.eclipse.persistence.dbws.builder"
+  org.eclipse.persistence.dbws.builder [osgi.identity; osgi.identity="org.eclipse.persistence.dbws.builder"; type="osgi.bundle"; version:Version="2.6.0.v20130815-a4708b6"]
+    import: (osgi.wiring.package=javax.xml.bind)
+     |
+    export: osgi.wiring.package: javax.xml.bind
+  javax.xml.bind [osgi.identity; osgi.identity="javax.xml.bind"; type="osgi.bundle"; version:Version="2.1.9.v201005080401"]
+	at org.eclipse.osgi.container.Module.start(Module.java:434)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1582)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1561)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1533)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1476)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:340)
+
+!ENTRY org.eclipse.egit.ui 2 0 2014-11-05 13:59:48.458
+!MESSAGE Warning: EGit couldn't detect the installation path "gitPrefix" of native Git. Hence EGit can't respect system level
+Git settings which might be configured in ${gitPrefix}/etc/gitconfig under the native Git installation directory.
+The most important of these settings is core.autocrlf. Git for Windows by default sets this parameter to true in
+this system level configuration. The Git installation location can be configured on the
+Team > Git > Configuration preference page's 'System Settings' tab.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.egit.ui 2 0 2014-11-05 13:59:48.479
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\mylyf_000'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.wst.common.project.facet.core 4 0 2014-11-05 14:43:27.225
+!MESSAGE Project facet osgi.app has not been defined. It is used in plugin org.apache.geronimo.st.v30.core.
+
+!ENTRY org.eclipse.wst.common.project.facet.core 4 0 2014-11-05 14:43:27.226
+!MESSAGE Project facet osgi.bundle has not been defined. It is used in plugin org.apache.geronimo.st.v30.core.
+
+!ENTRY org.eclipse.wst.common.project.facet.core 4 0 2014-11-05 14:43:27.253
+!MESSAGE Project facet osgi.fragment has not been defined. It is used in plugin org.apache.geronimo.st.v30.core.
+
+!ENTRY org.eclipse.wst.common.project.facet.core 4 0 2014-11-05 14:43:27.256
+!MESSAGE Project facet osgi.comp has not been defined. It is used in plugin org.apache.geronimo.st.v30.core.
+
+!ENTRY org.eclipse.ui 4 4 2014-11-05 19:55:42.538
+!MESSAGE Conflicting handlers for org.eclipse.wst.sse.ui.format: {org.eclipse.wst.sse.ui.internal.handlers.FormatHandler} vs {org.eclipse.wst.sse.ui.internal.handlers.FormatHandler}
