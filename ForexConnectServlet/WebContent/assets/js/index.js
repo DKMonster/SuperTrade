@@ -1,5 +1,8 @@
 $(document).ready(function() {
+	var html = $('#wrapper');
+
 	var obj_account = new Object();
+
 	var text_instrument = $('#instrument');
 	var text_userId = $('#user_id');
 	var text_pwd = $('#password');
@@ -10,8 +13,8 @@ $(document).ready(function() {
 	var btn_getInfo = $('#btn_getInfo');
 	var btn_getOffers = $('#btn_getOffers');
 	var btn_clear = $('#btn_clear');
-
-	var html = $('#wrapper');
+	var btn_login = $('#btn_login');
+	var btn_logout = $('#btn_logout');
 
 	var tableTbody = html.find('tbody');
 
@@ -41,6 +44,63 @@ $(document).ready(function() {
 			'ValueDate','Time'
 			];
 
+	btn_login.on('click' , function(){
+		obj_account.loadType = "getAccount";
+		obj_account.userId = text_userId.val();
+		obj_account.pwd = text_pwd.val();
+		obj_account.url = text_url.val();
+		obj_account.con = text_con.val();
+		$.ajax({
+			url: "AjaxServlet",
+			type: 'POST',
+			dataType: 'json',
+			data: JSON.stringify(obj_account),
+			contentType: 'application/json',
+			mimeType: 'application/json',
+			success: function(data) {
+				console.log("登入成功");
+				btn_login.attr("disabled","disabled");
+				btn_logout.removeAttr("disabled");
+			},
+			error: function (xhr, ajaxOptions, thrownError) {
+				console.log(xhr.status);
+				console.log(xhr.statusText);
+				console.log(xhr.responseText);
+				console.log(ajaxOptions);
+				console.log(thrownError);
+				return false;
+			}
+		});
+	});
+
+	btn_logout.on('click' , function(){
+		obj_account.loadType = "getAccount";
+		obj_account.userId = text_userId.val();
+		obj_account.pwd = text_pwd.val();
+		obj_account.url = text_url.val();
+		obj_account.con = text_con.val();
+		$.ajax({
+			url: "AjaxServlet",
+			type: 'POST',
+			dataType: 'json',
+			data: JSON.stringify(obj_account),
+			contentType: 'application/json',
+			mimeType: 'application/json',
+			success: function(data) {
+				console.log("登出成功");
+				btn_login.removeAttr("disabled");
+				btn_logout.attr("disabled","disabled");
+			},
+			error: function (xhr, ajaxOptions, thrownError) {
+				console.log(xhr.status);
+				console.log(xhr.statusText);
+				console.log(xhr.responseText);
+				console.log(ajaxOptions);
+				console.log(thrownError);
+				return false;
+			}
+		});
+	});
 
 	btn_getAccount.on('click' , function(){
 		obj_account.loadType = "getAccount";

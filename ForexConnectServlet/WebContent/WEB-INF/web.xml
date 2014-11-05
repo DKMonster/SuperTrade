@@ -5,8 +5,8 @@
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>
   <servlet>
-  	<display-name>AjaxServlet</display-name>
-  	<servlet-name>AjaxServlet</servlet-name>
-  	<servlet-class>com.supertrade.dkcode.AjaxServlet</servlet-class>
+    <display-name>AjaxServlet</display-name>
+    <servlet-name>AjaxServlet</servlet-name>
+    <servlet-class>com.supertrade.dkcode.AjaxServlet</servlet-class>
   </servlet>
 </web-app>

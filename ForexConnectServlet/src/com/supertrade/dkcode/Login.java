@@ -51,9 +51,37 @@ public class Login {
             while (!statusListener.isConnected() && !statusListener.hasError()) {
                     Thread.sleep(50);
             }
+            if (!statusListener.hasError()) {
+                getAccounts(mSession);
+                mSession.logout();
+                while (!statusListener.isDisconnected()) {
+                    Thread.sleep(50);
+                }
+            }
+            mSession.unsubscribeSessionStatus(statusListener);
+            mSession.dispose();
         } catch (Exception e) {
             System.out.println ("Exception: " + e.getMessage());
             System.exit(1);
+        }
+    }
+    // Get accounts information
+    public static void getAccounts(O2GSession session) {
+        try {
+            O2GLoginRules loginRules = session.getLoginRules();
+            if (loginRules != null && loginRules.isTableLoadedByDefault(O2GTableType.ACCOUNTS)) {
+                O2GResponse accountsResponse = loginRules.getTableRefreshResponse(O2GTableType.ACCOUNTS);
+                O2GResponseReaderFactory responseFactory = session.getResponseReaderFactory();
+                O2GAccountsTableResponseReader accountsReader = responseFactory.createAccountsTableReader(accountsResponse);
+                for (int i = 0; i < accountsReader.size(); i++) {
+                    O2GAccountRow account = accountsReader.getRow(i);
+                    System.out.println("AccountID = " + account.getAccountID() +
+                                       " Balance = " +  account.getBalance() +
+                                       " UsedMargin = " + account.getUsedMargin());
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Exception in getAccounts():\n\t " + e.getMessage());
         }
     }
 
