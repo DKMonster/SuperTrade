@@ -13,3 +13,6 @@
 .icon-floppy:before { content: '\e80b'; } /* '' */
 .icon-edit:before { content: '\e80c'; } /* '' */
 .icon-history:before { content: '\e80d'; } /* '' */
+.icon-home:before { content: '\e80e'; } /* '' */
+.icon-plus:before { content: '\e80f'; } /* '' */
+.icon-th-list:before { content: '\e810'; } /* '' */
