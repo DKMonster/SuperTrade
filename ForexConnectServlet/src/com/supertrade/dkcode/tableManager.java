@@ -1,20 +1,19 @@
 package com.supertrade.dkcode;
 
-import com.fxcore2.O2GMessageTableRow;
-import com.fxcore2.O2GMessagesTable;
 import com.fxcore2.O2GSession;
 import com.fxcore2.O2GTableManager;
 import com.fxcore2.O2GTableManagerMode;
 import com.fxcore2.O2GTableManagerStatus;
 import com.fxcore2.O2GTableType;
 import com.fxcore2.O2GTableUpdateType;
+import com.fxcore2.O2GTradeTableRow;
 import com.fxcore2.O2GTradesTable;
 import com.fxcore2.O2GTransport;
+
 
 public class tableManager {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		// Connection and session variables
         String mUserID = "";
         String mPassword = "";
@@ -72,27 +71,29 @@ public class tableManager {
                 if (tableManager.getStatus() == O2GTableManagerStatus.TABLES_LOADED) {
 
                     // Get an instance of the O2GTradesTable
-                	O2GMessagesTable messagesTable = (O2GMessagesTable)tableManager.getTable(O2GTableType.MESSAGES);
+                    O2GTradesTable tradeTable = (O2GTradesTable)tableManager.getTable(O2GTableType.TRADES);
  
                     // Get row level information
-                    for (int i = 0; i < messagesTable.size(); i++) {
-                    	O2GMessageTableRow trade = messagesTable.getRow(i);
-                        System.out.println(trade);
+                    for (int i = 0; i < tradeTable.size(); i++) {
+                        O2GTradeTableRow trade = tradeTable.getRow(i);
+                        System.out.println( "TradeID: " + trade.getTradeID() +
+                                           " Close = " +  trade.getClose()  +
+                                           " GrossPL= " + trade.getGrossPL());
                     }
  
                     // Create an instance of a table listener class
                     TableListener tableListener = new TableListener();
  
                     // Subscribe table listener to table updates
-                    messagesTable.subscribeUpdate(O2GTableUpdateType.UPDATE, tableListener);
-                    messagesTable.subscribeUpdate(O2GTableUpdateType.INSERT, tableListener);
+                    tradeTable.subscribeUpdate(O2GTableUpdateType.UPDATE, tableListener);
+                    tradeTable.subscribeUpdate(O2GTableUpdateType.INSERT, tableListener);
  
                     // Process updates (see TableListener.java)
                     Thread.sleep(10000);
  
                     // Unsubscribe table listener
-                    messagesTable.unsubscribeUpdate(O2GTableUpdateType.UPDATE, tableListener);
-                    messagesTable.unsubscribeUpdate(O2GTableUpdateType.INSERT, tableListener);
+                    tradeTable.unsubscribeUpdate(O2GTableUpdateType.UPDATE, tableListener);
+                    tradeTable.unsubscribeUpdate(O2GTableUpdateType.INSERT, tableListener);
  
                     mSession.logout();
                     while (!statusListener.isDisconnected()) {

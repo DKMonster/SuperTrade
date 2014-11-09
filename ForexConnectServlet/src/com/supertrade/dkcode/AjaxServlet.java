@@ -20,11 +20,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 /**
  * Servlet implementation class AjaxServlet
  */
-@WebServlet(
-		urlPatterns = { "/AjaxServlet" }, 
-		initParams = { 
-				@WebInitParam(name = "default", value = "This is a default value")
-		})
+@WebServlet(name="AjaxServlet" , urlPatterns = { "/AjaxServlet" })
 public class AjaxServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
