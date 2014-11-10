@@ -27,6 +27,7 @@ public class AjaxServlet extends HttpServlet {
     /**
      * Default constructor. 
      */
+	Map[] Data;
     Map<String, Object> responseData = new HashMap<String, Object>();
     
     public AjaxServlet() {
@@ -99,10 +100,22 @@ public class AjaxServlet extends HttpServlet {
 //        	responseData.put("loadType", account.getloadType());
             
             System.out.println(responseData);
+       
+        }else if(account.getloadType().equals("getTrade")){
+        	String[] accountData = new String[4];
+        	
+        	accountData[0] = account.getUserId();
+        	accountData[1] = account.getPwd();
+        	accountData[2] = account.getUrl();
+        	accountData[3] = account.getCon();
+        	
+        	Data = getTrade.main(accountData);
+            
+            System.out.println(Data);
         }
         
         try {
-        	mapper.writeValue(response.getOutputStream(), responseData);
+        	mapper.writeValue(response.getOutputStream(), Data);
         } catch (JsonGenerationException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

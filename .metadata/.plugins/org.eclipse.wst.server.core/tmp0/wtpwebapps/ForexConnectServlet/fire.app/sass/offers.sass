@@ -1,0 +1,244 @@
+@import compass
+@import variable
+@import mixin
+@import reset
+@import extend
+@import borwser
+
+/* ----------- variable ----------- */
+$wrapper-bg: #222
+$header-bg: #222
+$slider-bg: #333
+$content-bg: $slider-bg
+$footer-bg: $header-bg
+
+$slider-title-bg: $slider-bg
+
+$wrapper-w: 100%
+$header-w: 100%
+$slider-w: 20%
+$content-w: 80%
+$footer-w: 100%
+
+$wrapper-h: auto
+$header-h: 50px
+$slider-h: auto
+$content-h: auto
+$footer-h: 100px
+
+$slider-title-border: 1px solid #fff
+
+/* ----------- base setting ----------- */
+*
+	margin: 0
+	padding: 0
+	font-family: 'Raleway', '微軟正黑體' , '標楷體', Arial, sans-serif
+
+a , a:hover , a:focus
+	color: #000
+	background: none
+	text-decoration: none
+
+li , ul
+	float: left
+	list-style: none
+
+body
+	color: #222
+
+/* ----------- Mixin ----------- */
+@mixin baseText($color , $size , $bold , $lineH , $align)
+	color: $color
+	font-size: $size
+	font-weight: $bold
+	line-height: $lineH
+	text-align: $align
+
+@mixin bottomShadow()
+	border-bottom: 1px solid rgba(0 , 0 , 0 , 0.3)
+	+box-shadow(0 1px 0 rgba(255,255,255,0.05) inset)
+
+@mixin rightShadow()
+	border-right: 1px solid rgba(0 , 0 , 0 , 0.3)
+	+box-shadow(-1px 0 0 rgba(255,255,255,0.05) inset)
+
+@mixin leftShadow()
+	border-left: 1px solid rgba(0 , 0 , 0 , 0.3)
+	+box-shadow(-1px 0 0 rgba(255,255,255,0.05) inset)
+
+@mixin topShadow()
+	border-top: 1px solid rgba(0 , 0 , 0 , 0.3)
+	+box-shadow(0 1px 0 rgba(255,255,255,0.05) inset)
+
+/* ----------- main setting ----------- */
+.wrapper
+	+w-h($wrapper-w , $wrapper-h)
+	background: $wrapper-bg
+
+	.header
+		+w-h($header-w , $header-h)
+		background: $header-bg
+		+bottomShadow()
+
+		.logo
+			float: left
+			+w-h(auto , 50px)
+
+			p
+				+baseText(#fff , 24px , 700 , 50px , center)
+				padding: 0 20px
+
+		.menu
+			float: right
+			+w-h(auto , 50px)
+
+			i
+				+baseText(#fff , 24px , 700 , 50px , center)
+				padding: 0 20px
+
+	.slider
+		+w-h($slider-w , $slider-h)
+		background: $slider-bg
+		float: left
+		+rightShadow()
+		+bottomShadow()
+
+		.user
+			+w-h(100% , 150px)
+			padding: 20px 10px
+
+			img
+				float: left
+
+			p
+				+w-h(auto , 30px)
+				padding: 10px
+				float: left
+				+baseText(#fff , 14px , 700 , 20px , center)
+
+		.title
+			+w-h(100% , 36px)
+			background: $slider-title-bg
+			+bottomShadow()
+
+			p
+				padding: 3px 15px
+				+baseText(#fff , 20px , 700 , 30px , center)
+
+
+		.menu
+			+w-h(100% , 500px)
+			+bottomShadow()
+
+			li
+				+w-h(100% , 50px)
+
+			a
+				+w-h(100% , 50px)
+				padding-left: 20px
+				display: block
+				+baseText(#fff , 20px , 300 , 50px , left)
+
+				&:hover
+					cursor: pointer
+					color: #333
+					background: #fff
+					+transition(all .20s ease-in-out)
+						
+			li.active > a
+				color: #333
+				background: #fff
+				+topShadow()
+				+rightShadow()
+				+leftShadow()
+				+bottomShadow()
+					
+
+	.content
+		+w-h($content-w , $content-h)
+		background: $content-bg
+		float: right
+		+bottomShadow()
+
+		.title
+			+w-h(100% , 50px)
+			+bottomShadow()
+
+			.icon
+				float: left
+				padding-left: 10px
+				+baseText(#fff , 20px , 300 , 50px , left)
+
+			.text
+				float: left
+				padding-left: 10px
+				+baseText(#fff , 20px , 300 , 50px , left)
+
+			.setting
+				float: right
+				padding-right: 10px
+				+baseText(#fff , 20px , 300 , 50px , left)
+
+		.offers
+			+w-h(100% , 636px)
+			+bottomShadow()
+			padding: 10px
+			background: #222
+
+			.table_info
+				+w-h(100% , 300px)
+				padding: 10px
+
+				.title
+					+w-h(100% , 50px)
+					background: #222
+
+					.icon
+						float: left
+						padding-left: 10px
+						padding-right: 5px
+						+baseText(#fff , 20px , 300 , 50px , left)
+
+					.text
+						float: left
+						padding-left: 10px
+						+baseText(#fff , 20px , 300 , 50px , left)
+
+					.plus , .list
+						float: right
+						padding-right: 10px
+						padding-left: 10px
+						+leftShadow()
+						+baseText(#fff , 20px , 300 , 50px , left)
+
+						&:hover
+							color: #222
+							background: #fff
+							cursor: pointer
+							+transition(all .20s ease-in-out)
+
+				.content
+					+w-h(100% , 250px + 306px)
+					background: #222
+					overflow: auto
+
+					th
+						color: #fff
+						+bottomShadow()
+						+leftShadow()
+						+rightShadow()
+
+
+	.footer
+		+w-h($footer-w , $footer-h)
+		background: $footer-bg
+		float: left
+		+topShadow()
+
+		p
+			+w-h(400px , 100px)
+			margin: 0 auto
+			+baseText(#fff , 14px , 700 , 100px , center)
+
+			a
+				color: #fff

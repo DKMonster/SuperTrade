@@ -427,27 +427,102 @@ body {
   padding: 10px;
   float: left;
 }
-.wrapper .content .timeline .social {
-  width: 100%;
+.wrapper .content .timeline .chat {
+  width: 25%;
   height: 100%;
   background: #eeeeee;
   overflow: hidden;
+  float: left;
+  padding: 10px;
+}
+.wrapper .content .timeline .chat .theme_room {
+  width: 100%;
+  height: 50px;
+  color: white;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 50px;
+  text-align: center;
+  background: #222222;
+  border-left: 1px solid rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  -moz-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  border-right: 1px solid rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  -moz-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
+  -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
+}
+.wrapper .content .timeline .chat ul {
+  width: 100%;
+  height: auto;
+}
+.wrapper .content .timeline .chat ul li {
+  width: 100%;
+  height: 30px;
+  color: #222222;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 30px;
+  text-align: left;
+  background: #eeeeee;
+  border-left: 1px solid rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  -moz-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  border-right: 1px solid rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  -moz-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
+  -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
+}
+.wrapper .content .timeline .chat ul li:hover {
+  background: white;
+  cursor: pointer;
+}
+.wrapper .content .timeline .social {
+  width: 75%;
+  height: 100%;
+  background: #eeeeee;
+  overflow: hidden;
+  float: left;
 }
 .wrapper .content .timeline .social .write {
   width: 80%;
-  height: 120px;
+  height: 150px;
   display: inline-block;
   margin-top: 10px;
   margin-left: 10%;
   background: white;
 }
+.wrapper .content .timeline .social .write .w_text {
+  width: 100%;
+  height: 30px;
+  border-left: 1px solid rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  -moz-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  border-right: 1px solid rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  -moz-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  padding-left: 10px;
+  color: #cccccc;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 30px;
+  text-align: left;
+}
 .wrapper .content .timeline .social .write .w_message {
   width: 100%;
   height: 80px;
-  border-top: 1px solid rgba(0, 0, 0, 0.3);
-  -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
-  -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
   border-left: 1px solid rgba(0, 0, 0, 0.3);
   -webkit-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
   -moz-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;

@@ -1,0 +1,426 @@
+@import compass
+@import variable
+@import mixin
+@import reset
+@import extend
+@import borwser
+
+/* ----------- variable ----------- */
+$wrapper-bg: #222
+$header-bg: #222
+$slider-bg: #333
+$content-bg: $slider-bg
+$footer-bg: $header-bg
+
+$slider-title-bg: $slider-bg
+
+$wrapper-w: 100%
+$header-w: 100%
+$slider-w: 20%
+$content-w: 80%
+$footer-w: 100%
+
+$wrapper-h: auto
+$header-h: 50px
+$slider-h: auto
+$content-h: auto
+$footer-h: 100px
+
+$slider-title-border: 1px solid #fff
+
+$timeline-line-lCommit-pic-width: 30px
+$timeline-line-lCommit-commit-width: 100%
+$timeline-line-lCommit-space: 30px
+
+$slider2-s2_title-height: 30px
+$slider2-s2_content-height: 100%
+
+
+/* ----------- base setting ----------- */
+*
+	margin: 0
+	padding: 0
+	resize: none
+	font-family: 'Raleway', '微軟正黑體' , '標楷體', Arial, sans-serif
+
+a , a:hover , a:focus
+	color: #000
+	background: none
+	text-decoration: none
+
+li , ul
+	float: left
+	list-style: none
+
+body
+	color: #222
+
+
+/* ----------- Mixin ----------- */
+@mixin baseText($color , $size , $bold , $lineH , $align)
+	color: $color
+	font-size: $size
+	font-weight: $bold
+	line-height: $lineH
+	text-align: $align
+
+@mixin bottomShadow()
+	border-bottom: 1px solid rgba(0 , 0 , 0 , 0.3)
+	+box-shadow(0 1px 0 rgba(255,255,255,0.05) inset)
+
+@mixin rightShadow()
+	border-right: 1px solid rgba(0 , 0 , 0 , 0.3)
+	+box-shadow(-1px 0 0 rgba(255,255,255,0.05) inset)
+
+@mixin leftShadow()
+	border-left: 1px solid rgba(0 , 0 , 0 , 0.3)
+	+box-shadow(-1px 0 0 rgba(255,255,255,0.05) inset)
+
+@mixin topShadow()
+	border-top: 1px solid rgba(0 , 0 , 0 , 0.3)
+	+box-shadow(0 1px 0 rgba(255,255,255,0.05) inset)
+
+/* ----------- main setting ----------- */
+.wrapper
+	+w-h($wrapper-w , $wrapper-h)
+	background: $wrapper-bg
+
+	.header
+		+w-h($header-w , $header-h)
+		background: $header-bg
+		+bottomShadow()
+
+		.logo
+			float: left
+			+w-h(auto , 50px)
+
+			p
+				+baseText(#fff , 24px , 700 , 50px , center)
+				padding: 0 20px
+
+		.menu
+			float: right
+			+w-h(auto , 50px)
+
+			i
+				+baseText(#fff , 24px , 700 , 50px , center)
+				padding: 0 20px
+
+	.slider
+		+w-h($slider-w , $slider-h)
+		background: $slider-bg
+		float: left
+		+rightShadow()
+		+bottomShadow()
+
+		.user
+			+w-h(100% , 150px)
+			padding: 20px 10px
+
+			img
+				float: left
+
+			p
+				+w-h(auto , 30px)
+				padding: 10px
+				float: left
+				+baseText(#fff , 14px , 700 , 20px , center)
+
+		.title
+			+w-h(100% , 36px)
+			background: $slider-title-bg
+			+bottomShadow()
+
+			p
+				padding: 3px 15px
+				+baseText(#fff , 20px , 700 , 30px , center)
+
+
+		.menu
+			+w-h(100% , 500px)
+			+bottomShadow()
+
+			li
+				+w-h(100% , 50px)
+
+			a
+				+w-h(100% , 50px)
+				padding-left: 20px
+				display: block
+				+baseText(#fff , 20px , 300 , 50px , left)
+
+				&:hover
+					cursor: pointer
+					color: #333
+					background: #fff
+					+transition(all .20s ease-in-out)
+						
+			li.active > a
+				color: #333
+				background: #fff
+				+topShadow()
+				+rightShadow()
+				+leftShadow()
+				+bottomShadow()
+					
+
+	.content
+		+w-h($content-w , $content-h)
+		background: $content-bg
+		float: right
+		+bottomShadow()
+
+		.title
+			+w-h(100% , 50px)
+			+bottomShadow()
+
+			.icon
+				float: left
+				padding-left: 10px
+				+baseText(#fff , 20px , 300 , 50px , left)
+
+			.text
+				float: left
+				padding-left: 10px
+				+baseText(#fff , 20px , 300 , 50px , left)
+
+			.setting
+				float: right
+				padding-right: 10px
+				+baseText(#fff , 20px , 300 , 50px , left)
+
+		.timeline
+			+w-h(75% , 636px)
+			+rightShadow()
+			padding: 10px
+			float: left
+
+			.social
+				+w-h(100% , 100%)
+				background: #eee
+				overflow: hidden
+
+				.write
+					+w-h(80% , 120px)
+					display: inline-block
+					margin-top: 10px
+					margin-left: 10%
+					background: #fff
+
+					.w_message
+						+w-h(100% , 80px)
+						+topShadow()
+						+leftShadow()
+						+rightShadow()
+
+					.w_function
+						+w-h(100% , 40px)
+						background: #ccf
+						+bottomShadow()
+						+leftShadow()
+						+rightShadow()
+
+						.send
+							+w-h(80px , 30px)
+							margin-top: 4px
+							margin-right: 5px
+							+baseText(#fff , 18px , 300 , 28px , center)
+							float: right
+							cursor: pointer
+							background: #254788
+
+							&:hover
+								background: #254788 - 50
+								+transition(all .20s ease-in-out)
+
+							&:active
+								margin-top: 7px
+								+transition(all .20s ease-in-out)
+
+				.line
+					+w-h(100% , 496px)
+					display: inline-block
+
+					ul
+						+w-h(100% , 476px)
+
+					li
+						+w-h(80% , auto)
+						background: #fff
+						margin-left: 10%
+						margin-top: 20px
+						margin-bottom: 10px
+						+topShadow()
+						+leftShadow()
+						+rightShadow()
+						+bottomShadow()
+
+						.l_header
+							+w-h(100% , auto)
+							padding: 10px
+							float: left
+
+							.pic
+								+w-h(30% , 50px)
+								float: left
+
+							.name
+								+w-h(70% , 25px)
+								+baseText(#333 , 14px , 700 , 25px , left)
+								float: left
+								padding-left: 15px
+
+							.time
+								+w-h(70% , 25px)
+								+baseText(#ccc , 12px , 300 , 25px , left)
+								float: left
+								padding-left: 15px
+
+						.l_content
+							+w-h(100% , auto)
+							padding: 10px
+							float: left
+
+							.text
+								+baseText(#222 , 14px , 300 , 20px , left)
+
+						.l_commit
+							+w-h(100% , 50px)
+							float: left
+							background: #ccf
+							padding: 10px
+
+							.pic
+								+w-h($timeline-line-lCommit-pic-width , 40px)
+								float: left
+
+							.commit
+								+w-h("" , 30px)
+								margin-left: 20px
+								line-height: 30px
+								overflow: hidden
+								+calc(width , #{$timeline-line-lCommit-commit-width} - #{$timeline-line-lCommit-pic-width} - #{$timeline-line-lCommit-space})
+
+		.slider2
+			+w-h(25% , 636px)
+			float: right
+			padding: 10px
+
+			.trade_message
+				+w-h(100% , 30%)
+				+bottomShadow()
+				background: #eee
+
+				.s2_title
+					+w-h(100% , $slider2-s2_title-height)
+					+bottomShadow()
+					background: #222
+					+baseText(#fff , 18px , 700 , 30px , center)
+
+				.s2_content
+					+w-h(100% , $slider2-s2_content-height)
+					+calc(height , #{$slider2-s2_content-height} - #{$slider2-s2_title-height})
+					overflow: hidden
+
+					li
+						+w-h(100% , 50px)
+						padding: 5px
+						+bottomShadow()
+						background: #eee
+
+						&:hover
+							background: #eee + 50
+							cursor: pointer
+
+						.pic
+							float: left
+							+w-h(40px , 40px)
+
+						p
+							+baseText(#222 , 10px , 300 , 20px , left)
+
+			.follower_message
+				+w-h(100% , 30%)
+				+bottomShadow()
+				background: #eee
+
+				.s2_title
+					+w-h(100% , 30px)
+					+bottomShadow()
+					background: #222
+					+baseText(#fff , 18px , 700 , 30px , center)
+
+				.s2_content
+					+w-h(100% , $slider2-s2_content-height)
+					+calc(height , #{$slider2-s2_content-height} - #{$slider2-s2_title-height})
+					overflow: hidden
+
+					li
+						+w-h(100% , 50px)
+						padding: 5px
+						+bottomShadow()
+						background: #eee
+
+						&:hover
+							background: #eee + 50
+							cursor: pointer
+
+						.pic
+							float: left
+							+w-h(40px , 40px)
+
+						.name
+							+baseText(#222 , 14px , 700 , 20px , left)
+
+						.date
+							+baseText(#ccc , 14px , 700 , 20px , left)
+
+			.friends_message
+				+w-h(100% , 40%)
+				+bottomShadow()
+				background: #eee
+
+				.s2_title
+					+w-h(100% , 30px)
+					+bottomShadow()
+					background: #222
+					+baseText(#fff , 18px , 700 , 30px , center)
+
+				.s2_content
+					+w-h(100% , $slider2-s2_content-height)
+					+calc(height , #{$slider2-s2_content-height} - #{$slider2-s2_title-height})
+					overflow: hidden
+
+					li
+						+w-h(100% , 50px)
+						padding: 5px
+						+bottomShadow()
+						background: #eee
+
+						&:hover
+							background: #eee + 50
+							cursor: pointer
+
+						.pic
+							float: left
+							+w-h(40px , 40px)
+
+						.name
+							+baseText(#222 , 14px , 700 , 20px , left)
+
+						.date
+							+baseText(#ccc , 14px , 700 , 20px , left)
+
+	.footer
+		+w-h($footer-w , $footer-h)
+		background: $footer-bg
+		float: left
+		+topShadow()
+
+		p
+			+w-h(400px , 100px)
+			margin: 0 auto
+			+baseText(#fff , 14px , 700 , 100px , center)
+
+			a
+				color: #fff

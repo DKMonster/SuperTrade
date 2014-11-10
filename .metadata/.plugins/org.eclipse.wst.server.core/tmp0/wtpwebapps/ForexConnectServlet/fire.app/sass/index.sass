@@ -6,6 +6,27 @@
 @import borwser
 
 /* ----------- variable ----------- */
+$wrapper-bg: #222
+$header-bg: #222
+$slider-bg: #333
+$content-bg: $slider-bg
+$footer-bg: $header-bg
+
+$slider-title-bg: $slider-bg
+
+$wrapper-w: 100%
+$header-w: 100%
+$slider-w: 20%
+$content-w: 80%
+$footer-w: 100%
+
+$wrapper-h: auto
+$header-h: 50px
+$slider-h: auto
+$content-h: auto
+$footer-h: 100px
+
+$slider-title-border: 1px solid #fff
 
 /* ----------- base setting ----------- */
 *
@@ -25,10 +46,28 @@ li , ul
 body
 	color: #000
 
-/* ----------- main setting ----------- */
+/* ----------- Mixin ----------- */
+@mixin baseText($color , $size , $bold , $lineH , $align)
+	color: $color
+	font-size: $size
+	font-weight: $bold
+	line-height: $lineH
+	text-align: $align
 
-.account , .user_info , .offers
-	+w-h(80% , auto)
-	margin: 0 auto
-	overflow-x: auto
-	margin-top: 50px
+@mixin bottomShadow()
+	border-bottom: 1px solid rgba(0 , 0 , 0 , 0.3)
+	+box-shadow(0 1px 0 rgba(255,255,255,0.05) inset)
+
+@mixin rightShadow()
+	border-right: 1px solid rgba(0 , 0 , 0 , 0.3)
+	+box-shadow(-1px 0 0 rgba(255,255,255,0.05) inset)
+
+@mixin leftShadow()
+	border-left: 1px solid rgba(0 , 0 , 0 , 0.3)
+	+box-shadow(-1px 0 0 rgba(255,255,255,0.05) inset)
+
+@mixin topShadow()
+	border-top: 1px solid rgba(0 , 0 , 0 , 0.3)
+	+box-shadow(0 1px 0 rgba(255,255,255,0.05) inset)
+
+/* ----------- main setting ----------- */

@@ -227,11 +227,5 @@ body {
   color: black;
 }
 
+/* ----------- Mixin ----------- */
 /* ----------- main setting ----------- */
-.account, .user_info, .offers {
-  width: 80%;
-  height: auto;
-  margin: 0 auto;
-  overflow-x: auto;
-  margin-top: 50px;
-}
