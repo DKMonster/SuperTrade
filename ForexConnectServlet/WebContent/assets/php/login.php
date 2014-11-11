@@ -14,7 +14,7 @@
 		$result = mysql_query($sql);
 		$row = mysql_fetch_assoc($result);
 
-		$pwdstr = md5($row['user_pwd']);
+		$pwdstr = md5($row['user_password']);
 
 		if($pwdstr == md5($pwd)){
 			// get ip 
@@ -24,14 +24,19 @@
 				$ip=$_SERVER['HTTP_X_FORWARDED_FOR'];
 			else
 				$ip=$_SERVER['REMOTE_ADDR'];
-
-			mysql_query("UPDATE `user` SET user_ip='$ip' WHERE user_id='".$row['user_id']."'");
+			// get date
+			date_default_timezone_set('Asia/Taipei');
+			$date= date("Y/m/d");
+			// get time
+			$time= date("h:i:s");
+			// sql
+			mysql_query("UPDATE `user` SET user_login_ip='".$ip."' , user_login_date='".$date."' , user_login_time='".$time."'  WHERE user_id='".$row['user_id']."'");
 			$_SESSION['id'] = $row['user_id'];
 			$_SESSION['nickname'] = $row['user_nickname'];
 
-			echo success;
+			echo "success";
 		}else{
-			echo fail;
+			echo "fail";
 		}
 	}else{
 		echo '您無權限觀看此頁面!';

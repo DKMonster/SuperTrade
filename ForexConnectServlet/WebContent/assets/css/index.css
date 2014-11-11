@@ -253,7 +253,7 @@ html, body {
   width: 400px;
   height: 300px;
   margin: 0 auto;
-  padding-top: 100px;
+  padding-top: 5%;
 }
 .wrapper .content .login-form .title {
   width: 100%;
@@ -296,7 +296,7 @@ html, body {
 }
 .wrapper .content .login-form fieldset {
   width: 100%;
-  height: 200px;
+  height: auto;
   background: white;
   -webkit-border-radius: 0 0 5px 5px;
   -moz-border-radius: 0 0 5px 5px;
@@ -304,6 +304,7 @@ html, body {
   -o-border-radius: 0 0 5px 5px;
   border-radius: 0 0 5px 5px;
   padding: 2px;
+  padding-bottom: 20px;
   position: relative;
   border-top: 1px solid rgba(0, 0, 0, 0.3);
   -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
@@ -393,7 +394,7 @@ html, body {
   width: 250px;
   height: 40px;
   float: left;
-  color: #222222;
+  color: #eeeeee;
   font-size: 14px;
   font-weight: 700;
   line-height: 40px;
