@@ -195,21 +195,60 @@ body
 			padding: 10px
 			float: left
 
-			.social
-				+w-h(100% , 100%)
+			.chat
+				+w-h(25% , 100%)
 				background: #eee
 				overflow: hidden
+				float: left
+				padding: 10px
+
+				.theme_room
+					+w-h(100% , 50px)
+					+baseText(#fff , 20px , 300 , 50px , center)
+					background: #222
+					+leftShadow()
+					+rightShadow()
+					+bottomShadow()
+
+				ul
+					+w-h(100% , auto)
+
+					li
+						+w-h(100% , 30px)
+						+baseText(#222 , 18px , 300 , 30px , left)
+						background: #eee
+
+						+leftShadow()
+						+rightShadow()
+						+bottomShadow()
+
+						&:hover
+							background: #eee + 50
+							cursor: pointer
+
+
+			.social
+				+w-h(75% , 100%)
+				background: #eee
+				overflow: hidden
+				float: left
 
 				.write
-					+w-h(80% , 120px)
+					+w-h(80% , 150px)
 					display: inline-block
 					margin-top: 10px
 					margin-left: 10%
 					background: #fff
 
+					.w_text
+						+w-h(100% , 30px)
+						+leftShadow()
+						+rightShadow()
+						padding-left: 10px
+						+baseText(#ccc , 14px , 300 , 30px , left)
+
 					.w_message
 						+w-h(100% , 80px)
-						+topShadow()
 						+leftShadow()
 						+rightShadow()
 

@@ -9,4 +9,9 @@
     <servlet-name>AjaxServlet</servlet-name>
     <servlet-class>com.supertrade.dkcode.AjaxServlet</servlet-class>
   </servlet>
+
+  <servlet-mapping>
+    <servlet-name>AjaxServlet</servlet-name>
+    <url-pattern>/ajaxservlet</url-pattern>
+  </servlet-mapping>
 </web-app>
