@@ -303,6 +303,7 @@ body {
   text-align: left;
 }
 .wrapper .slider .user .info i {
+  padding-right: 5px;
   float: left;
 }
 .wrapper .slider .title {
@@ -324,7 +325,7 @@ body {
 }
 .wrapper .slider .menu {
   width: 100%;
-  height: 500px;
+  height: 701px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.3);
   -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
   -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
@@ -421,23 +422,37 @@ body {
 }
 .wrapper .content .account {
   width: 100%;
-  height: 636px;
+  height: 837px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.3);
   -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
   -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
   padding: 10px;
+  float: left;
   background: #222222;
 }
 .wrapper .content .account .user_info {
-  width: 100%;
-  height: 300px;
+  width: 60%;
+  height: 400px;
   padding: 10px;
+  float: left;
 }
 .wrapper .content .account .user_info .title {
   width: 100%;
   height: 50px;
   background: #222222;
+  border-top: 1px solid rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
+  -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
+  border-left: 1px solid rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  -moz-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  border-right: 1px solid rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  -moz-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
 }
 .wrapper .content .account .user_info .title .icon {
   float: left;
@@ -483,8 +498,16 @@ body {
 }
 .wrapper .content .account .user_info .content {
   width: 100%;
-  height: 250px;
+  height: 350px;
   background: #222222;
+  border-left: 1px solid rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  -moz-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  border-right: 1px solid rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  -moz-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
 }
 .wrapper .content .account .user_info .content .form {
   margin-top: 15px;
@@ -496,7 +519,7 @@ body {
   height: 30px;
   padding-right: 5px;
   color: white;
-  font-size: 20px;
+  font-size: 14px;
   font-weight: 300;
   line-height: 30px;
   text-align: left;
@@ -504,10 +527,89 @@ body {
 .wrapper .content .account .user_info .content .form-group .input {
   height: 30px;
 }
+.wrapper .content .account .user_security {
+  width: 40%;
+  height: 400px;
+  padding: 10px;
+  float: right;
+}
+.wrapper .content .account .user_security .title {
+  width: 100%;
+  height: 50px;
+  background: #222222;
+  border-top: 1px solid rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
+  -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
+  border-left: 1px solid rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  -moz-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  border-right: 1px solid rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  -moz-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+}
+.wrapper .content .account .user_security .title .icon {
+  float: left;
+  padding-left: 10px;
+  padding-right: 5px;
+  color: white;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 50px;
+  text-align: left;
+}
+.wrapper .content .account .user_security .title .text {
+  float: left;
+  padding-left: 10px;
+  color: white;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 50px;
+  text-align: left;
+}
+.wrapper .content .account .user_security .content {
+  width: 100%;
+  height: 350px;
+  background: #222222;
+  border-left: 1px solid rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  -moz-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  border-right: 1px solid rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  -moz-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+}
+.wrapper .content .account .user_security .content .form {
+  margin-top: 15px;
+}
+.wrapper .content .account .user_security .content .form-group {
+  padding-top: 10px;
+}
+.wrapper .content .account .user_security .content .form-group .text {
+  height: 30px;
+  padding-right: 5px;
+  color: white;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 30px;
+  text-align: left;
+}
+.wrapper .content .account .user_security .content .form-group p {
+  height: 30px;
+  color: white;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 30px;
+  text-align: left;
+}
 .wrapper .content .account .user_history {
   width: 100%;
   height: 300px;
   padding: 10px;
+  float: left;
   margin-top: 16px;
 }
 .wrapper .content .account .user_history .title {

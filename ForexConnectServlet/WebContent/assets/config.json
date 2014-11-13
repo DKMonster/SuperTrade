@@ -7,6 +7,12 @@
   "ascent": 850,
   "glyphs": [
     {
+      "uid": "186dec7a13156bbe2550790c158fb85d",
+      "css": "crown",
+      "code": 59411,
+      "src": "fontelico"
+    },
+    {
       "uid": "8b80d36d4ef43889db10bc1f0dc9a862",
       "css": "user",
       "code": 59396,

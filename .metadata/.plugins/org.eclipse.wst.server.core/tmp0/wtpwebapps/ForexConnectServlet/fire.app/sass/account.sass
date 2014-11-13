@@ -110,11 +110,15 @@ body
 			img
 				float: left
 
-			p
-				+w-h(auto , 30px)
+			.info
+				+w-h(150px , 30px)
 				padding: 10px
 				float: left
-				+baseText(#fff , 14px , 700 , 20px , center)
+				+baseText(#fff , 12px , 700 , 20px , left)
+
+				i
+					padding-right: 5px
+					float: left
 
 		.title
 			+w-h(100% , 36px)
@@ -127,7 +131,7 @@ body
 
 
 		.menu
-			+w-h(100% , 500px)
+			+w-h(100% , 701px)
 			+bottomShadow()
 
 			li
@@ -179,18 +183,23 @@ body
 				+baseText(#fff , 20px , 300 , 50px , left)
 
 		.account
-			+w-h(100% , 636px)
+			+w-h(100% , 837px)
 			+bottomShadow()
 			padding: 10px
+			float: left
 			background: #222
 
 			.user_info
-				+w-h(100% , 300px)
+				+w-h(60% , 400px)
 				padding: 10px
+				float: left
 
 				.title
 					+w-h(100% , 50px)
 					background: #222
+					+topShadow()
+					+leftShadow()
+					+rightShadow()
 
 					.icon
 						float: left
@@ -217,8 +226,10 @@ body
 							+transition(all .20s ease-in-out)
 
 				.content
-					+w-h(100% , 250px)
+					+w-h(100% , 350px)
 					background: #222
+					+leftShadow()
+					+rightShadow()
 
 					.form
 						margin-top: 15px
@@ -229,14 +240,60 @@ body
 						.text
 							height: 30px
 							padding-right: 5px
-							+baseText(#fff , 20px , 300 , 30px , left)
+							+baseText(#fff , 14px , 300 , 30px , left)
 
 						.input
 							height: 30px
 
+			.user_security
+				+w-h(40% , 400px)
+				padding: 10px
+				float: right
+
+				.title
+					+w-h(100% , 50px)
+					background: #222
+					+topShadow()
+					+leftShadow()
+					+rightShadow()
+
+					.icon
+						float: left
+						padding-left: 10px
+						padding-right: 5px
+						+baseText(#fff , 20px , 300 , 50px , left)
+
+					.text
+						float: left
+						padding-left: 10px
+						+baseText(#fff , 20px , 300 , 50px , left)
+
+				.content
+					+w-h(100% , 350px)
+					background: #222
+					+leftShadow()
+					+rightShadow()
+
+					.form
+						margin-top: 15px
+
+					.form-group
+						padding-top: 10px
+
+						.text
+							height: 30px
+							padding-right: 5px
+							+baseText(#fff , 14px , 300 , 30px , left)
+
+						p
+							height: 30px
+							+baseText(#fff , 14px , 300 , 30px , left)
+
+
 			.user_history
 				+w-h(100% , 300px)
 				padding: 10px
+				float: left
 				margin-top: 16px
 
 				.title

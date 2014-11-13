@@ -292,16 +292,20 @@ body {
 .wrapper .slider .user img {
   float: left;
 }
-.wrapper .slider .user p {
-  width: auto;
+.wrapper .slider .user .info {
+  width: 150px;
   height: 30px;
   padding: 10px;
   float: left;
   color: white;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 700;
   line-height: 20px;
-  text-align: center;
+  text-align: left;
+}
+.wrapper .slider .user .info i {
+  padding-right: 5px;
+  float: left;
 }
 .wrapper .slider .title {
   width: 100%;
@@ -434,6 +438,10 @@ body {
   overflow: hidden;
   float: left;
   padding: 10px;
+  border-right: 1px solid rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  -moz-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
 }
 .wrapper .content .timeline .chat .theme_room {
   width: 100%;

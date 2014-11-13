@@ -291,16 +291,20 @@ body {
 .wrapper .slider .user img {
   float: left;
 }
-.wrapper .slider .user p {
-  width: auto;
+.wrapper .slider .user .info {
+  width: 150px;
   height: 30px;
   padding: 10px;
   float: left;
   color: white;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 700;
   line-height: 20px;
-  text-align: center;
+  text-align: left;
+}
+.wrapper .slider .user .info i {
+  padding-right: 10px;
+  float: left;
 }
 .wrapper .slider .title {
   width: 100%;

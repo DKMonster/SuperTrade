@@ -55,7 +55,11 @@ public class AjaxServlet extends HttpServlet {
         ObjectMapper mapper = new ObjectMapper();
  
         getAccount account = mapper.readValue(json, getAccount.class);
-        
+
+        response.addHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+		response.setHeader("Access-Control-Max-Age", "3600");
+		response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
         response.setContentType("application/json");
         
         responseData.clear();
@@ -113,6 +117,7 @@ public class AjaxServlet extends HttpServlet {
             
             System.out.println(Data);
         }
+        
         
         try {
         	mapper.writeValue(response.getOutputStream(), Data);

@@ -11,6 +11,7 @@ INDEX VERSION 1.127+C:\Users\mylyf_000\Dropbox\Project\SuperTrade\.metadata\.plu
 1028199574.index
 4291676484.index
 3598813974.index
+1016837705.index
 1776872780.index
 2486087126.index
 2743915309.index
@@ -36,7 +37,6 @@ INDEX VERSION 1.127+C:\Users\mylyf_000\Dropbox\Project\SuperTrade\.metadata\.plu
 3454125809.index
 2504645929.index
 2550399823.index
-2297560030.index
 4200440193.index
 1899487054.index
 4254634711.index

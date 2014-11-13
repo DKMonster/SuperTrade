@@ -7,6 +7,12 @@
   "ascent": 850,
   "glyphs": [
     {
+      "uid": "186dec7a13156bbe2550790c158fb85d",
+      "css": "crown",
+      "code": 59411,
+      "src": "fontelico"
+    },
+    {
       "uid": "8b80d36d4ef43889db10bc1f0dc9a862",
       "css": "user",
       "code": 59396,
@@ -28,6 +34,12 @@
       "uid": "44e04715aecbca7f266a17d5a7863c68",
       "css": "plus",
       "code": 59407,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "17ebadd1e3f274ff0205601eef7b9cc4",
+      "css": "help-circled",
+      "code": 59412,
       "src": "fontawesome"
     },
     {
