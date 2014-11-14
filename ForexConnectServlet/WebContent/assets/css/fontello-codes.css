@@ -9,7 +9,7 @@
 .icon-vcard:before { content: '\e807'; } /* '' */
 .icon-doc-text-1:before { content: '\e808'; } /* '' */
 .icon-basket-1:before { content: '\e809'; } /* '' */
-.icon-newspaper:before { content: '\e80a'; } /* '' */
+.icon-eye:before { content: '\e80a'; } /* '' */
 .icon-floppy:before { content: '\e80b'; } /* '' */
 .icon-edit:before { content: '\e80c'; } /* '' */
 .icon-history:before { content: '\e80d'; } /* '' */
@@ -20,3 +20,4 @@
 .icon-users:before { content: '\e812'; } /* '' */
 .icon-crown:before { content: '\e813'; } /* '' */
 .icon-help-circled:before { content: '\e814'; } /* '' */
+.icon-eye-off:before { content: '\e815'; } /* '' */
