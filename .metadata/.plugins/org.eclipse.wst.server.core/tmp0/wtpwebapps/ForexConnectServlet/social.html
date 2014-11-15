@@ -103,12 +103,8 @@
 				<div class="timeline">
 					<div class="chat" id="chat">
 						<div class="theme_room">主題室</div>
-						<ul>
-							<li><i class="icon-user"></i>My Timeline</li>
-							<li><i class="icon-users"></i>Chat 1</li>
-							<li><i class="icon-users"></i>Chat 2</li>
-							<li><i class="icon-users"></i>Chat 3</li>
-							<li><i class="icon-users"></i>Chat 4</li>
+						<ul class="room" id="room">
+							<li data-room="0" class="myTimeline active"><i class="icon-user"></i>My Timeline</li>
 						</ul>
 					</div>
 					<div class="social" id="social">
@@ -120,8 +116,8 @@
 							</div>
 						</div>
 						<div class="line">
-							<ul>
-								<li>
+							<ul class="line_message" id="line_message">
+								<!-- <li>
 									<div class="l_header">
 										<img src="" data-src="holder.js/50x50" class="pic" alt="image">
 										<div class="name">Administrator</div>
@@ -136,39 +132,7 @@
 										<img src="" data-src="holder.js/30x30" class="pic" alt="image">
 										<textarea name="commit" id="commit" class="commit"></textarea>
 									</div>
-								</li>
-								<li>
-									<div class="l_header">
-										<img src="" data-src="holder.js/50x50" class="pic" alt="image">
-										<div class="name">Administrator</div>
-										<div class="time">2014-11-09 15:41</div>
-									</div>
-									<div class="l_content">
-										<p class="text">
-											Uber is Taipei's best way to request a safe, reliable, and affordable ride within minutes. Use Uber on your phone to connect to a driver in Taipei at the touch of a ...
-										</p>
-									</div>
-									<div class="l_commit">
-										<img src="" data-src="holder.js/30x30" class="pic" alt="image">
-										<textarea name="commit" id="commit" class="commit"></textarea>
-									</div>
-								</li>
-								<li>
-									<div class="l_header">
-										<img src="" data-src="holder.js/50x50" class="pic" alt="image">
-										<div class="name">Administrator</div>
-										<div class="time">2014-11-09 15:41</div>
-									</div>
-									<div class="l_content">
-										<p class="text">
-											Uber is Taipei's best way to request a safe, reliable, and affordable ride within minutes. Use Uber on your phone to connect to a driver in Taipei at the touch of a ...
-										</p>
-									</div>
-									<div class="l_commit">
-										<img src="" data-src="holder.js/30x30" class="pic" alt="image">
-										<textarea name="commit" id="commit" class="commit"></textarea>
-									</div>
-								</li>
+								</li> -->
 							</ul>
 						</div>
 					</div>
@@ -199,69 +163,27 @@
 							</li>
 						</ul>
 					</div>
-					<div class="follower_message">
-						<div class="s2_title">跟隨者</div>
+					<div class="follower_message" id="follower_message">
+						<div class="s2_title">仰慕跟隨</div>
 						<ul class="s2_content">
-							<li>
+							<!-- <li>
 								<img src="" data-src="holder.js/40x40" class="img-thumbnail pic" alt="image">
+								<div class="follow_off"><i class="icon-eye-off"></i></div>
 								<div class="name"><i class="icon-user"></i>Steady Capture44</div>
 								<div class="date"><i class="icon-calendar-empty"></i>2014-11-08</div>
-							</li>
-							<li>
-								<img src="" data-src="holder.js/40x40" class="img-thumbnail pic" alt="image">
-								<div class="name"><i class="icon-user"></i>TraderFX Swing </div>
-								<div class="date"><i class="icon-calendar-empty"></i>2014-10-28</div>
-							</li>
-							<li>
-								<img src="" data-src="holder.js/40x40" class="img-thumbnail pic" alt="image">
-								<div class="name"><i class="icon-user"></i>MinaTomby</div>
-								<div class="date"><i class="icon-calendar-empty"></i>2014-10-18</div>
-							</li>
-							<li>
-								<img src="" data-src="holder.js/40x40" class="img-thumbnail pic" alt="image">
-								<div class="name"><i class="icon-user"></i>SirGeorjeDePit</div>
-								<div class="date"><i class="icon-calendar-empty"></i>2014-10-09</div>
-							</li>
-							<li>
-								<img src="" data-src="holder.js/40x40" class="img-thumbnail pic" alt="image">
-								<div class="name"><i class="icon-user"></i>NAJEEB riseFX</div>
-								<div class="date"><i class="icon-calendar-empty"></i>2014-09-22</div>
-							</li>
-							<li>
-								<img src="" data-src="holder.js/40x40" class="img-thumbnail pic" alt="image">
-								<div class="name"><i class="icon-user"></i>Nandoss</div>
-								<div class="date"><i class="icon-calendar-empty"></i>2014-09-14</div>
-							</li>
+							</li> -->
 						</ul>
 					</div>
-					<div class="friends_message">
-						<div class="s2_title">朋友</div>
+					<div class=""></div>
+					<div class="friends_message" id="friends_message">
+						<div class="s2_title">同道中人</div>
 						<ul class="s2_content">
-							<li>
+							<!-- <li>
 								<img src="" data-src="holder.js/40x40" class="img-thumbnail pic" alt="image">
+								<div class="follow"><i class="icon-eye"></i></div>
 								<div class="name"><i class="icon-user"></i>NaabTrades76</div>
 								<div class="date"><i class="icon-calendar-empty"></i>2014-11-09</div>
-							</li>
-							<li>
-								<img src="" data-src="holder.js/40x40" class="img-thumbnail pic" alt="image">
-								<div class="name"><i class="icon-user"></i>MinaTomby</div>
-								<div class="date"><i class="icon-calendar-empty"></i>2014-10-18</div>
-							</li>
-							<li>
-								<img src="" data-src="holder.js/40x40" class="img-thumbnail pic" alt="image">
-								<div class="name"><i class="icon-user"></i>Ninja Trader pRO </div>
-								<div class="date"><i class="icon-calendar-empty"></i>2014-10-09</div>
-							</li>
-							<li>
-								<img src="" data-src="holder.js/40x40" class="img-thumbnail pic" alt="image">
-								<div class="name"><i class="icon-user"></i>Reacher</div>
-								<div class="date"><i class="icon-calendar-empty"></i>2014-10-08</div>
-							</li>
-							<li>
-								<img src="" data-src="holder.js/40x40" class="img-thumbnail pic" alt="image">
-								<div class="name"><i class="icon-user"></i>PokeMan</div>
-								<div class="date"><i class="icon-calendar-empty"></i>2014-10-08</div>
-							</li>
+							</li> -->
 						</ul>
 					</div>
 				</div>
@@ -270,6 +192,16 @@
 				<p>
 					<a href="/">SuperTrade</a> &copy; copyright 2014. all rights reserved.
 				</p>
+			</div>
+		</div>
+
+		<div class="wrapper col-sm-12">
+			<div class="header col-sm-12">
+				<div class="col-sm-6"></div>
+				<div class="col-sm-6"></div>
+			</div>
+			<div class="content col-sm-12">
+				
 			</div>
 		</div>
 

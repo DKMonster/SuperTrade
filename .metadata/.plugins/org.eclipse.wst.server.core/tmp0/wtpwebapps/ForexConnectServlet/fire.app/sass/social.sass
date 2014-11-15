@@ -231,6 +231,9 @@ body
 							background: #eee + 50
 							cursor: pointer
 
+					li.active
+						background: #eee + 50
+
 
 			.social
 				+w-h(75% , 100%)
@@ -305,7 +308,7 @@ body
 							float: left
 
 							.pic
-								+w-h(30% , 50px)
+								+w-h(50px , 50px)
 								float: left
 
 							.name
@@ -335,7 +338,7 @@ body
 							padding: 10px
 
 							.pic
-								+w-h($timeline-line-lCommit-pic-width , 40px)
+								+w-h($timeline-line-lCommit-pic-width , 30px)
 								float: left
 
 							.commit
@@ -408,6 +411,20 @@ body
 						&:hover
 							background: #eee + 50
 							cursor: pointer
+							+transition(all .20s ease-in-out)
+
+							.follow_off
+								display: block
+								+transition(all .20s ease-in-out)
+
+								&:hover
+									+topShadow()
+									+leftShadow()
+									+rightShadow()
+									+bottomShadow()
+									color: #222
+									background: #eee + 50
+									+transition(all .20s ease-in-out)
 
 						.pic
 							float: left
@@ -418,6 +435,18 @@ body
 
 						.date
 							+baseText(#ccc , 14px , 700 , 20px , left)
+
+						.follow_off
+							+w-h(30px , 30px)
+							background: #eee
+							float: right
+							margin-top: 5px
+							margin-right: 5px
+							display: none
+							border: 1px solid #aaa
+							+border-radius(5px)
+							+baseText(#aaa , 14px , 700 , 30px , center)
+							+transition(all .20s ease-in-out)
 
 			.friends_message
 				+w-h(100% , 40%)
@@ -444,6 +473,20 @@ body
 						&:hover
 							background: #eee + 50
 							cursor: pointer
+							+transition(all .20s ease-in-out)
+
+							.follow
+								display: block
+								+transition(all .20s ease-in-out)
+
+								&:hover
+									+topShadow()
+									+leftShadow()
+									+rightShadow()
+									+bottomShadow()
+									color: #222
+									background: #eee + 50
+									+transition(all .20s ease-in-out)
 
 						.pic
 							float: left
@@ -454,6 +497,18 @@ body
 
 						.date
 							+baseText(#ccc , 14px , 700 , 20px , left)
+
+						.follow
+							+w-h(30px , 30px)
+							background: #eee
+							float: right
+							margin-top: 5px
+							margin-right: 5px
+							display: none
+							border: 1px solid #aaa
+							+border-radius(5px)
+							+baseText(#aaa , 14px , 700 , 30px , center)
+							+transition(all .20s ease-in-out)
 
 	.footer
 		+w-h($footer-w , $footer-h)
