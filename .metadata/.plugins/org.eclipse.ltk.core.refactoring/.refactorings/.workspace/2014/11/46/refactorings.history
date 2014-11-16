@@ -1,4 +1,3 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Delete resource &apos;ForexConnectAPI&apos;" deleteContents="true" description="Delete resource &apos;ForexConnectAPI&apos;" element1="/ForexConnectAPI" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1415947610871"/>
+<session version="1.0">&#x0A;<refactoring comment="Delete resource &apos;ForexConnectAPI&apos;" deleteContents="true" description="Delete resource &apos;ForexConnectAPI&apos;" element1="/ForexConnectAPI" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1415947610871"/>&#x0A;<refactoring comment="Copy 0 elements to &apos;ForexConnectAPI/src/com.supertrade.dkmonster&apos;&#x0D;&#x0A;- Destination element: &apos;ForexConnectAPI/src/com.supertrade.dkmonster&apos;" description="Copy compilation units" destination="=ForexConnectAPI/src&lt;com.supertrade.dkmonster" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1416068160908" units="0" version="1.0"/>
 </session>

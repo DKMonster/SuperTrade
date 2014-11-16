@@ -87,7 +87,7 @@ $(document).ready(function() {
 		}else{
 			security_pep_off.removeClass('btn-danger');
 			security_pep_on.addClass('btn-success');
-		}
+		}	
 
 	}
 
@@ -95,7 +95,7 @@ $(document).ready(function() {
 
 	function test(){
 		var obj_account = new Object();
-		obj_account.loadType = "getAccount";
+		obj_account.loadType = "getInfo";
 		obj_account.userId = "D172574180001";
 		obj_account.pwd = "7384";
 		obj_account.url = "http://www.fxcorporate.com/Hosts.jsp";

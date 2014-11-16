@@ -16,9 +16,6 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
-import com.supertrade.dkmonster.getInfo;
-import com.supertrade.dkmonster.getOffers;
-import com.supertrade.dkmonster.getTrade;
 import com.supertrade.dkmonster.getAccount;
 
 /**
@@ -70,60 +67,8 @@ public class AjaxServlet extends HttpServlet {
         response.setContentType("application/json");
         
         responseData.clear();
-
-        if(account.getloadType().equals("getAccount")){
-        	
-//        	responseData.put("loadType", account.getloadType());
-            responseData.put("userId" , account.getUserId());
-            responseData.put("pwd" , account.getPwd());
-            responseData.put("url" , account.getUrl());
-            responseData.put("con" , account.getCon());
-            
-            System.out.println(responseData);
-            
-        }else if(account.getloadType().equals("getInfo")){
-        	
-        	String[] accountData = new String[4];
-        	
-        	accountData[0] = account.getUserId();
-        	accountData[1] = account.getPwd();
-        	accountData[2] = account.getUrl();
-        	accountData[3] = account.getCon();
-        	
-        	responseData = getInfo.main(accountData);
-        	
-//        	responseData.put("loadType", account.getloadType());
-            
-            System.out.println(responseData);
         
-        }else if(account.getloadType().equals("getOffers")){
-        	
-        	String[] accountData = new String[5];
-        	
-        	accountData[0] = account.getInstrument();
-        	accountData[1] = account.getUserId();
-        	accountData[2] = account.getPwd();
-        	accountData[3] = account.getUrl();
-        	accountData[4] = account.getCon();
-        	
-        	responseData = getOffers.main(accountData);
-        	
-//        	responseData.put("loadType", account.getloadType());
-            
-            System.out.println(responseData);
-       
-        }else if(account.getloadType().equals("getTrade")){
-        	String[] accountData = new String[4];
-        	
-        	accountData[0] = account.getUserId();
-        	accountData[1] = account.getPwd();
-        	accountData[2] = account.getUrl();
-        	accountData[3] = account.getCon();
-        	
-        	Data = getTrade.main(accountData);
-            
-            System.out.println(Data);
-        }
+        responseData.put("a","b");
         
         try {
         	mapper.writeValue(response.getOutputStream(), responseData);
