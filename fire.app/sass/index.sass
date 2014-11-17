@@ -1,0 +1,161 @@
+@import compass
+@import variable
+@import mixin
+@import reset
+@import extend
+@import borwser
+
+/* ----------- variable ----------- */
+/* ----------- base setting ----------- */
+*
+	margin: 0
+	padding: 0
+	font-family: 'Raleway', '微軟正黑體' , '標楷體', Arial, sans-serif
+
+a , a:hover , a:focus
+	color: #000
+	background: none
+	text-decoration: none
+
+li , ul
+	float: left
+	list-style: none
+
+body
+	color: #000
+
+fieldset
+	border: none
+	margin: 0
+
+/* ----------- Mixin ----------- */
+@mixin baseText($color , $size , $bold , $lineH , $align)
+	color: $color
+	font-size: $size
+	font-weight: $bold
+	line-height: $lineH
+	text-align: $align
+
+@mixin bottomShadow()
+	border-bottom: 1px solid rgba(0 , 0 , 0 , 0.3)
+	+box-shadow(0 1px 0 rgba(255,255,255,0.05) inset)
+
+@mixin rightShadow()
+	border-right: 1px solid rgba(0 , 0 , 0 , 0.3)
+	+box-shadow(-1px 0 0 rgba(255,255,255,0.05) inset)
+
+@mixin leftShadow()
+	border-left: 1px solid rgba(0 , 0 , 0 , 0.3)
+	+box-shadow(-1px 0 0 rgba(255,255,255,0.05) inset)
+
+@mixin topShadow()
+	border-top: 1px solid rgba(0 , 0 , 0 , 0.3)
+	+box-shadow(0 1px 0 rgba(255,255,255,0.05) inset)
+
+/* ----------- main setting ----------- */
+
+html , body
+	overflow: hidden
+	+w-h(100% , 100%)
+
+.wrapper
+	+w-h(100% , 100%)
+	background: #333
+
+	.content
+		+w-h(100% , 85%)
+
+		.login-form
+			+w-h(400px , 300px)
+			margin: 0 auto
+			padding-top: 5%
+
+			.title
+				+w-h(100% , 100px)
+				float: left
+				background: #222
+				+baseText(#fff , 30px , 700 , 100px , center)
+				+transition(all .50s ease-in-out)
+				+topShadow()
+				+bottomShadow()
+				+leftShadow()
+				+rightShadow()
+
+				&:hover
+					color: #222
+					background: #fff
+					+transition(all .20s ease-in-out)
+
+			fieldset
+				+w-h(100% , auto)
+				background: #fff
+				+border-radius(0 0 5px 5px)
+				padding: 2px
+				padding-bottom: 20px
+				position: relative
+				+topShadow()
+				+bottomShadow()
+				+leftShadow()
+				+rightShadow()
+
+			fieldset:before
+				background: #fff
+				content: ""
+				width: 8px
+				height: 8px
+				top: 0
+				left: 50%
+				margin: -4px 0 0 -4px
+				position: absolute
+				+transform(rotate(45deg))
+				+topShadow()
+				+leftShadow()
+
+			form
+				padding: 20px
+
+			input[type="text"] , input[type="password"]
+				border: 1px solid #333
+				padding: 12px 10px
+				width: 360px
+
+			input.email
+				+border-radius(3px 3px 0 0)
+
+			input.pwd
+				+border-radius(0 0 3px 3px)
+				border-top: none
+
+			.login
+				+w-h(100px , 40px)
+				background: #1dabb8
+				+border-radius(3px)
+				float: right
+				+baseText(#fff , 14px , 700 , 40px , center)
+				margin-top: 20px
+
+				&:hover
+					background: #1dabb8 - 50
+					cursor: pointer
+
+			p
+				+w-h(250px , 40px)
+				float: left
+				+baseText(#eee , 14px , 700 , 40px , left)
+				margin-top: 20px
+
+
+
+	.footer
+		+w-h(100% , 15%)
+		background: #222
+		float: left
+		+topShadow()
+
+		p
+			+w-h(400px , 100px)
+			margin: 0 auto
+			+baseText(#fff , 14px , 700 , 100px , center)
+
+			a
+				color: #fff
