@@ -41,7 +41,7 @@ $(document).ready(function() {
 		txtTitle.css({'background':'#222'});
 		$.ajax({
 			async: true,
-			url: "/assets/php/login.php",
+			url: "/SuperTrade/assets/php/login.php",
 			type: "POST",
 			// dataType: "JSON",
 			data: {

@@ -1,0 +1,101 @@
+package com.supertrade.dkmonster;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import com.fxcore2.*;
+
+public class getOpenPositions {
+
+	static Map[] data;
+	static Map<String, Object> responseData = new HashMap<String, Object>();
+	
+    // Connection and session variables
+    static String mUserID = "";
+    static String mPassword = "";
+    static String mURL = "";
+    static String mConnection = "";
+    static String mSessionID = "";
+    static String mPin = "";
+    static O2GSession mSession = null;
+
+    //Position variables
+    static String mInstrument = "";
+    static String mBuySell = "";
+
+    static String mAccountID = "";
+    static String mOfferID = "";
+    static int mAmount = 0;
+
+	public static Map[] main(String[] args) throws InterruptedException {
+		// Check for correct number of arguments
+        if (args.length < 6) {
+            System.out.println("Not Enough Parameters!");
+            System.out.println("USAGE: [instrument] [order side (B/S)] [user ID] [password] [URL] [connection] [session ID (if needed)] [pin (if needed)]");
+            System.exit(1);
+        }
+        // Get command line arguments
+        mInstrument = args[0];
+        mBuySell = args[1];
+        mUserID = args[2];
+        mPassword = args[3];
+        mURL = args[4];
+        mConnection = args[5];
+        if (args.length > 6) {
+            mSessionID = args[6];
+        }
+        if (args.length > 7) {
+            mPin = args[7];
+        }
+        // Create a session, subscribe to session listener, response listener, login, open position, logout, unsubscribe
+        try {
+            mSession = O2GTransport.createSession();
+            SessionStatusListener statusListener = new SessionStatusListener(mSession, mSessionID, mPin);
+            mSession.subscribeSessionStatus(statusListener);
+            ResponseListener responseListener = new ResponseListener(mSession);
+            mSession.subscribeResponse(responseListener);
+            if (login(mSession, statusListener, mUserID, mPassword, mURL, mConnection)) {
+                O2GResponseReaderFactory readerFactory = mSession.getResponseReaderFactory();
+                if (readerFactory != null) {
+                    O2GResponse response;
+                    O2GLoginRules loginRules = mSession.getLoginRules();
+                    response = loginRules.getTableRefreshResponse(O2GTableType.ACCOUNTS);
+                    O2GAccountsTableResponseReader accountsResponseReader = readerFactory.createAccountsTableReader(response);
+                    if (accountsResponseReader.size() > 0) {
+                        O2GAccountRow accountRow = accountsResponseReader.getRow(0); // The first account
+                        mAccountID = accountRow.getAccountID();
+                        mAmount = accountRow.getBaseUnitSize();
+                        response = loginRules.getTableRefreshResponse(O2GTableType.OFFERS);
+                        O2GOffersTableResponseReader offersResponseReader = readerFactory.createOffersTableReader(response);
+                        for (int i = 0; i < offersResponseReader.size(); i++) {
+                            O2GOfferRow offerRow = offersResponseReader.getRow(i);
+                            if (mInstrument.equals(offerRow.getInstrument())) {
+                                mOfferID = offerRow.getOfferID();
+                                break;
+                            }
+                        }
+                        if (!mOfferID.isEmpty()) {
+                            openPosition(mSession, mAccountID, mOfferID, mBuySell, mAmount, responseListener);
+                            Thread.sleep(1000);
+                        } else {
+                            System.out.println("Cannot find offer for specified instrument: " + mInstrument);
+                        }
+                    } else {
+                        System.out.println("Cannot find an account");
+                    }
+                } else {
+                    System.out.println("Cannot create response reader factory");
+                }
+                logout(mSession, statusListener);
+            }
+            mSession.unsubscribeSessionStatus(statusListener);
+            mSession.unsubscribeResponse(responseListener);
+            mSession.dispose();
+        } catch (Exception e) {
+            System.out.println ("Exception: " + e.getMessage());
+//            System.exit(1);
+        }
+		return data;
+	}
+
+}

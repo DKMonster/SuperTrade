@@ -162,7 +162,6 @@ body
 		+w-h($content-w , $content-h)
 		background: $content-bg
 		float: right
-		+bottomShadow()
 
 		.title
 			+w-h(100% , 50px)
@@ -183,11 +182,11 @@ body
 				padding-right: 10px
 				+baseText(#fff , 20px , 300 , 50px , left)
 
-		.orders
-			+w-h(100% , 636px)
-			+bottomShadow()
+		.openpositions , .summary
+			+w-h(100% , 300px)
 			padding: 10px
 			background: #222
+			display: block
 
 			.table_info
 				+w-h(100% , 300px)
@@ -222,15 +221,24 @@ body
 							+transition(all .20s ease-in-out)
 
 				.content
-					+w-h(100% , 250px + 306px)
+					+w-h(100% , 250px)
 					background: #222
 					overflow: auto
+
+					.table
+						overflow: hidden
 
 					th
 						color: #fff
 						+bottomShadow()
 						+leftShadow()
 						+rightShadow()
+						min-width: 120px
+						text-align: center
+
+					td
+						background: #eee
+						text-align: center
 
 
 	.footer

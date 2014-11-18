@@ -1,0 +1,151 @@
+package com.supertrade.dkmonster;
+
+import java.util.Calendar;
+
+import com.fxcore2.O2GGenericTableResponseReader;
+import com.fxcore2.O2GLoginRules;
+import com.fxcore2.O2GOfferRow;
+import com.fxcore2.O2GOffersTableResponseReader;
+import com.fxcore2.O2GResponse;
+import com.fxcore2.O2GResponseReaderFactory;
+import com.fxcore2.O2GResponseType;
+import com.fxcore2.O2GSession;
+import com.fxcore2.O2GTableColumn;
+import com.fxcore2.O2GTableColumnCollection;
+import com.fxcore2.O2GTableManagerMode;
+import com.fxcore2.O2GTableType;
+import com.fxcore2.O2GTransport;
+
+public class getAllOffers {
+	
+    // Connection and session variables
+	static String mUserID = "";
+    static String mPassword = "";
+    static String mURL = "";
+    static String mConnection = "";
+    static String mDBName = "";
+    static String mPin = "";
+    static O2GSession mSession = null;
+    static String mInstrument = "";
+    
+    private static SimpleLog mSimpleLog;
+
+	public static void main(String[] args) {
+ 
+        // Check for correct number of arguments
+        if (args.length < 4) {
+            System.out.println("Not Enough Parameters!");
+            System.out.println("USAGE: [user ID] [password] [URL] [connection] [session ID (if needed)] [pin (if needed)]");
+            System.exit(1);
+        }
+ 
+       // Get command line arguments
+        mUserID = args[0];
+        mPassword = args[1];
+        mURL = args[2];
+        mConnection = args[3];
+        if (args.length > 4) {
+            mDBName = args[4];
+        }
+        if (args.length > 5) {
+            mPin = args[5];
+        }
+		
+        
+        try {
+            mSession = O2GTransport.createSession();
+            SessionStatusListener statusListener = new SessionStatusListener(mSession, mDBName, mPin);
+            mSession.subscribeSessionStatus(statusListener);
+            mSession.login(mUserID, mPassword, mURL, mConnection);
+            while (!statusListener.isConnected() && !statusListener.hasError()) {
+                    Thread.sleep(50);
+            }
+	        
+	        if (!statusListener.hasError()) {
+	            // Show login rules.
+	            O2GLoginRules loginRules = mSession.getLoginRules();
+	        	O2GResponse response = loginRules.getTableRefreshResponse(O2GTableType.OFFERS);
+	        	onOffersRecieved(response);	
+	        	
+                mSession.logout();
+                while (!statusListener.isDisconnected()) {
+                    Thread.sleep(50);
+                }
+	        }
+            mSession.unsubscribeSessionStatus(statusListener);
+            mSession.dispose();
+        } catch (Exception e) {
+            System.out.println ("Exception: " + e.getMessage());
+//            System.exit(1);
+        }
+	}
+
+    private static void onOffersRecieved(O2GResponse response) {
+        O2GResponseReaderFactory factory = mSession.getResponseReaderFactory();
+        if (factory == null)
+            return;
+
+        O2GOffersTableResponseReader offersReader = factory.createOffersTableReader(response);
+        if (offersReader == null)
+            return;
+
+        if (response.getType() == O2GResponseType.TABLES_UPDATES)
+            onUpdateOffers(offersReader);
+        else
+            onOffersTableResponse(offersReader);
+    }
+
+    private static void onUpdateOffers(O2GOffersTableResponseReader offersReader) {
+        int iCount = offersReader.size();
+
+        mSimpleLog.log("Offer updates count {0}", iCount);
+
+        for (int i = 0; i < iCount; i++) {
+            O2GOfferRow offer = offersReader.getRow(i);
+            mSimpleLog.log("{0} OfferID={1} Bid={2} Ask={3} Volume={4}", offer.getInstrument(), offer.getOfferID(), offer.getBid(), offer.getAsk(), offer.getVolume());
+        }
+    }
+
+    private static void onOffersTableResponse(O2GOffersTableResponseReader offersReader) {
+        useGenericTableInterface(offersReader);
+        useOffersTableIntefaces(offersReader);
+    }
+
+    private static void useGenericTableInterface(O2GGenericTableResponseReader genericReader) {
+        mSimpleLog.log("Generic table");
+        O2GTableColumnCollection columns = genericReader.getColumns();
+        // Print column
+        for (int i = 0; i < columns.size(); i++) {
+            O2GTableColumn column = columns.get(i);
+            mSimpleLog.log("{0} {1} {2}", i, column.getId(), column.getType());
+        }
+
+        for (int i = 0; i < genericReader.size(); i++) {
+            int iCount = columns.size();
+            for (int j = 0; j < iCount; j++) {
+                Object value = genericReader.getCell(i, j);
+                boolean bIsCellValid = genericReader.isCellValid(i, j);
+                O2GTableColumn column = columns.get(j);
+                if (value instanceof Calendar) {
+                    value = ((Calendar)value).getTime();
+                }
+                mSimpleLog.log("{0} = {1} Valid={2}", column.getId(), value, bIsCellValid);
+            }
+        }
+    }
+
+    private static void useOffersTableIntefaces(O2GOffersTableResponseReader offersReader) {
+        mSimpleLog.log("Offers Table");
+        for (int i = 0; i < offersReader.size(); i++) {
+            O2GOfferRow offer = offersReader.getRow(i);
+            printToLogOffer(offer);
+        }
+    }
+
+    private static void printToLogOffer(O2GOfferRow offer) {
+        mSimpleLog.log("{0} OfferID={1} Bid={2} Ask={3} Low={4} High={5} Volume={6} QuoteID={7} Time={8} BidTradable={9} AskTradable={10} ContractCurreny={11} Digits={12} PointSize={13} SubscriptionStatus={14} TradingStatus={15} InstrumentType={16} ContractMultiplier={17} ValueDate={18} BuyInterest={19} SellInterest={20}",
+                offer.getInstrument(), offer.getOfferID(), offer.getBid(), offer.getAsk(), offer.getLow(), offer.getHigh(), offer.getVolume(), offer.getQuoteID(), offer.getTime().getTime(), offer.getBidTradable(), offer.getAskTradable(), offer.getContractCurrency(), offer.getDigits(), offer.getPointSize(),
+                offer.getSubscriptionStatus(), offer.getTradingStatus(), offer.getInstrumentType(), offer.getContractMultiplier(), offer.getValueDate(), offer.getBuyInterest(), offer.getSellInterest());
+    }
+
+}

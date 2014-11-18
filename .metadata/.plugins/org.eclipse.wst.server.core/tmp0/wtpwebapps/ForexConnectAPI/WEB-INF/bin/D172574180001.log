@@ -1,0 +1,151 @@
+Connecting to D172574180001 *** http://www.fxcorporate.com/Hosts.jsp Demo  
+Status: Connecting
+Status: Connected
+Time frame id=t1 unit=TICK size=1
+
+Time frame id=m1 unit=MIN size=1
+
+Time frame id=m5 unit=MIN size=5
+
+Time frame id=m15 unit=MIN size=15
+
+Time frame id=m30 unit=MIN size=30
+
+Time frame id=H1 unit=HOUR size=1
+
+Time frame id=H2 unit=HOUR size=2
+
+Time frame id=H3 unit=HOUR size=3
+
+Time frame id=H4 unit=HOUR size=4
+
+Time frame id=H6 unit=HOUR size=6
+
+Time frame id=H8 unit=HOUR size=8
+
+Time frame id=D1 unit=DAY size=1
+
+Time frame id=W1 unit=WEEK size=1
+
+Time frame id=M1 unit=MONTH size=1
+
+Generic table
+0 AccountID STRING
+1 AccountName STRING
+2 AccountKind STRING
+3 Balance DOUBLE
+4 NonTradeEquity DOUBLE
+5 M2MEquity DOUBLE
+6 UsedMargin DOUBLE
+7 UsedMargin3 DOUBLE
+8 MarginCallFlag STRING
+9 LastMarginCallDate DATE
+10 MaintenanceType STRING
+11 AmountLimit INTEGER
+12 BaseUnitSize INTEGER
+13 MaintenanceFlag BOOLEAN
+14 ManagerAccountID STRING
+15 LeverageProfileID STRING
+AccountID = 2576656 Valid=true
+AccountName = 02576656 Valid=true
+AccountKind = 32 Valid=true
+Balance = 51,299.72 Valid=true
+NonTradeEquity = 0 Valid=true
+M2MEquity = 52,267.36 Valid=true
+UsedMargin = 10,930 Valid=true
+UsedMargin3 = 21,860 Valid=true
+MarginCallFlag = N Valid=true
+LastMarginCallDate = 1899/12/30 ?? 8:00 Valid=true
+MaintenanceType = F Valid=true
+AmountLimit = 0 Valid=true
+BaseUnitSize = 1,000 Valid=true
+MaintenanceFlag = false Valid=true
+ManagerAccountID =  Valid=true
+LeverageProfileID = 1382 Valid=true
+Accounts Table
+AccountID=2576656 AccountName=02576656 AccountKind=32 AccountLimit=0 Balance=51,299.72 NonTradableEquity=0 M2MEquity=52,267.36 UsedMargin=10,930 UsedMargin3=21,860 MarginCallFlag=N LastMarginCallDate=java.util.GregorianCalendar[time=-2209161600000,areFieldsSet=true,areAllFieldsSet=true,lenient=true,zone=sun.util.calendar.ZoneInfo[id="UTC",offset=0,dstSavings=0,useDaylight=false,transitions=0,lastRule=null],firstDayOfWeek=1,minimalDaysInFirstWeek=1,ERA=1,YEAR=1899,MONTH=11,WEEK_OF_YEAR=52,WEEK_OF_MONTH=5,DAY_OF_MONTH=30,DAY_OF_YEAR=364,DAY_OF_WEEK=7,DAY_OF_WEEK_IN_MONTH=5,AM_PM=0,HOUR=0,HOUR_OF_DAY=0,MINUTE=0,SECOND=0,MILLISECOND=0,ZONE_OFFSET=0,DST_OFFSET=0] MainteanceType=F AmountLimit=0 MaintenanceFlag=false BaseUnitSize=1,000 LevarageProfileID=1382 ManagerAccountID=
+System Properties:
+DB_VERSION 3.11.3.price-feed
+TRAILING_FLUCTUATE_PTS_MAX 300
+QUERYDEPTH_h3 300
+HCCOFFERFID Y
+QUERYDEPTH_h2 300
+HCTOFFERFID Y
+SYS_VERSION 1.00.000
+SERVER_TIME_UTC UTC
+HCDACCTUsdMr3 Y
+BASE_TIME_ZONE America/New_York
+FIRST_TICK_OPEN_PRICE_ENABLED N
+TRAILING_FLUCTUATE Y
+BatchMarketDataSnapshot true
+SupportOffersFilter true
+QUERYDEPTH_h4 300
+QUERYDEPTH_h6 300
+BASE_CRNCY_SYMBOL $
+TRAILING_STOP_USED Y
+QUERYDEPTH_h8 300
+MKT_SUM_URL marketsummary.fxcorporate.com
+SUMM_SortEnabled TRUE
+HCCOFFERChAsk Y
+SHOW_MR MMR
+LoadTradeProfilesAttempts 3
+MAX_WRONG_PSWD 10
+SUMMSUB_SortEnabled TRUE
+HCDACCTUsblMr3% Y
+LIMITSTOP_SUPPORT Y
+THRESHOLD 75000
+TRAILING_STOP_DYNAMIC Y
+HCCOFFERCHBid Y
+SupportMDHistoryRequest true
+TRAILING_FLUCTUATE_PTS_MIN 10
+MKT_SUM_REFRESH_RATE 10
+CONNECTION_NAME PremiumDemo
+END_TRADING_DAY 22:00:00
+FORCE_PASSWORD_CHANGE N
+HCTOFFERChAsk Y
+PRICE_ARCHIVE_REQUESTS_CACHE_ENABLED N
+PRICE_ARCHIVE_URL pricehistory.fxcorporate.com
+SupportBatchRequest true
+HCTOFFERChBid Y
+LINKS26 CHANGE,{F91D5C83-967E-4580-B45E-D969EE69CB71},11,,,,https://secure4.fxcorporate.com/fxtr/?ib=FXCMUK_HELLAS&locale=el_GR,gre
+LINKS27 HIDE,{67274F72-F432-4a81-A1D6-8703342A7D9D}
+MARKET_CLS_MSG Market is closed. Trading operations are disabled.
+BASE_UNIT_SIZE 10000
+BASE_CRNCY_PRECISION 2
+COND_DIST_ENTRY 0.1
+SYS_NAME FX Trading System
+DATABASE_TYPE CFD
+COND_DIST 0.1
+CHART_TIME_UTC SERVER
+BASE_CRNCY USD
+TRAILING_DYNAMIC_PTS 10
+MAX_RATE_DIFF 15000
+THREE_LEVEL_MARGIN Y
+SYSTEM_TYPE Demo
+TRAILING_DYNAMIC Y
+PWD_EXPIRY_DAYS 180
+TP_107 N
+LINKS1 CHANGE,{F91D5C83-967E-4580-B45E-D969EE69CB71},11,,,,https://secure2.fxcorporate.com/fxtr/?ib=[FXMA_IB]
+TP_171 Y
+TP_172 N
+TP_86 Y
+TP_88 Y
+EXT_PRICE_TERMINAL PDEMO2_PRICES
+FXMA_IB FXCM
+LoadTradeProfilesPeriod 60000
+QUERYDEPTH_5 300
+QUERYDEPTH_4 300
+QUERYDEPTH_7 300
+QUERYDEPTH_6 300
+TP_170 N
+QUERYDEPTH_8 300
+REPORTS_URL https://fxpa.fxcorporate.com/fxpa/getreport.app/
+LOCALE enu
+QUERYDEPTH_1 300
+MARKET_OPEN Y
+QUERYDEPTH_0 600
+QUERYDEPTH_3 300
+QUERYDEPTH_2 300
+TP_94 Y
+SupportTickVolume true
+HCDACCTUsblMr3 Y

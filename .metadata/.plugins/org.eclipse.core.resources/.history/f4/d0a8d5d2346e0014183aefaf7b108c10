@@ -1,0 +1,145 @@
+package com.superoffer.dkmonster;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import com.fxcore2.O2GLoginRules;
+import com.fxcore2.O2GOfferRow;
+import com.fxcore2.O2GOffersTableResponseReader;
+import com.fxcore2.O2GRequestFactory;
+import com.fxcore2.O2GResponse;
+import com.fxcore2.O2GResponseReaderFactory;
+import com.fxcore2.O2GSession;
+import com.fxcore2.O2GTableManager;
+import com.fxcore2.O2GTableManagerMode;
+import com.fxcore2.O2GTableManagerStatus;
+import com.fxcore2.O2GTableType;
+import com.fxcore2.O2GofferTableRow;
+import com.fxcore2.O2GOffersTable;
+import com.fxcore2.O2GTransport;
+
+public class getOffers {
+
+	static Map[] data;
+	static Map<String, Object> responseData = new HashMap<String, Object>();
+
+	public static Map[] main(String[] args) {
+		// Connection and session variables
+        String mUserID = "";
+        String mPassword = "";
+        String mURL = "";
+        String mConnection = "";
+        String mDBName = "";
+        String mPin = "";
+        O2GSession mSession = null;
+ 
+        // Check for correct number of arguments
+        if (args.length < 4) {
+            System.out.println("Not Enough Parameters!");
+            System.out.println("USAGE: [user ID] [password] [URL] [connection] [session ID (if needed)] [pin (if needed)]");
+            System.exit(1);
+        }
+ 
+       // Get command line arguments
+        mUserID = args[0];
+        mPassword = args[1];
+        mURL = args[2];
+        mConnection = args[3];
+        if (args.length > 4) {
+            mDBName = args[4];
+        }
+        if (args.length > 5) {
+            mPin = args[5];
+        }
+ 
+        // Create a session, subscribe to session listener, login, get open positions information, logout
+        try {
+ 
+            // Create a session
+            mSession = O2GTransport.createSession();
+ 
+            // Specify that your session uses a table manager
+            mSession.useTableManager(O2GTableManagerMode.YES, null);
+            SessionStatusListener statusListener = new SessionStatusListener(mSession, mDBName, mPin);
+            mSession.subscribeSessionStatus(statusListener);
+ 
+            // Login into the trading server
+            mSession.login(mUserID, mPassword, mURL, mConnection);
+            while (!statusListener.isConnected() && !statusListener.hasError()) {
+                    Thread.sleep(50);
+            }
+            if (!statusListener.hasError()) {
+ 
+                // Get an instance of table manager
+                O2GTableManager tableManager = mSession.getTableManager();
+ 
+                // Check the table manager status
+                while (tableManager.getStatus() != O2GTableManagerStatus.TABLES_LOADED &&
+                       tableManager.getStatus() != O2GTableManagerStatus.TABLES_LOAD_FAILED) {
+                       Thread.sleep(50);
+                }
+                if (tableManager.getStatus() == O2GTableManagerStatus.TABLES_LOADED) {
+
+                    // Get an instance of the O2GOffersTable
+                    O2GOffersTable offerTable = (O2GOffersTable)tableManager.getTable(O2GTableType.Offers);
+ 
+                    // Get row level information
+                    data = new Map[offerTable.size()];
+                    for (int i = 0; i < offerTable.size(); i++) {
+                        O2GofferTableRow offer = offerTable.getRow(i);
+                        responseData.put("OfferID" , offer.getOfferID());
+                        responseData.put("Instrument" , offer.getInstrument());
+                        responseData.put("QuoteID" , offer.getQuoteID());
+                        responseData.put("Bid" , offer.getBid());
+                        responseData.put("Ask" , offer.getAsk());
+                        responseData.put("BidTradable" , offer.getBidTradable());
+                        responseData.put("AskTradable" , offer.getAskTradable());
+                        responseData.put("High" , offer.getHigh());
+                        responseData.put("Low" , offer.getLow());
+                        responseData.put("BuyInterest" , offer.getBuyInterest());
+                        responseData.put("SellInterest" , offer.getSellInterest());
+                        responseData.put("Volume" , offer.getVolume());
+                        responseData.put("ContractCurrency" , offer.getContractCurrency());
+                        responseData.put("Digits" , offer.getDigits());
+                        responseData.put("PointSize" , offer.getPointSize());
+                        responseData.put("SubscriptionStatus" , offer.getSubscriptionStatus());
+                        responseData.put("TradingStatus" , offer.getTradingStatus());
+                        responseData.put("InstrumentType" , offer.getInstrumentType());
+                        responseData.put("ContractMultiplier" , offer.getContractMultiplier());
+                        responseData.put("ValueDate" , offer.getValueDate());
+                        responseData.put("Time" , offer.getTime());
+                        data[i] = responseData;
+                    }
+ 
+//                    // Create an instance of a table listener class
+//                    TableListener tableListener = new TableListener();
+// 
+//                    // Subscribe table listener to table updates
+//                    offerTable.subscribeUpdate(O2GTableUpdateType.UPDATE, tableListener);
+//                    offerTable.subscribeUpdate(O2GTableUpdateType.INSERT, tableListener);
+// 
+//                    // Process updates (see TableListener.java)
+//                    Thread.sleep(10000);
+// 
+//                    // Unsubscribe table listener
+//                    offerTable.unsubscribeUpdate(O2GTableUpdateType.UPDATE, tableListener);
+//                    offerTable.unsubscribeUpdate(O2GTableUpdateType.INSERT, tableListener);
+ 
+                    mSession.logout();
+                    while (!statusListener.isDisconnected()) {
+                        Thread.sleep(50);
+                    }
+                }
+            }
+            mSession.unsubscribeSessionStatus(statusListener);
+            mSession.dispose();
+//            System.exit(1);
+    		return data;
+        } catch (Exception e) {
+            System.out.println ("Exception: " + e.getMessage());
+//            System.exit(1);
+            return data;
+        }
+	}
+
+}

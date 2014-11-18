@@ -380,10 +380,6 @@ body {
   height: auto;
   background: #333333;
   float: right;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
-  -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
-  -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
 }
 .wrapper .content .title {
   width: 100%;
@@ -420,27 +416,24 @@ body {
   line-height: 50px;
   text-align: left;
 }
-.wrapper .content .orders {
+.wrapper .content .openpositions, .wrapper .content .summary {
   width: 100%;
-  height: 636px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
-  -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
-  -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
+  height: 300px;
   padding: 10px;
   background: #222222;
+  display: block;
 }
-.wrapper .content .orders .table_info {
+.wrapper .content .openpositions .table_info, .wrapper .content .summary .table_info {
   width: 100%;
   height: 300px;
   padding: 10px;
 }
-.wrapper .content .orders .table_info .title {
+.wrapper .content .openpositions .table_info .title, .wrapper .content .summary .table_info .title {
   width: 100%;
   height: 50px;
   background: #222222;
 }
-.wrapper .content .orders .table_info .title .icon {
+.wrapper .content .openpositions .table_info .title .icon, .wrapper .content .summary .table_info .title .icon {
   float: left;
   padding-left: 10px;
   padding-right: 5px;
@@ -450,7 +443,7 @@ body {
   line-height: 50px;
   text-align: left;
 }
-.wrapper .content .orders .table_info .title .text {
+.wrapper .content .openpositions .table_info .title .text, .wrapper .content .summary .table_info .title .text {
   float: left;
   padding-left: 10px;
   color: white;
@@ -459,7 +452,7 @@ body {
   line-height: 50px;
   text-align: left;
 }
-.wrapper .content .orders .table_info .title .plus, .wrapper .content .orders .table_info .title .list {
+.wrapper .content .openpositions .table_info .title .plus, .wrapper .content .openpositions .table_info .title .list, .wrapper .content .summary .table_info .title .plus, .wrapper .content .summary .table_info .title .list {
   float: right;
   padding-right: 10px;
   padding-left: 10px;
@@ -473,7 +466,7 @@ body {
   line-height: 50px;
   text-align: left;
 }
-.wrapper .content .orders .table_info .title .plus:hover, .wrapper .content .orders .table_info .title .list:hover {
+.wrapper .content .openpositions .table_info .title .plus:hover, .wrapper .content .openpositions .table_info .title .list:hover, .wrapper .content .summary .table_info .title .plus:hover, .wrapper .content .summary .table_info .title .list:hover {
   color: #222222;
   background: white;
   cursor: pointer;
@@ -482,13 +475,16 @@ body {
   -o-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
 }
-.wrapper .content .orders .table_info .content {
+.wrapper .content .openpositions .table_info .content, .wrapper .content .summary .table_info .content {
   width: 100%;
-  height: 556px;
+  height: 250px;
   background: #222222;
   overflow: auto;
 }
-.wrapper .content .orders .table_info .content th {
+.wrapper .content .openpositions .table_info .content .table, .wrapper .content .summary .table_info .content .table {
+  overflow: hidden;
+}
+.wrapper .content .openpositions .table_info .content th, .wrapper .content .summary .table_info .content th {
   color: white;
   border-bottom: 1px solid rgba(0, 0, 0, 0.3);
   -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
@@ -502,6 +498,12 @@ body {
   -webkit-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
   -moz-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
   box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  min-width: 120px;
+  text-align: center;
+}
+.wrapper .content .openpositions .table_info .content td, .wrapper .content .summary .table_info .content td {
+  background: #eeeeee;
+  text-align: center;
 }
 .wrapper .footer {
   width: 100%;

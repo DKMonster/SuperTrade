@@ -3,24 +3,24 @@ package com.supertrade.dkmonster;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.fxcore2.O2GLoginRules;
-import com.fxcore2.O2GOfferRow;
-import com.fxcore2.O2GOffersTableResponseReader;
-import com.fxcore2.O2GRequestFactory;
-import com.fxcore2.O2GResponse;
-import com.fxcore2.O2GResponseReaderFactory;
+import com.fxcore2.O2GOfferTableRow;
+import com.fxcore2.O2GOffersTable;
 import com.fxcore2.O2GSession;
+import com.fxcore2.O2GTableIterator;
+import com.fxcore2.O2GTableManager;
+import com.fxcore2.O2GTableManagerMode;
+import com.fxcore2.O2GTableManagerStatus;
 import com.fxcore2.O2GTableType;
+import com.fxcore2.O2GTableUpdateType;
 import com.fxcore2.O2GTransport;
 
 public class getOffers {
 
+	static String[] listData;
 	static Map<String, Object> responseData = new HashMap<String, Object>();
-    static String mInstrument = "";
 
-	public static Map<String, Object> main(String[] args) {
-		// TODO Auto-generated method stub
-
+	public static String[] main(String[] args) {
+	    
         // Connection and session variables
         String mUserID = "";
         String mPassword = "";
@@ -29,6 +29,7 @@ public class getOffers {
         String mDBName = "";
         String mPin = "";
         O2GSession mSession = null;
+        String mInstrument = "";
         
         // Check for correct number of arguments
         if (args.length < 5) {
@@ -55,71 +56,90 @@ public class getOffers {
             mSession = O2GTransport.createSession();
             SessionStatusListener statusListener = new SessionStatusListener(mSession, mDBName, mPin);
             mSession.subscribeSessionStatus(statusListener);
-            ResponseListener responseListener = new ResponseListener(mSession,mInstrument);
-            mSession.subscribeResponse(responseListener);
+            
+            mSession.useTableManager(O2GTableManagerMode.YES, null);
+            
             mSession.login(mUserID, mPassword, mURL, mConnection);
             while (!statusListener.isConnected() && !statusListener.hasError()) {
                     Thread.sleep(50);
             }
+                        
             if (!statusListener.hasError()) {
-                getOffers(mSession);
-                if (!mInstrument.equals("{INSTRUMENT}") && !mInstrument.equals("")) {
-                    O2GRequestFactory requestFactory = mSession.getRequestFactory();
-                    if (requestFactory != null) {
-                        mSession.sendRequest(requestFactory.createRefreshTableRequest(O2GTableType.OFFERS));
-                        Thread.sleep(10000);
-                    }
-                }   
+                
+                O2GTableManager manager = mSession.getTableManager();
+                while (manager.getStatus() == O2GTableManagerStatus.TABLES_LOADING) {                
+                     Thread.sleep(50);
+                }
+                
+                O2GOffersTable offers = null;
+                OffersListener listener = null;
+                if (manager.getStatus() == O2GTableManagerStatus.TABLES_LOADED) {                
+                    offers = (O2GOffersTable)manager.getTable(O2GTableType.OFFERS);                    
+                    getOffers(offers);
+                    
+                    System.out.print(mInstrument);
+                    
+                    listener = new OffersListener();                            
+                    listener.SetInstrumentFilter(mInstrument);
+                    
+                    offers.subscribeUpdate(O2GTableUpdateType.UPDATE, listener);                                                           
+                                        
+                }
+                
+                System.out.println("Press enter to stop!");
+                System.in.read();
+                
+                if (offers != null) {
+                    offers.unsubscribeUpdate(O2GTableUpdateType.UPDATE, listener);
+                }
+                                                
                 mSession.logout();
                 while (!statusListener.isDisconnected()) {
                     Thread.sleep(50);
                 }
             }
-            mSession.unsubscribeSessionStatus(statusListener);
-            mSession.unsubscribeResponse(responseListener);
+            mSession.unsubscribeSessionStatus(statusListener);            
             mSession.dispose();
         } catch (Exception e) {
             System.out.println ("Exception: " + e.getMessage());
             System.exit(1);
         }
-		return responseData;
+		return listData;
     }
     
     // Get offers information
-    public static void getOffers(O2GSession session) { 
-        try {
-            O2GLoginRules loginRules = session.getLoginRules();
-            if (loginRules != null && loginRules.isTableLoadedByDefault(O2GTableType.OFFERS)) {
-                O2GResponse offersResponse = loginRules.getTableRefreshResponse(O2GTableType.OFFERS);
-                O2GResponseReaderFactory responseFactory = session.getResponseReaderFactory();
-                O2GOffersTableResponseReader offersReader = responseFactory.createOffersTableReader(offersResponse);
-                for (int i = 0; i < offersReader.size(); i++) {
-                    O2GOfferRow offer = offersReader.getRow(i);
-                    if(mInstrument.equals(offer.getInstrument())){
-                        responseData.put("OfferID" , offer.getOfferID());
-                        responseData.put("Instrument" , offer.getInstrument());
-                        responseData.put("QuoteID" , offer.getQuoteID());
-                        responseData.put("Bid" , offer.getBid());
-                        responseData.put("Ask" , offer.getAsk());
-                        responseData.put("BidTradable" , offer.getBidTradable());
-                        responseData.put("AskTradable" , offer.getAskTradable());
-                        responseData.put("High" , offer.getHigh());
-                        responseData.put("Low" , offer.getLow());
-                        responseData.put("BuyInterest" , offer.getBuyInterest());
-                        responseData.put("SellInterest" , offer.getSellInterest());
-                        responseData.put("Volume" , offer.getVolume());
-                        responseData.put("ContractCurrency" , offer.getContractCurrency());
-                        responseData.put("Digits" , offer.getDigits());
-                        responseData.put("PointSize" , offer.getPointSize());
-                        responseData.put("SubscriptionStatus" , offer.getSubscriptionStatus());
-                        responseData.put("TradingStatus" , offer.getTradingStatus());
-                        responseData.put("InstrumentType" , offer.getInstrumentType());
-                        responseData.put("ContractMultiplier" , offer.getContractMultiplier());
-                        responseData.put("ValueDate" , offer.getValueDate());
-                        responseData.put("Time" , offer.getTime());
-                    }
+    public static void getOffers(O2GOffersTable offers) { 
+        try {            
+                O2GOfferTableRow offer = null;
+                O2GTableIterator iterator = new O2GTableIterator();
+                offer = offers.getNextRow(iterator);
+                int i = 0;
+                while (offer != null) { 
+                    responseData.put("OfferID" , offer.getOfferID());
+                    responseData.put("Instrument" , offer.getInstrument());
+                    responseData.put("QuoteID" , offer.getQuoteID());
+                    responseData.put("Bid" , offer.getBid());
+                    responseData.put("Ask" , offer.getAsk());
+                    responseData.put("BidTradable" , offer.getBidTradable());
+                    responseData.put("AskTradable" , offer.getAskTradable());
+                    responseData.put("High" , offer.getHigh());
+                    responseData.put("Low" , offer.getLow());
+                    responseData.put("BuyInterest" , offer.getBuyInterest());
+                    responseData.put("SellInterest" , offer.getSellInterest());
+                    responseData.put("Volume" , offer.getVolume());
+                    responseData.put("ContractCurrency" , offer.getContractCurrency());
+                    responseData.put("Digits" , offer.getDigits());
+                    responseData.put("PointSize" , offer.getPointSize());
+                    responseData.put("SubscriptionStatus" , offer.getSubscriptionStatus());
+                    responseData.put("TradingStatus" , offer.getTradingStatus());
+                    responseData.put("InstrumentType" , offer.getInstrumentType());
+                    responseData.put("ContractMultiplier" , offer.getContractMultiplier());
+                    responseData.put("ValueDate" , offer.getValueDate());
+                    responseData.put("Time" , offer.getTime());
+                    listData[i] = String.valueOf(responseData);
+                    i++;
+                    offer = offers.getNextRow(iterator);
                 }
-            }
         } catch (Exception e) {
             System.out.println("Exception in getOffers().\n\t " + e.getMessage());
         }   

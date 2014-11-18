@@ -43,7 +43,7 @@ $(document).ready(function() {
 	/* get account */
 	$.ajax({
 		async: true,
-		url: "/assets/php/getAccount.php",
+		url: "/SuperTrade/assets/php/getAccount.php",
 		type: "POST",
 		dataType: "JSON",
 		success: function (msg) {
@@ -65,7 +65,7 @@ $(document).ready(function() {
 
 	function data_loading(msg){
 		/* slide data */
-		s_pic.attr('src','/assets/user/img/' + msg['user_picture']);
+		s_pic.attr('src','/SuperTrade/assets/user/img/' + msg['user_picture']);
 		s_name.html(msg['user_nickname']);
 		s_balance.html("$500.00");
 		s_date.html(msg['user_login_date']);
@@ -77,7 +77,7 @@ $(document).ready(function() {
 	function loadTimeline(){
 		$.ajax({
 			async: true,
-			url: "/assets/php/getTimeline.php",
+			url: "/SuperTrade/assets/php/getTimeline.php",
 			type: "POST",
 			dataType: "JSON",
 			success: function (msg) {
@@ -120,7 +120,7 @@ $(document).ready(function() {
 	function loadFollowPeople(){
 		$.ajax({
 			async: true,
-			url: "/assets/php/getFollowPeople.php",
+			url: "/SuperTrade/assets/php/getFollowPeople.php",
 			type: "GET",
 			dataType: "JSON",
 			success: function (msg) {
@@ -130,7 +130,7 @@ $(document).ready(function() {
 					for(var i = 1 ; i < Object.keys(msg).length ; i++){
 						fm2_content.append(
 							'<li>'+
-								'<img src="/assets/user/img/'+msg[i]['user_picture']+'" data-src="holder.js/40x40" class="img-thumbnail pic" alt="image">'+
+								'<img src="/SuperTrade/assets/user/img/'+msg[i]['user_picture']+'" data-src="holder.js/40x40" class="img-thumbnail pic" alt="image">'+
 								'<div class="follow_off" data-follow="'+msg[i]['follow_id']+'"><i class="icon-eye-off"></i></div>'+
 								'<div class="name"><i class="icon-user"></i>'+msg[i]['user_nickname']+'</div>'+
 								'<div class="date"><i class="icon-calendar-empty"></i>'+msg[i]['user_login_date']+'</div>'+
@@ -156,7 +156,7 @@ $(document).ready(function() {
 	function loadGoodPeople(){
 		$.ajax({
 			async: true,
-			url: "/assets/php/getGoodPeople.php",
+			url: "/SuperTrade/assets/php/getGoodPeople.php",
 			type: "GET",
 			dataType: "JSON",
 			success: function (msg) {
@@ -166,7 +166,7 @@ $(document).ready(function() {
 					for(var i = 1 ; i < Object.keys(msg).length ; i++){
 						fm_content.append(
 							'<li>'+
-								'<img src="/assets/user/img/'+msg[i]['user_picture']+'" data-src="holder.js/40x40" class="img-thumbnail pic" alt="image">'+
+								'<img src="/SuperTrade/assets/user/img/'+msg[i]['user_picture']+'" data-src="holder.js/40x40" class="img-thumbnail pic" alt="image">'+
 								'<div class="follow" data-follow="'+msg[i]['user_id']+'"><i class="icon-eye"></i></div>'+
 								'<div class="name"><i class="icon-user"></i>'+msg[i]['user_nickname']+'</div>'+
 								'<div class="date"><i class="icon-calendar-empty"></i>'+msg[i]['user_login_date']+'</div>'+
@@ -198,7 +198,7 @@ $(document).ready(function() {
 
 			$.ajax({
 				async: true,
-				url: "/assets/php/setFollowOff.php",
+				url: "/SuperTrade/assets/php/setFollowOff.php",
 				type: "GET",
 				dataType: "JSON",
 				data: {
@@ -233,7 +233,7 @@ $(document).ready(function() {
 
 			$.ajax({
 				async: true,
-				url: "/assets/php/setFollow.php",
+				url: "/SuperTrade/assets/php/setFollow.php",
 				type: "GET",
 				dataType: "JSON",
 				data: {
@@ -300,7 +300,7 @@ $(document).ready(function() {
 			// console.log(roomID);
 			$.ajax({
 				async: true,
-				url: "/assets/php/sendMessage.php",
+				url: "/SuperTrade/assets/php/sendMessage.php",
 				type: "GET",
 				dataType: "JSON",
 				data: {
@@ -335,7 +335,7 @@ $(document).ready(function() {
 			// console.log("myTimeline");
 			$.ajax({
 				async: true,
-				url: "/assets/php/getTimelineMessage.php",
+				url: "/SuperTrade/assets/php/getTimelineMessage.php",
 				type: "GET",
 				dataType: "JSON",
 				success: function (msg) {
@@ -347,7 +347,7 @@ $(document).ready(function() {
 							line_message.append(
 								'<li>'+
 									'<div class="l_header">'+
-										'<img src="/assets/user/img/'+msg[i]['user_picture']+'" data-src="holder.js/50x50" class="pic" alt="image">'+
+										'<img src="/SuperTrade/assets/user/img/'+msg[i]['user_picture']+'" data-src="holder.js/50x50" class="pic" alt="image">'+
 										'<div class="name">'+msg[i]['user_nickname']+'</div>'+
 										'<div class="time">'+msg[i]['timeline_date']+' '+msg[i]['timeline_time']+'</div>'+
 									'</div>'+
@@ -355,7 +355,7 @@ $(document).ready(function() {
 										'<p class="text">'+msg[i]['timeline_content']+'</p>'+
 									'</div>'+
 									'<div class="l_commit">'+
-										'<img src="/assets/user/img/'+msg[i]['user_picture']+'" data-src="holder.js/30x30" class="pic" alt="image">'+
+										'<img src="/SuperTrade/assets/user/img/'+msg[i]['user_picture']+'" data-src="holder.js/30x30" class="pic" alt="image">'+
 										'<textarea name="commit" id="commit" class="commit"></textarea>'+
 									'</div>'+
 								'</li>'
@@ -377,7 +377,7 @@ $(document).ready(function() {
 		}else{
 			$.ajax({
 				async: true,
-				url: "/assets/php/getRoomMessage.php",
+				url: "/SuperTrade/assets/php/getRoomMessage.php",
 				type: "GET",
 				dataType: "JSON",
 				data: {
@@ -392,7 +392,7 @@ $(document).ready(function() {
 							line_message.append(
 								'<li>'+
 									'<div class="l_header">'+
-										'<img src="/assets/user/img/'+msg[i]['user_picture']+'" data-src="holder.js/50x50" class="pic" alt="image">'+
+										'<img src="/SuperTrade/assets/user/img/'+msg[i]['user_picture']+'" data-src="holder.js/50x50" class="pic" alt="image">'+
 										'<div class="name">'+msg[i]['user_nickname']+'</div>'+
 										'<div class="time">'+msg[i]['room_message_date']+' '+msg[i]['room_message_time']+'</div>'+
 									'</div>'+
@@ -400,7 +400,7 @@ $(document).ready(function() {
 										'<p class="text">'+msg[i]['room_message_content']+'</p>'+
 									'</div>'+
 									'<div class="l_commit">'+
-										'<img src="/assets/user/img/'+msg[i]['user_picture']+'" data-src="holder.js/30x30" class="pic" alt="image">'+
+										'<img src="/SuperTrade/assets/user/img/'+msg[i]['user_picture']+'" data-src="holder.js/30x30" class="pic" alt="image">'+
 										'<textarea name="commit" id="commit" class="commit"></textarea>'+
 									'</div>'+
 								'</li>'

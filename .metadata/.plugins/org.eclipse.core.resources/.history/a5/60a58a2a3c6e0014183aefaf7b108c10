@@ -1,0 +1,12 @@
+package com.supertrade.dkmonster;
+
+import java.util.Map;
+
+public class getOffers {
+
+	public static Map[] main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

@@ -1,0 +1,46 @@
+package com.supertrade.dkmonster;
+
+import com.fxcore2.O2GSession;
+import com.fxcore2.O2GTableManagerMode;
+import com.fxcore2.O2GTransport;
+
+public class getAllOffers {
+
+	public static void main(String[] args) {
+		
+        // Connection and session variables
+        String mUserID = "";
+        String mPassword = "";
+        String mURL = "";
+        String mConnection = "";
+        String mDBName = "";
+        String mPin = "";
+        O2GSession mSession = null;
+        String mInstrument = "";
+        
+        try {
+			O2GSession session = O2GTransport.createSession();
+	        SessionStatusListener statusListener = new SessionStatusListener(mSession, mDBName, mPin);
+	        mSession.subscribeSessionStatus(statusListener);
+	        
+	        mSession.useTableManager(O2GTableManagerMode.YES, null);
+	        
+	        mSession.login(mUserID, mPassword, mURL, mConnection);
+	        while (!statusListener.isConnected() && !statusListener.hasError()) {
+	            Thread.sleep(50);
+	        }
+	        
+	        if (!statusListener.hasError()) {
+	        	
+	        	
+	        }
+        } catch (Exception e) {
+            System.out.println ("Exception: " + e.getMessage());
+            System.exit(1);
+        }
+        
+        
+		
+	}
+
+}

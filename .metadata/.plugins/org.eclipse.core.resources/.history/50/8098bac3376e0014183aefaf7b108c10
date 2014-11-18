@@ -1,0 +1,255 @@
+package com.supertrade.dkmonster;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import com.fxcore2.IO2GResponseListener;
+import com.fxcore2.IO2GSessionStatus;
+import com.fxcore2.O2GLoginRules;
+import com.fxcore2.O2GOfferRow;
+import com.fxcore2.O2GOffersTableResponseReader;
+import com.fxcore2.O2GRequestFactory;
+import com.fxcore2.O2GResponse;
+import com.fxcore2.O2GResponseReaderFactory;
+import com.fxcore2.O2GResponseType;
+import com.fxcore2.O2GSession;
+import com.fxcore2.O2GSessionDescriptor;
+import com.fxcore2.O2GSessionDescriptorCollection;
+import com.fxcore2.O2GSessionStatusCode;
+import com.fxcore2.O2GTableType;
+import com.fxcore2.O2GTransport;
+
+public class getOffers {
+
+	static Map[] data;
+	static Map<String, Object> responseData = new HashMap<String, Object>();
+
+	public static Map[] main(String[] args) {
+		// Connection and session variables
+        String mUserID = "";
+        String mPassword = "";
+        String mURL = "";
+        String mConnection = "";
+        String mDBName = "";
+        String mPin = "";
+        O2GSession mSession = null;
+        String mInstrument = "";
+ 
+        // Check for correct number of arguments
+        if (args.length < 5) {
+            System.out.println("Not Enough Parameters!");
+            System.out.println("USAGE: [instrument] [user ID] [password] [URL] [connection] [session ID (if needed)] [pin (if needed)]");
+            System.exit(1);
+        }
+ 
+        // Get command line arguments
+        mInstrument = args[0];
+        mUserID = args[1];
+        mPassword = args[2];
+        mURL = args[3];
+        mConnection = args[4];
+        if (args.length > 5) {
+            mDBName = args[5];
+        }
+        if (args.length > 6) {
+            mPin = args[6];
+        }
+ 
+        // Create a session, subscribe to session listener, login, get offers, logout
+        try {
+            mSession = O2GTransport.createSession();
+            SessionStatusListener statusListener = new SessionStatusListener(mSession, mDBName, mPin);
+            mSession.subscribeSessionStatus(statusListener);
+            ResponseListener responseListener = new ResponseListener(mSession,mInstrument);
+            mSession.subscribeResponse(responseListener);
+            mSession.login(mUserID, mPassword, mURL, mConnection);
+            while (!statusListener.isConnected() && !statusListener.hasError()) {
+                    Thread.sleep(50);
+            }
+            if (!statusListener.hasError()) {
+                getOffers(mSession);
+                if (!mInstrument.equals("{INSTRUMENT}") && !mInstrument.equals("")) {
+                    O2GRequestFactory requestFactory = mSession.getRequestFactory();
+                    if (requestFactory != null) {
+                        mSession.sendRequest(requestFactory.createRefreshTableRequest(O2GTableType.OFFERS));
+                        Thread.sleep(10000);
+                    }
+                }
+                mSession.logout();
+                while (!statusListener.isDisconnected()) {
+                    Thread.sleep(50);
+                }
+            }
+            mSession.unsubscribeSessionStatus(statusListener);
+            mSession.unsubscribeResponse(responseListener);
+            mSession.dispose();
+        } catch (Exception e) {
+            System.out.println ("Exception: " + e.getMessage());
+            System.exit(1);
+        }
+    }
+
+
+// Get offers information
+public static void getOffers(O2GSession session) {
+    try {
+        O2GLoginRules loginRules = session.getLoginRules();
+        if (loginRules != null && loginRules.isTableLoadedByDefault(O2GTableType.OFFERS)) {
+            O2GResponse offersResponse = loginRules.getTableRefreshResponse(O2GTableType.OFFERS);
+            O2GResponseReaderFactory responseFactory = session.getResponseReaderFactory();
+            O2GOffersTableResponseReader offersReader = responseFactory.createOffersTableReader(offersResponse);
+            for (int i = 0; i < offersReader.size(); i++) {
+                O2GOfferRow offer = offersReader.getRow(i);
+                System.out.println("Instrument = " + offer.getInstrument() +
+                                   " Bid Price = " +  offer.getBid() +
+                                   " Ask Price = " + offer.getAsk());
+            }
+        }
+    } catch (Exception e) {
+        System.out.println("Exception in getOffers().\n\t " + e.getMessage());
+    }
+}
+}
+
+class ResponseListener implements IO2GResponseListener {
+
+// Session, response and request variables
+private O2GSession mSession = null;
+private String mInstrument = "";
+private O2GResponse mResponse = null;
+private String mRequest = "";
+
+// Constructor
+public ResponseListener(O2GSession session, String instrument) {
+    mSession = session;
+    mInstrument = instrument;
+}
+
+// Implementation of IO2GResponseListener interface public method onRequestCompleted
+public void onRequestCompleted(String requestID, O2GResponse response) {
+    if (response.getType() == O2GResponseType.GET_OFFERS) {
+        mResponse = response;
+        mRequest = "getoffers";
+        printOffers(mSession, mResponse, mInstrument);
+    }
+}
+
+// Implementation of IO2GResponseListener interface public method onRequestFailed
+public void onRequestFailed(String requestID, String error) {
+    System.out.println("Request failed. requestID= " + requestID + "; error= " + error);
+}
+
+// Implementation of IO2GResponseListener interface public method onTablesUpdates
+public void onTablesUpdates(O2GResponse response) {
+    if (response.getType() == O2GResponseType.TABLES_UPDATES) {
+        mResponse = response;
+        mRequest = "tablesupdates";
+        printOffers(mSession, mResponse, mInstrument);
+    }
+}
+
+// Prints response to a user request and live offer updates
+public void printOffers(O2GSession session, O2GResponse response, String instrument) {
+    O2GResponseReaderFactory readerFactory = session.getResponseReaderFactory();
+    if (readerFactory != null) {
+        O2GOffersTableResponseReader reader = readerFactory.createOffersTableReader(response);
+        for (int i = 0; i < reader.size(); i++) {
+            O2GOfferRow row = reader.getRow(i);
+            if (row.isBidValid() && row.isAskValid())
+            {
+                if (row.getInstrument().equals(instrument)) {
+                    if ("getoffers".equals(mRequest)) {
+                        System.out.println("This is a response to getOffers request.");
+                    }
+                    if ("tablesupdates".equals(mRequest)) {
+                        System.out.println("This is your live update.");
+                    }
+                    System.out.println("Instrument = " + row.getInstrument() +
+                                   " Bid Price = " +  row.getBid() +
+                                   " Ask Price = " + row.getAsk());
+                    mRequest = "";
+                    break;
+                }
+            }
+        }
+    }
+}
+}
+
+
+class SessionStatusListener implements IO2GSessionStatus {
+
+// Connection , session and status variables
+private boolean mConnected = false;
+private boolean mDisconnected = false;
+private boolean mError = false;
+private String mDBName = "";
+private String mPin = "";
+private O2GSession mSession = null;
+private O2GSessionStatusCode mStatus = null;
+
+// Constructor
+public SessionStatusListener(O2GSession session, String dbName, String pin) {
+    mSession = session;
+    mDBName = dbName;
+    mPin = pin;
+}
+
+//Shows if session is connected
+public final boolean isConnected() {
+    return mConnected;
+}
+
+//Shows if session is disconnected
+public final boolean isDisconnected() {
+    return mDisconnected;
+}
+
+// Shows if there was an error during the logn process
+public final boolean hasError() {
+    return mError;
+}
+
+// Returns current session status
+public final O2GSessionStatusCode getStatus() {
+    return mStatus;
+}
+
+// Implementation of IO2GSessionStatus interface public method onSessionStatusChanged
+public final void onSessionStatusChanged(O2GSessionStatusCode status) {
+    mStatus = status;
+    System.out.println("Status: " + mStatus.toString());
+    if (mStatus == O2GSessionStatusCode.CONNECTED) {
+        mConnected = true;
+    }
+    else {
+        mConnected = false;
+    }
+    if (status == O2GSessionStatusCode.DISCONNECTED) {
+        mDisconnected = true;
+    }
+    else {
+        mDisconnected = false;
+    }
+    if (mStatus == O2GSessionStatusCode.TRADING_SESSION_REQUESTED) {
+        O2GSessionDescriptorCollection descs = mSession.getTradingSessionDescriptors();
+        System.out.println("\nSession descriptors");
+        System.out.println("id, name, description, requires pin");
+        for (O2GSessionDescriptor desc : descs) {
+            System.out.println(desc.getId() + " " + desc.getName() + " " + desc.getDescription() + " " + desc.isPinRequired());
+        }
+        if (mDBName.equals("")) {
+            System.out.println("Argument for trading session ID is missing");
+        }
+        else {
+            mSession.setTradingSession(mDBName, mPin);
+        }
+    }
+}
+
+// Implementation of IO2GSessionStatus interface public method onLoginFailed
+public final void onLoginFailed(String error) {
+    System.out.println("Login error: " + error);
+    mError = true;
+}
+}

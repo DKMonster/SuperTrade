@@ -1,0 +1,195 @@
+package com.supertrade.dkmonster;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Semaphore;
+
+import com.fxcore2.*;
+
+public class OPResponseListener implements IO2GResponseListener {
+
+    private O2GSession mSession;
+    private String mRequestID;
+    private List<O2GTradeRow> mTrades;
+    private OrderMonitor mOrderMonitor;
+    private Semaphore mSemaphore;
+
+    public OPResponseListener(O2GSession session) {
+        mRequestID = "";
+        mOrderMonitor = null;
+        mTrades = new ArrayList<O2GTradeRow>();
+        mSemaphore = new Semaphore(0);
+        mSession = session;
+    }
+
+    public void setRequestID(String requestID) {
+        mRequestID = requestID;
+    }
+
+    public void waitEvents() throws InterruptedException {
+        mSemaphore.acquire(1);
+    }
+
+    public List<O2GTradeRow> getTrades() {
+        return mTrades;
+    }
+
+    // Implementation of IO2GResponseListener interface public method onRequestCompleted
+    public void onRequestCompleted(String requestID, O2GResponse response) {
+    }
+
+    // Implementation of IO2GResponseListener interface public method onRequestFailed
+    public void onRequestFailed(String requestID, String error) {
+        if (mRequestID.equals(requestID)) {
+            System.out.println("Request failed: " + error);
+            mSemaphore.release();
+        }
+    }
+
+    // Implementation of IO2GResponseListener interface public method onTablesUpdates
+    public void onTablesUpdates(O2GResponse response) {
+        O2GResponseReaderFactory factory = mSession.getResponseReaderFactory();
+        if (factory != null) {
+            O2GTablesUpdatesReader reader = factory.createTablesUpdatesReader(response);
+            for (int i = 0; i < reader.size(); i++) {
+                switch (reader.getUpdateTable(i)) {
+                case ACCOUNTS:
+                    O2GAccountRow account = reader.getAccountRow(i);
+                    //Show balance updates
+                    System.out.format("Balance: %.2f%n", account.getBalance());
+                    break;
+                case ORDERS:
+                    O2GOrderRow orderRow = reader.getOrderRow(i);
+                    if (mRequestID.equals(orderRow.getRequestID())) {
+                        switch (reader.getUpdateType(i)) {
+                        case INSERT:
+                            if ((OrderMonitor.isClosingOrder(orderRow) || OrderMonitor.isOpeningOrder(orderRow)) &&
+                                    mOrderMonitor == null) {
+                                System.out.println("The order has been added. Order ID: " + orderRow.getOrderID() + 
+                                        " Rate: " + orderRow.getRate() + 
+                                        " Time In Force: " + orderRow.getTimeInForce());
+                                mOrderMonitor = new OrderMonitor(orderRow);
+                            }
+                            break;
+                        case DELETE:
+                            if (mOrderMonitor != null) {
+                                System.out.println("The order has been deleted. Order ID: " + orderRow.getOrderID());
+                                mOrderMonitor.onOrderDeleted(orderRow);
+                                if (mOrderMonitor.isOrderCompleted()) {
+                                    printResult();
+                                    mSemaphore.release();
+                                }
+                            }
+                            break;
+                        }
+                    }
+                    break;
+                case TRADES:
+                    O2GTradeRow trade = reader.getTradeRow(i);
+                    if (reader.getUpdateType(i) == O2GTableUpdateType.INSERT) {
+                        if (mOrderMonitor != null) {
+                            mOrderMonitor.onTradeAdded(trade);
+                            if (mOrderMonitor.isOrderCompleted()) {
+                                mTrades = mOrderMonitor.getTrades();
+                                printResult();
+                                mSemaphore.release();
+                            }
+                        }
+                    }
+                    break;
+                case CLOSED_TRADES:
+                    O2GClosedTradeRow closedTrade = reader.getClosedTradeRow(i);
+                    if (reader.getUpdateType(i) == O2GTableUpdateType.INSERT) {
+                        if (mOrderMonitor != null) {
+                            mOrderMonitor.onClosedTradeAdded(closedTrade);
+                            if (mOrderMonitor.isOrderCompleted()) {
+                                printResult();
+                                mSemaphore.release();
+                            }
+                        }
+                    }
+                    break;
+                case MESSAGES:
+                    O2GMessageRow message = reader.getMessageRow(i);
+                    if (reader.getUpdateType(i) == O2GTableUpdateType.INSERT) {
+                        if (mOrderMonitor != null) {
+                            mOrderMonitor.onMessageAdded(message);
+                            if (mOrderMonitor.isOrderCompleted()) {
+                                printResult();
+                                mSemaphore.release();
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
+    private void printResult() {
+        if (mOrderMonitor != null) {
+            OrderMonitor.ExecutionResult result = mOrderMonitor.getResult();
+            List<O2GTradeRow> trades;
+            List<O2GClosedTradeRow> closedTrades;
+            O2GOrderRow order = mOrderMonitor.getOrder();
+            String orderID = order.getOrderID();
+            trades = mOrderMonitor.getTrades();
+            closedTrades = mOrderMonitor.getClosedTrades();
+            switch (result) {
+            case Canceled:
+                if (trades.size() > 0) {
+                    printTrades(trades, orderID);
+                    printClosedTrades(closedTrades, orderID);
+                    System.out.println("A part of the order has been canceled. Amount = " + mOrderMonitor.getRejectAmount());
+                } else {
+                    System.out.println("The order: OrderID = " + orderID + " has been canceled.");
+                    System.out.println("The cancel amount = " + mOrderMonitor.getRejectAmount() + ".");
+                }
+                break;
+            case FullyRejected:
+                System.out.println("The order has been rejected. OrderID = " + orderID);
+                System.out.println("The rejected amount = " + mOrderMonitor.getRejectAmount());
+                System.out.println("Rejection cause: " + mOrderMonitor.getRejectMessage());
+                break;
+            case PartialRejected:
+                printTrades(trades, orderID);
+                printClosedTrades(closedTrades, orderID);
+                System.out.println("A part of the order has been rejected. Amount = " + mOrderMonitor.getRejectAmount());
+                System.out.println("Rejection cause: " + mOrderMonitor.getRejectMessage());
+                break;
+            case Executed:
+                printTrades(trades, orderID);
+                printClosedTrades(closedTrades, orderID);
+                break;
+            }
+        }
+    }
+
+    private void printTrades(List<O2GTradeRow> trades, String orderID) {
+        if (trades.size() == 0) {
+            return;
+        }
+        System.out.println("For the order: OrderID = " + orderID + " the following positions have been opened: ");
+        for (int i = 0; i < trades.size(); i++) {
+            O2GTradeRow trade = trades.get(i);
+            String tradeID = trade.getTradeID();
+            int amount = trade.getAmount();
+            double rate = trade.getOpenRate();
+            System.out.println("Trade ID: " + tradeID + "; Amount: " + amount + "; Rate: " + rate);
+        }
+    }
+
+    private void printClosedTrades(List<O2GClosedTradeRow> closedTrades, String orderID) {
+        if (closedTrades.size() == 0) {
+            return;
+        }
+        System.out.println("For the order: OrderID = " + orderID + " the following positions have been closed: ");
+        for (int i = 0; i < closedTrades.size(); i++) {
+            O2GClosedTradeRow closedTrade = closedTrades.get(i);
+            String tradeID = closedTrade.getTradeID();
+            int amount = closedTrade.getAmount();
+            double rate = closedTrade.getCloseRate();
+            System.out.println("Closed Trade ID: " + tradeID + "; Amount: " + amount + "; Closed Rate: " + rate);
+        }
+    }
+}

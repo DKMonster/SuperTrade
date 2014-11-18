@@ -1,0 +1,26 @@
+package com.supertrade.dkmonster;
+
+import com.fxcore2.*;
+
+public class login {
+
+	public static void main(String[] args) {
+	    
+        // Connection and session variables
+        String mUserID = "";
+        String mPassword = "";
+        String mURL = "";
+        String mConnection = "";
+        String mDBName = "";
+        String mPin = "";
+        O2GSession mSession = null;
+        String mInstrument = "";
+        
+        
+		O2GSession session = O2GTransport.createSession();
+        SessionStatusListener statusListener = new SessionStatusListener(mSession, mDBName, mPin);
+        mSession.subscribeSessionStatus(statusListener);
+		
+	}
+
+}

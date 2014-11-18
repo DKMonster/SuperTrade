@@ -2,7 +2,7 @@ package com.supertrade.dkmonster;
 
 public class getAccount {
 	private String loadType;
-	private String userId , pwd , url , con , instrument;
+	private String userId , pwd , url = "http://www.fxcorporate.com/Hosts.jsp" , con , instrument;
 	
 	//getters & setters 
 	

@@ -1,0 +1,132 @@
+package com.supertrade.dkmonster;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
+
+import com.supertrade.dkmonster.getInfo;
+import com.supertrade.dkmonster.getOffers;
+import com.supertrade.dkmonster.getTrade;
+import com.supertrade.dkmonster.getAccount;
+
+/**
+ * Servlet implementation class AjaxServlet
+ */
+@WebServlet("/AjaxServlet")
+public class AjaxServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+
+	String[] listData;
+	Map<String, Object> responseData = new HashMap<String, Object>();
+   
+   
+    public AjaxServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+        String json = "";
+        if(br != null){
+            json = br.readLine();
+        }
+        
+        ObjectMapper mapper = new ObjectMapper();
+        
+        getAccount account = mapper.readValue(json, getAccount.class);
+
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+		response.setHeader("Access-Control-Max-Age", "3600");
+		response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
+        response.setContentType("application/json");
+        
+        responseData.clear();
+
+        if(account.getloadType().equals("getAccount")){
+        	
+//        	responseData.put("loadType", account.getloadType());
+            responseData.put("userId" , account.getUserId());
+            responseData.put("pwd" , account.getPwd());
+            responseData.put("url" , account.getUrl());
+            responseData.put("con" , account.getCon());
+            
+        }else if(account.getloadType().equals("getInfo")){
+        	
+        	String[] accountData = new String[4];
+        	
+        	accountData[0] = account.getUserId();
+        	accountData[1] = account.getPwd();
+        	accountData[2] = account.getUrl();
+        	accountData[3] = account.getCon();
+        	
+        	responseData = getInfo.main(accountData);
+        
+        }else if(account.getloadType().equals("getOffers")){
+        	
+        	String[] accountData = new String[5];
+        	
+        	accountData[0] = account.getInstrument();
+        	accountData[1] = account.getUserId();
+        	accountData[2] = account.getPwd();
+        	accountData[3] = account.getUrl();
+        	accountData[4] = account.getCon();
+        	
+//        	listData = getOffers.main(accountData);
+       
+        }else if(account.getloadType().equals("getTrade")){
+        	String[] accountData = new String[4];
+        	
+        	accountData[0] = account.getUserId();
+        	accountData[1] = account.getPwd();
+        	accountData[2] = account.getUrl();
+        	accountData[3] = account.getCon();
+        	
+        	listData = getTrade.main(accountData);
+        }
+        
+        try {
+        	mapper.writeValue(response.getOutputStream(), listData);
+        } catch (JsonGenerationException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+        
+	}
+
+}

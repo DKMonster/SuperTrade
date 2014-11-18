@@ -28,7 +28,7 @@
 			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
 	</head>
-	<body>
+	<body onload="onLoad()">
 		<!-- start to website. -->
 
 		<div class="wrapper" id="wrapper">
@@ -100,7 +100,7 @@
 					<div class="text">Orders</div>
 					<div class="setting"><i class="icon-cog"></i></div>
 				</div>
-				<div class="orders">
+				<div class="openpositions">
 					<div class="table_info" id="table_info">
 						<div class="title">
 							<div class="icon"><i class="icon-edit"></i></div>
@@ -108,15 +108,15 @@
 							<div class="list"><i class="icon-th-list"></i></div>
 							<div class="plus"><i class="icon-plus"></i></div>
 						</div>
-						<div class="content">
-							<table class="table table-striped table-hover">
+						<div class="allTable content">
+							<table class="table">
 								<thead>
 									<tr>
 										<th>#</th>
 										<th>成交單據</th>
 										<th>帳號</th>
 										<th>商品</th>
-										<th>數量</th>
+										<th>數量(K)</th>
 										<th>賣/買</th>
 										<th>開市價</th>
 										<th>收市價</th>
@@ -129,166 +129,45 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr class="active">
-										<td>1</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
+									<!-- content -->
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="summary">
+					<div class="table_info" id="table_info">
+						<div class="title">
+							<div class="icon"><i class="icon-edit"></i></div>
+							<div class="text">總結</div>
+							<div class="list"><i class="icon-th-list"></i></div>
+							<div class="plus"><i class="icon-plus"></i></div>
+						</div>
+						<div class="allTable content">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>商品</th>
+										<th>賣出盈/虧</th>
+										<th>賣出數量(K)</th>
+										<th>平均賣價</th>
+										<th>買入平倉</th>
+										<th>賣出平倉</th>
+										<th>平娟買價</th>
+										<th>買進數量(K)</th>
+										<th>買進盈虧(K)</th>
+										<th>買進盈虧</th>
+										<th>數量(K)</th>
+										<th>總盈虧</th>
+										<th>淨盈虧</th>
+										<th>淨止損</th>
+										<th>淨移動止損</th>
+										<th>淨限價</th>
 									</tr>
-									<tr class="active">
-										<td>2</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-									</tr>
-									<tr class="active">
-										<td>3</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-									</tr>
-									<tr class="active">
-										<td>4</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-									</tr>
-									<tr class="active">
-										<td>5</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-									</tr>
-									<tr class="active">
-										<td>6</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-									</tr>
-									<tr class="active">
-										<td>7</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-									</tr>
-									<tr class="active">
-										<td>8</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-									</tr>
-									<tr class="active">
-										<td>9</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-									</tr>
-									<tr class="active">
-										<td>10</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-										<td>Content</td>
-									</tr>
+								</thead>
+								<tbody>
+									<!-- content -->
 								</tbody>
 							</table>
 						</div>
@@ -320,5 +199,31 @@
 		<script type="text/javascript" src="assets/js/plugin/jquery.nicescroll.min.js"></script>
 		<!-- ********** JS Main ********** -->
 		<script type="text/javascript" src="assets/js/orders.js"></script>
+
+		<script type="text/javascript">
+
+			function onLoad(){
+				$.ajax({
+					async: true,
+					url: "/SuperTrade/assets/php/existSession.php",
+					type: "POST",
+					success: function (msg) {
+						if (msg == "success") {
+							// 正確
+						} else if (msg == "fail") {
+							// 錯誤
+							window.location.href = 'index.html';
+						}
+					},
+					error: function (xhr, ajaxOptions, thrownError) {
+						console.log(xhr.status);
+						console.log(xhr.statusText);
+						console.log(xhr.responseText);
+						return false;
+					}
+				});
+			}
+
+		</script>
 	</body>
 </html>

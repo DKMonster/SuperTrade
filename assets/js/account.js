@@ -36,7 +36,7 @@ $(document).ready(function() {
 
 	$.ajax({
 		async: true,
-		url: "/assets/php/getAccount.php",
+		url: "/SuperTrade/assets/php/getAccount.php",
 		type: "POST",
 		dataType: "JSON",
 		success: function (msg) {
@@ -59,13 +59,13 @@ $(document).ready(function() {
 	function data_loading(msg){
 		console.log(msg);
 		/* slide data */
-		s_pic.attr('src','/assets/user/img/' + msg['user_picture']);
+		s_pic.attr('src','/SuperTrade/assets/user/img/' + msg['user_picture']);
 		s_name.html(msg['user_nickname']);
 		s_balance.html("$500.00");
 		s_date.html(msg['user_login_date']);
 
 		/* edit data */
-		user_pic.attr('src','/assets/user/img/' + msg['user_picture']);
+		user_pic.attr('src','/SuperTrade/assets/user/img/' + msg['user_picture']);
 		user_nickname.val(msg['user_nickname']);
 		user_email.val(msg['user_email']);
 
@@ -91,34 +91,33 @@ $(document).ready(function() {
 
 	}
 
-	test();
+	// test();
 
-	function test(){
-		var obj_account = new Object();
-		obj_account.loadType = "getInfo";
-		obj_account.userId = "D172574180001";
-		obj_account.pwd = "7384";
-		obj_account.url = "http://www.fxcorporate.com/Hosts.jsp";
-		obj_account.con = "Demo";
+	// function test(){
+	// 	var obj_account = new Object();
+	// 	obj_account.loadType = "getInfo";
+	// 	obj_account.userId = "D172574180001";
+	// 	obj_account.pwd = "7384";
+	// 	obj_account.con = "Demo";
 
-		$.ajax({
-			url: "http://localhost:8080/ForexConnectAPI/AjaxServlet",
-			type: 'POST',
-			dataType: 'json',
-			data: JSON.stringify(obj_account),
-			contentType: 'application/json',
-			mimeType: 'application/json',
-			success: function(data) {
-				console.log(data);
-			},
-			error: function (xhr, ajaxOptions, thrownError) {
-				console.log(xhr.status);
-				console.log(xhr.statusText);
-				console.log(xhr.responseText);
-				console.log(ajaxOptions);
-				console.log(thrownError);
-				return false;
-			}
-		});
-	}
+	// 	$.ajax({
+	// 		url: "http://localhost:8080/ForexConnectAPI/AjaxServlet",
+	// 		type: 'POST',
+	// 		dataType: 'json',
+	// 		data: JSON.stringify(obj_account),
+	// 		contentType: 'application/json',
+	// 		mimeType: 'application/json',
+	// 		success: function(data) {
+	// 			console.log(data);
+	// 		},
+	// 		error: function (xhr, ajaxOptions, thrownError) {
+	// 			console.log(xhr.status);
+	// 			console.log(xhr.statusText);
+	// 			console.log(xhr.responseText);
+	// 			console.log(ajaxOptions);
+	// 			console.log(thrownError);
+	// 			return false;
+	// 		}
+	// 	});
+	// }
 });

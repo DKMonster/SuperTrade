@@ -1,0 +1,26 @@
+package com.supertrade.dkmonster;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import com.fxcore2.*;
+
+public class getOpenPositions {
+
+	static Map[] data;
+	static Map<String, Object> responseData = new HashMap<String, Object>();
+
+	public static Map[] main(String[] args) {
+		// Connection and session variables
+        String mUserID = "";
+        String mPassword = "";
+        String mURL = "";
+        String mConnection = "";
+        String mDBName = "";
+        String mPin = "";
+        O2GSession mSession = null;
+		
+		return data;
+	}
+
+}
