@@ -9,7 +9,7 @@
 $wrapper-bg: #222
 $header-bg: #222
 $slider-bg: #333
-$content-bg: $slider-bg
+$content-bg: #222
 $footer-bg: $header-bg
 
 $slider-title-bg: $slider-bg
@@ -22,8 +22,8 @@ $footer-w: 100%
 
 $wrapper-h: auto
 $header-h: 50px
-$slider-h: auto
-$content-h: auto
+$slider-h: 700px
+$content-h: 700px
 $footer-h: 100px
 
 $slider-title-border: 1px solid #fff
@@ -132,7 +132,6 @@ body
 
 		.menu
 			+w-h(100% , 500px)
-			+bottomShadow()
 
 			li
 				+w-h(100% , 50px)
@@ -166,6 +165,7 @@ body
 		.title
 			+w-h(100% , 50px)
 			+bottomShadow()
+			background: #333
 
 			.icon
 				float: left

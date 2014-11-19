@@ -488,6 +488,9 @@ body {
   background: #222222;
   overflow: auto;
 }
+.wrapper .content .offers .table_info .content .table {
+  overflow: hidden;
+}
 .wrapper .content .offers .table_info .content th {
   color: white;
   border-bottom: 1px solid rgba(0, 0, 0, 0.3);
@@ -502,6 +505,35 @@ body {
   -webkit-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
   -moz-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
   box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  min-width: 120px;
+  text-align: center;
+}
+.wrapper .content .offers .table_info .content td {
+  background: #eeeeee;
+  text-align: center;
+  height: 30px;
+  line-height: 30px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
+  -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
+  border-left: 1px solid rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  -moz-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  border-right: 1px solid rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  -moz-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+}
+.wrapper .content .offers .table_info .content .high {
+  background: #ff8888;
+}
+.wrapper .content .offers .table_info .content .low {
+  background: #8888ff;
+}
+.wrapper .content .offers .table_info .content .nor {
+  background: #888888;
 }
 .wrapper .footer {
   width: 100%;

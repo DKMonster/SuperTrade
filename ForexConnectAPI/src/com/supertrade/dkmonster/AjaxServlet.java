@@ -33,6 +33,7 @@ public class AjaxServlet extends HttpServlet {
      */
 
 	Object[] listData;
+	int backData = 0;
 	Map<String, Object> responseData = new HashMap<String, Object>();
    
    
@@ -73,13 +74,16 @@ public class AjaxServlet extends HttpServlet {
 
         if(account.getloadType().equals("getAccount")){
         	
-//        	responseData.put("loadType", account.getloadType());
+        	backData = 1;
+        	
             responseData.put("userId" , account.getUserId());
             responseData.put("pwd" , account.getPwd());
             responseData.put("url" , account.getUrl());
             responseData.put("con" , account.getCon());
             
         }else if(account.getloadType().equals("getInfo")){
+        	
+        	backData = 1;
         	
         	String[] accountData = new String[4];
         	
@@ -91,6 +95,8 @@ public class AjaxServlet extends HttpServlet {
         	responseData = getInfo.main(accountData);
         
         }else if(account.getloadType().equals("getOffers")){
+
+        	backData = 2;
         	
         	String[] accountData = new String[5];
         	
@@ -103,6 +109,9 @@ public class AjaxServlet extends HttpServlet {
         	listData = getOffers.main(accountData);
        
         }else if(account.getloadType().equals("getTrade")){
+        	
+        	backData = 2;
+        	
         	String[] accountData = new String[4];
         	
         	accountData[0] = account.getUserId();
@@ -114,7 +123,11 @@ public class AjaxServlet extends HttpServlet {
         }
         
         try {
-        	mapper.writeValue(response.getOutputStream(), listData);
+        	if(backData == 1) {
+            	mapper.writeValue(response.getOutputStream(), responseData);
+        	}else if(backData == 2) {
+            	mapper.writeValue(response.getOutputStream(), listData);
+        	}
         } catch (JsonGenerationException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

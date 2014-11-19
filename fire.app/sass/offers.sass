@@ -226,11 +226,34 @@ body
 					background: #222
 					overflow: auto
 
+					.table
+						overflow: hidden
+
 					th
 						color: #fff
 						+bottomShadow()
 						+leftShadow()
 						+rightShadow()
+						min-width: 120px
+						text-align: center
+
+					td
+						background: #eee
+						text-align: center
+						height: 30px
+						line-height: 30px
+						+bottomShadow()
+						+leftShadow()
+						+rightShadow()
+
+					.high
+						background: #f88
+
+					.low
+						background: #88f
+
+					.nor
+						background: #888
 
 
 	.footer

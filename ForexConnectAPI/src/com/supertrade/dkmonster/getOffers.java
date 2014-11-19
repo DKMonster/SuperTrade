@@ -16,10 +16,9 @@ import com.fxcore2.O2GTransport;
 
 public class getOffers {
 
-	static String[] listData;
-	static Map<String, Object> responseData = new HashMap<String, Object>();
+	static Map[] Data;
 
-	public static String[] main(String[] args) {
+	public static Map[] main(String[] args) {
 	    
         // Connection and session variables
         String mUserID = "";
@@ -77,7 +76,7 @@ public class getOffers {
                     offers = (O2GOffersTable)manager.getTable(O2GTableType.OFFERS);                    
                     getOffers(offers);
                     
-                    System.out.print(mInstrument);
+//                    System.out.print(mInstrument);
                     
                     listener = new OffersListener();                            
                     listener.SetInstrumentFilter(mInstrument);
@@ -86,8 +85,8 @@ public class getOffers {
                                         
                 }
                 
-                System.out.println("Press enter to stop!");
-                System.in.read();
+//                System.out.println("Press enter to stop!");
+//                System.in.read();
                 
                 if (offers != null) {
                     offers.unsubscribeUpdate(O2GTableUpdateType.UPDATE, listener);
@@ -100,11 +99,12 @@ public class getOffers {
             }
             mSession.unsubscribeSessionStatus(statusListener);            
             mSession.dispose();
+    		return Data;
         } catch (Exception e) {
             System.out.println ("Exception: " + e.getMessage());
-            System.exit(1);
+//            System.exit(1);
+    		return Data;
         }
-		return listData;
     }
     
     // Get offers information
@@ -113,8 +113,9 @@ public class getOffers {
                 O2GOfferTableRow offer = null;
                 O2GTableIterator iterator = new O2GTableIterator();
                 offer = offers.getNextRow(iterator);
-                int i = 0;
-                while (offer != null) { 
+                Data = new Map[offers.size()];
+                for(int i = 0 ; i < offers.size(); i++) {
+                	HashMap<String, Object> responseData = new HashMap<String, Object>();
                     responseData.put("OfferID" , offer.getOfferID());
                     responseData.put("Instrument" , offer.getInstrument());
                     responseData.put("QuoteID" , offer.getQuoteID());
@@ -136,8 +137,9 @@ public class getOffers {
                     responseData.put("ContractMultiplier" , offer.getContractMultiplier());
                     responseData.put("ValueDate" , offer.getValueDate());
                     responseData.put("Time" , offer.getTime());
-                    listData[i] = String.valueOf(responseData);
-                    i++;
+//                    System.out.println(responseData);
+                    Data[i] = responseData;
+//                    System.out.println(Data[i]);
                     offer = offers.getNextRow(iterator);
                 }
         } catch (Exception e) {

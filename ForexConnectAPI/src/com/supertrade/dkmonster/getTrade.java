@@ -107,7 +107,7 @@ public class getTrade {
                         responseData.put("PL", trade.getPL());
                         responseData.put("Stop", trade.getStop());
                         Data[i] = responseData;
-                        System.out.println(Data[i]);
+//                        System.out.println(Data[i]);
                     }
  
 //                    // Create an instance of a table listener class

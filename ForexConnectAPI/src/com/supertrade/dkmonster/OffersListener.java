@@ -23,7 +23,7 @@ public class OffersListener implements IO2GTableListener {
         if (mInstrument == null || mInstrument.isEmpty() || row.getInstrument().equals(mInstrument)) {
             System.out.println("Instrument = " + row.getInstrument() +
                                " Bid Price = " +  row.getBid() +
-                               " Ask Price = " + row.getAsk());             
+                               " Ask Price = " + row.getAsk());
         }
     }
 
