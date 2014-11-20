@@ -1,9 +1,13 @@
 $(document).ready(function() {
-	var body = $('body , html');
-	body.niceScroll({
+
+	var frameAccount = $('.account');
+	var userHistory = frameAccount.find('#user_history');
+	var hisTable = userHistory.find('.content');
+	
+	frameAccount.niceScroll({
+		cursorwidth: 10,
 		horizrailenabled: false
 	});
-
 
 	var slider = $('#slider');
 	var s_pic = slider.find('#user_pic');
@@ -27,13 +31,6 @@ $(document).ready(function() {
 	var security_pep_on = user_security.find('#pep_on');
 	var security_pep_off = user_security.find('#pep_off');
 
-	var history = $('#user_history');
-	var h_content = history.find('.content');
-
-	h_content.niceScroll({
-		horizrailenabled: false
-	});
-
 	$.ajax({
 		async: true,
 		url: "/SuperTrade/assets/php/getAccount.php",
@@ -45,7 +42,7 @@ $(document).ready(function() {
 				data_loading(msg);
 			} else if (msg['msg'] == "fail") {
 				// 錯誤
-				console.log("發生不知名錯誤!")
+				console.log("發生不知名錯誤!");
 			}
 		},
 		error: function (xhr, ajaxOptions, thrownError) {
@@ -57,7 +54,7 @@ $(document).ready(function() {
 	});
 
 	function data_loading(msg){
-		console.log(msg);
+		// console.log(msg);
 		/* slide data */
 		s_pic.attr('src','/SuperTrade/assets/user/img/' + msg['user_picture']);
 		s_name.html(msg['user_nickname']);

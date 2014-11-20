@@ -120,18 +120,6 @@ public class AjaxServlet extends HttpServlet {
         	accountData[3] = account.getCon();
         	
         	listData = getTrade.main(accountData);
-        }else if(account.getloadType().equals("getNews")){
-        	
-        	backData = 2;
-        	
-        	String[] accountData = new String[4];
-        	
-        	accountData[0] = account.getUserId();
-        	accountData[1] = account.getPwd();
-        	accountData[2] = account.getUrl();
-        	accountData[3] = account.getCon();
-        	
-        	listData = getNews.main(accountData);
         }
         
         try {

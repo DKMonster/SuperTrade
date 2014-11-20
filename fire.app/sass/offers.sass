@@ -9,10 +9,10 @@
 $wrapper-bg: #222
 $header-bg: #222
 $slider-bg: #333
-$content-bg: $slider-bg
-$footer-bg: $header-bg
+$content-bg: #333
+$footer-bg: #222
 
-$slider-title-bg: $slider-bg
+$slider-title-bg: #333
 
 $wrapper-w: 100%
 $header-w: 100%
@@ -20,11 +20,18 @@ $slider-w: 20%
 $content-w: 80%
 $footer-w: 100%
 
-$wrapper-h: auto
+$wrapper-h: 100%
 $header-h: 50px
-$slider-h: auto
-$content-h: auto
-$footer-h: 100px
+$slider-h: 100%
+$content-h: 100%
+$footer-h: 50px
+
+$s-user-h: 150px
+$s-title-h: 36px
+$s-menu-h: 100%
+
+$c-title-h: 50px
+$c-content-h: 100%
 
 $slider-title-border: 1px solid #fff
 
@@ -45,6 +52,10 @@ li , ul
 
 body
 	color: #222
+
+html , body
+	+w-h(100% , 100%)
+	overflow: hidden
 
 /* ----------- Mixin ----------- */
 @mixin baseText($color , $size , $bold , $lineH , $align)
@@ -97,14 +108,15 @@ body
 				padding: 0 20px
 
 	.slider
-		+w-h($slider-w , $slider-h)
+		+w-h($slider-w , "")
+		+calc(height , #{$slider-h} - (#{$header-h} - #{$footer-h}))
 		background: $slider-bg
 		float: left
+		overflow: hidden
 		+rightShadow()
-		+bottomShadow()
 
 		.user
-			+w-h(100% , 150px)
+			+w-h(100% , $s-user-h)
 			padding: 20px 10px
 
 			img
@@ -117,11 +129,11 @@ body
 				+baseText(#fff , 12px , 700 , 20px , left)
 
 				i
-					padding-right: 10px
+					padding-right: 5px
 					float: left
 
 		.title
-			+w-h(100% , 36px)
+			+w-h(100% , $s-title-h)
 			background: $slider-title-bg
 			+bottomShadow()
 
@@ -131,7 +143,8 @@ body
 
 
 		.menu
-			+w-h(100% , 500px)
+			+w-h(100% , "")
+			+calc(height , #{$s-menu-h} - #{$s-user-h} - #{$s-title-h})
 			+bottomShadow()
 
 			li
@@ -159,13 +172,14 @@ body
 					
 
 	.content
-		+w-h($content-w , $content-h)
+		+w-h($content-w , "")
+		+calc(height , #{$content-h} - #{$header-h} - #{$footer-h})
 		background: $content-bg
 		float: right
-		+bottomShadow()
+		overflow: hidden
 
 		.title
-			+w-h(100% , 50px)
+			+w-h(100% , $c-title-h)
 			+bottomShadow()
 
 			.icon
@@ -184,18 +198,24 @@ body
 				+baseText(#fff , 20px , 300 , 50px , left)
 
 		.offers
-			+w-h(100% , 636px)
+			+w-h(100% , "")
+			+calc(height , #{$c-content-h} - #{$c-title-h})
 			+bottomShadow()
 			padding: 10px
 			background: #222
 
 			.table_info
-				+w-h(100% , 300px)
+				+w-h(100% , 100%)
 				padding: 10px
+				display: block
+				float: left
 
 				.title
-					+w-h(100% , 50px)
+					+w-h(100% , $c-title-h)
 					background: #222
+					+topShadow()
+					+leftShadow()
+					+rightShadow()
 
 					.icon
 						float: left
@@ -222,38 +242,57 @@ body
 							+transition(all .20s ease-in-out)
 
 				.content
-					+w-h(100% , 250px + 306px)
+					+w-h(100% , "")
+					+calc(height , #{$c-content-h} - #{$c-title-h})
 					background: #222
 					overflow: auto
+					+leftShadow()
+					+rightShadow()
+					+bottomShadow()
 
 					.table
 						overflow: hidden
 
-					th
-						color: #fff
-						+bottomShadow()
-						+leftShadow()
-						+rightShadow()
-						min-width: 120px
-						text-align: center
+					thead
 
-					td
-						background: #eee
-						text-align: center
-						height: 30px
-						line-height: 30px
-						+bottomShadow()
-						+leftShadow()
-						+rightShadow()
+						th
+							color: #fff
+							+bottomShadow()
+							+leftShadow()
+							+rightShadow()
+							min-width: 120px
+							font-weight: bold
+							text-align: center
+
+					tbody
+
+						td
+							text-align: center
+							height: 30px
+							color: #fff
+							line-height: 30px
+							+bottomShadow()
+							+leftShadow()
+							+rightShadow()
+
+						tr:hover
+							cursor: pointer
+							background: #eee
+
+							td
+								color: #222
+								font-weight: bold
 
 					.high
+						color: #fff
 						background: #f88
 
 					.low
+						color: #fff
 						background: #88f
 
 					.nor
-						background: #888
+						background: #333
 
 
 	.footer
@@ -263,9 +302,9 @@ body
 		+topShadow()
 
 		p
-			+w-h(400px , 100px)
+			+w-h(400px , 50px)
 			margin: 0 auto
-			+baseText(#fff , 14px , 700 , 100px , center)
+			+baseText(#fff , 14px , 700 , 50px , center)
 
 			a
 				color: #fff

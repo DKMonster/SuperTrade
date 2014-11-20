@@ -1,14 +1,51 @@
 $(document).ready(function() {
-	var body = $('body , html');
-	body.niceScroll({
-		horizrailenabled: false
-	});
+
+	var slider = $('#slider');
+	var s_pic = slider.find('#user_pic');
+	var s_name = slider.find('#user_name').find('.name');
+	var s_balance = slider.find('#user_balance').find('.balance');
+	var s_date = slider.find('#user_date').find('.date');
 
 	var content = $('#content');
+	var orders = content.find('#orders');
 	var allTable = content.find('.allTable');
 	var openpositions = content.find('.openpositions');
 	var tableOrders = openpositions.find('.content');
-	allTable.niceScroll({});
+	
+	tableOrders.niceScroll({
+		cursorwidth: 10
+	});
+
+	$.ajax({
+		async: true,
+		url: "/SuperTrade/assets/php/getAccount.php",
+		type: "POST",
+		dataType: "JSON",
+		success: function (msg) {
+			if (msg['msg'] == "success") {
+				// 正確
+				data_loading(msg);
+			} else if (msg['msg'] == "fail") {
+				// 錯誤
+				console.log("發生不知名錯誤!");
+			}
+		},
+		error: function (xhr, ajaxOptions, thrownError) {
+			console.log(xhr.status);
+			console.log(xhr.statusText);
+			console.log(xhr.responseText);
+			return false;
+		}
+	});
+
+	function data_loading(msg){
+		// console.log(msg);
+		/* slide data */
+		s_pic.attr('src','/SuperTrade/assets/user/img/' + msg['user_picture']);
+		s_name.html(msg['user_nickname']);
+		s_balance.html("$500.00");
+		s_date.html(msg['user_login_date']);
+	}
 
 	// 開倉部位
 	OpenPositions();
