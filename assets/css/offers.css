@@ -605,3 +605,114 @@ html, body {
 .wrapper .footer p a {
   color: white;
 }
+.wrapper .entryOrder {
+  position: absolute;
+  left: 0;
+  top: 50px;
+  width: 20%;
+  height: -webkit-calc(100% - 50px);
+  height: -moz-calc(100% - 50px);
+  height: calc(100% - 50px);
+  background: #eeeeee;
+}
+.wrapper .entryOrder .eoHeader {
+  width: 100%;
+  height: 50px;
+  background: #222222;
+  display: block;
+}
+.wrapper .entryOrder .eoHeader .title {
+  float: left;
+  padding-left: 5px;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 50px;
+  text-align: left;
+}
+.wrapper .entryOrder .eoHeader .close {
+  float: right;
+  padding-right: 5px;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 50px;
+  text-align: left;
+}
+.wrapper .entryOrder .eoContent {
+  width: 100%;
+  height: -webkit-calc(100% - 50px);
+  height: -moz-calc(100% - 50px);
+  height: calc(100% - 50px);
+  display: block;
+}
+.wrapper .entryOrder .eoContent .level {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin-top: 10px;
+  border: 1px solid #222222;
+}
+.wrapper .entryOrder .eoContent .level .title {
+  width: 100px;
+  height: 15px;
+  margin-top: -5px;
+  margin-left: 5px;
+  background: #eeeeee;
+  color: #222222;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 15px;
+  text-align: center;
+}
+.wrapper .entryOrder .eoContent .level .optLabel {
+  width: 100%;
+  height: 30px;
+  color: #222222;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 30px;
+  text-align: left;
+}
+.wrapper .entryOrder .eoContent .level .optLabel .text {
+  color: #222222;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 30px;
+  text-align: left;
+}
+.wrapper .entryOrder .eoContent .level .optLabel select {
+  width: 100%;
+  height: 20px;
+}
+.wrapper .entryOrder .eoContent .level .optLabel input[type="number"] {
+  width: 100%;
+  height: 20px;
+}
+.wrapper .entryOrder .eoContent .level .optLabel p {
+  width: 100%;
+  height: 20px;
+  color: #222222;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 30px;
+  text-align: left;
+}
+.wrapper .entryOrder .eoContent .level .optLabel .radio {
+  width: 50px;
+  height: 30px;
+  float: left;
+  margin-top: 0px;
+  display: block;
+  color: #222222;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 30px;
+  text-align: left;
+}
+.wrapper .entryOrder .eoContent .level .optLabel .radio input {
+  margin-top: 5px;
+}
+.wrapper .entryOrder .eoContent .level .optLabel .radio:last-child {
+  float: right;
+}

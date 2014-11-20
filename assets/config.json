@@ -31,6 +31,12 @@
       "src": "fontawesome"
     },
     {
+      "uid": "5211af474d3a9848f67f945e2ccaf143",
+      "css": "cancel",
+      "code": 59414,
+      "src": "fontawesome"
+    },
+    {
       "uid": "44e04715aecbca7f266a17d5a7863c68",
       "css": "plus",
       "code": 59407,
@@ -76,6 +82,12 @@
       "uid": "e99461abfef3923546da8d745372c995",
       "css": "cog",
       "code": 59393,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "9affc98d652b86628d650ee58dbf0357",
+      "css": "basket",
+      "code": 59415,
       "src": "fontawesome"
     },
     {

@@ -19,12 +19,14 @@ $header-w: 100%
 $slider-w: 20%
 $content-w: 80%
 $footer-w: 100%
+$entryOrder-w: 20%
 
 $wrapper-h: 100%
 $header-h: 50px
 $slider-h: 100%
 $content-h: 100%
 $footer-h: 50px
+$entryOrder-h: 100%
 
 $s-user-h: 150px
 $s-title-h: 36px
@@ -308,3 +310,77 @@ html , body
 
 			a
 				color: #fff
+
+	.entryOrder
+		position: absolute
+		left: 0
+		top: $header-h
+		+w-h(20% , "")
+		+calc(height , #{$entryOrder-h} - #{$header-h})
+		background: #eee
+
+		.eoHeader
+			+w-h(100% , 50px)
+			background: #222
+			display: block
+
+			.title
+				float: left
+				padding-left: 5px
+				+baseText(#fff , 18px , 700 , 50px , left)
+
+			.close
+				float: right
+				padding-right: 5px
+				+baseText(#fff , 18px , 700 , 50px , left)
+
+		.eoContent
+			+w-h(100% , "")
+			+calc(height , #{$entryOrder-h} - #{$header-h})
+			display: block
+
+
+
+			.level
+				+w-h(100% , auto)
+				display: block
+				margin-top: 10px
+				border: 1px solid #222
+
+				.title
+					+w-h(100px , 15px)
+					margin-top: -5px
+					margin-left: 5px
+					background: #eee
+					+baseText(#222 , 12px , 700 , 15px , center)
+
+				.optLabel
+					+w-h(100% , 30px)
+					+baseText(#222 , 12px , 700 , 30px , left)
+
+					.text
+						+baseText(#222 , 12px , 700 , 30px , left)
+
+					select
+						+w-h(100% , 20px)
+
+					input[type="number"]
+						+w-h(100% , 20px)
+
+					p
+						+w-h(100% , 20px)
+						+baseText(#222 , 12px , 700 , 30px , left)
+
+					.radio
+						width: 50px
+						height: 30px
+						float: left
+						margin-top: 0px
+						display: block
+						+baseText(#222 , 12px , 700 , 30px , left)
+
+						input
+							margin-top: 5px
+
+					.radio:last-child
+						float: right
