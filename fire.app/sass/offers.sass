@@ -313,9 +313,9 @@ html , body
 
 	.entryOrder
 		position: absolute
-		left: 0
+		left: -280px
 		top: $header-h
-		+w-h(20% , "")
+		+w-h(280px , "")
 		+calc(height , #{$entryOrder-h} - #{$header-h})
 		background: #eee
 
@@ -356,9 +356,14 @@ html , body
 
 				.optLabel
 					+w-h(100% , 30px)
+					margin-bottom: 5px
 					+baseText(#222 , 12px , 700 , 30px , left)
 
 					.text
+						+baseText(#222 , 12px , 700 , 30px , left)
+
+					.text3
+						margin-top: 10px
 						+baseText(#222 , 12px , 700 , 30px , left)
 
 					select
@@ -375,12 +380,120 @@ html , body
 						width: 50px
 						height: 30px
 						float: left
-						margin-top: 0px
+						margin-top: 10px
 						display: block
 						+baseText(#222 , 12px , 700 , 30px , left)
 
 						input
-							margin-top: 5px
+							margin-top: 8px
 
 					.radio:last-child
 						float: right
+
+					button
+						margin-top: 3px
+						+w-h(30% , 30px)
+
+					.cancel
+						float: left
+
+					.ok
+						float: right
+
+				.optLabel:nth-child(4)
+					+w-h(100% , 40px)
+
+
+	.marketOrder
+		position: absolute
+		left: -280px
+		top: $header-h
+		+w-h(280px , "")
+		+calc(height , #{$entryOrder-h} - #{$header-h})
+		background: #eee
+
+		.moHeader
+			+w-h(100% , 50px)
+			background: #222
+			display: block
+
+			.title
+				float: left
+				padding-left: 5px
+				+baseText(#fff , 18px , 700 , 50px , left)
+
+			.close
+				float: right
+				padding-right: 5px
+				+baseText(#fff , 18px , 700 , 50px , left)
+
+		.moContent
+			+w-h(100% , "")
+			+calc(height , #{$entryOrder-h} - #{$header-h})
+			display: block
+
+
+
+			.level
+				+w-h(100% , auto)
+				display: block
+				margin-top: 10px
+				border: 1px solid #222
+
+				.title
+					+w-h(100px , 15px)
+					margin-top: -5px
+					margin-left: 5px
+					background: #eee
+					+baseText(#222 , 12px , 700 , 15px , center)
+
+				.optLabel
+					+w-h(100% , 25px)
+					margin-bottom: 5px
+					+baseText(#222 , 12px , 700 , 25px , left)
+
+					.text
+						+baseText(#222 , 12px , 700 , 25px , left)
+
+					.text3
+						margin-top: 10px
+						+baseText(#222 , 12px , 700 , 25px , left)
+
+					select
+						+w-h(100% , 20px)
+
+					input[type="number"]
+						+w-h(100% , 20px)
+
+					p
+						+w-h(100% , 20px)
+						+baseText(#222 , 12px , 700 , 25px , left)
+
+					.radio
+						width: 50px
+						height: 30px
+						float: left
+						margin-top: 10px
+						display: block
+						+baseText(#222 , 12px , 700 , 25px , left)
+
+						input
+							margin-top: 8px
+
+					.radio:last-child
+						float: right
+
+					button
+						display: block
+						+w-h(30% , 30px)
+
+					.cancel
+						float: left
+
+					.ok
+						float: right
+
+				.optLabel:nth-child(4)
+					+w-h(100% , 40px)
+
+

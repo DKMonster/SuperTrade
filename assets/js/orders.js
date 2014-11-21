@@ -11,6 +11,8 @@ $(document).ready(function() {
 	var allTable = content.find('.allTable');
 	var openpositions = content.find('.openpositions');
 	var tableOrders = openpositions.find('.content');
+
+	var first = 0;
 	
 	tableOrders.niceScroll({
 		cursorwidth: 10
@@ -65,11 +67,17 @@ $(document).ready(function() {
 			contentType: 'application/json',
 			mimeType: 'application/json',
 			success: function(data) {
+
 				var tbody = tableOrders.find('tbody');
-				console.log(data);
+
+				// console.log(data);
+
+				// init
+				tbody.empty();
+
 				for(var i = 0 ; i < data.length ; i++){
 					tbody.append(
-						'<tr>'+
+						'<tr data-id="'+data[i]['TradeID']+'">'+
 							'<td>'+(i+1)+'</td>'+
 							'<td>'+data[i]['TradeID']+'</td>'+
 							'<td>'+data[i]['AccountID']+'</td>'+
@@ -87,6 +95,21 @@ $(document).ready(function() {
 						'</tr>'
 						);
 				}
+
+				// CloseOrder cpOrder
+				var cpOrder = $('.closePositions');
+				var cpSelect = cpOrder.find('#cpOrder');
+				cpSelect.change(function(){
+					var data = $(this).val();
+					checkCPRate(data);
+				});
+				
+
+				closeOrder();
+
+				createCloseOrder();
+
+				setTimeout(OpenPositions , 10000);
 			},
 			error: function (xhr, ajaxOptions, thrownError) {
 				console.log(xhr.status);
@@ -96,6 +119,63 @@ $(document).ready(function() {
 				console.log(thrownError);
 				return false;
 			}
+		});
+	}
+
+	function closeOrder(){
+		var tr;
+		var cpOrder = $('.closePositions').find('#cpOrder');
+
+		cpOrder.empty();
+
+		for(var i = 0 ; i < tableOrders.find('tr').length ; i++){
+			tr = tableOrders.find('tr:nth-child('+(i+1)+')');
+			td = tr.find('td:nth-child(2)').html();
+			cpOrder.append('<option value="'+td+'">'+td+'</option>');
+		}
+
+		checkCPRate();
+	}
+
+	function checkCPRate(cpData){
+		var cpOrder = $('.closePositions');
+		var cpRate = cpOrder.find('.cpRate');
+
+		if(cpData == null){
+			cpData = cpOrder.find('#cpOrder :selected').val();
+		}
+
+		var data = tableOrders.find('tr[data-id="'+cpData+'"]').find('td:nth-child(8)').html();
+
+		cpRate.val(data);
+
+		id = tableOrders.find('tr[data-id="'+cpData+'"]').data('id');
+		cpOrder.attr("data-id",id);
+	}
+
+	function createCloseOrder(){
+		var cpOrder = $('.closePositions');
+
+		var btnOK = cpOrder.find('#ok');
+		var btnCancel = cpOrder.find('#cancel');
+		var btnClose = cpOrder.find('#close');
+
+		var plus = $('#plusCloseOrder');
+
+		plus.on('click' , function(){
+			cpOrder.transition({ x: 280 });
+		});
+
+		btnClose.on('click' , function(){
+			cpOrder.transition({ x: 0 });
+		});
+
+		btnCancel.on('click' , function(){
+			cpOrder.transition({ x: 0 });
+		});
+
+		btnOK.on('click' , function(){
+
 		});
 	}
 

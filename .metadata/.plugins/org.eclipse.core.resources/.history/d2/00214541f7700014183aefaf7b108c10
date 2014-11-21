@@ -1,0 +1,100 @@
+package com.supertrade.dkmonster;
+
+import java.util.Map;
+
+import com.fxcore2.O2GOffersTable;
+import com.fxcore2.O2GRequestFactory;
+import com.fxcore2.O2GSession;
+import com.fxcore2.O2GTableManager;
+import com.fxcore2.O2GTableManagerMode;
+import com.fxcore2.O2GTableManagerStatus;
+import com.fxcore2.O2GTableType;
+import com.fxcore2.O2GTableUpdateType;
+import com.fxcore2.O2GTransport;
+
+public class CreateEntryOrder {
+
+	static Map[] Data;
+
+	public static Map[] main(String[] args) {
+	    
+        // Connection and session variables
+        String mUserID = "";
+        String mPassword = "";
+        String mURL = "";
+        String mConnection = "";
+        String mDBName = "";
+        String mPin = "";
+        O2GSession mSession = null;
+        String mInstrument = "";
+        
+        // Check for correct number of arguments
+        if (args.length < 5) {
+            System.out.println("Not Enough Parameters!");
+            System.out.println("USAGE: [instrument] [user ID] [password] [URL] [connection] [session ID (if needed)] [pin (if needed)]");
+            System.exit(1);
+        }
+        
+        // Get command line arguments
+        mInstrument = args[0];
+        mUserID = args[1];
+        mPassword = args[2];
+        mURL = args[3];
+        mConnection = args[4];
+        if (args.length > 5) {
+            mDBName = args[5];
+        }
+        if (args.length > 6) {
+            mPin = args[6];
+        }
+        
+        // Create a session, subscribe to session listener, login, get offers, logout
+        try {
+            mSession = O2GTransport.createSession();
+            SessionStatusListener statusListener = new SessionStatusListener(mSession, mDBName, mPin);
+            mSession.subscribeSessionStatus(statusListener);
+            
+            mSession.useTableManager(O2GTableManagerMode.YES, null);
+            
+            mSession.login(mUserID, mPassword, mURL, mConnection);
+            while (!statusListener.isConnected() && !statusListener.hasError()) {
+                    Thread.sleep(50);
+            }
+                        
+            if (!statusListener.hasError()) {
+                
+                O2GTableManager manager = mSession.getTableManager();
+                                                
+                mSession.logout();
+                while (!statusListener.isDisconnected()) {
+                    Thread.sleep(50);
+                }
+            }
+            mSession.unsubscribeSessionStatus(statusListener);            
+            mSession.dispose();
+    		return Data;
+        } catch (Exception e) {
+            System.out.println ("Exception: " + e.getMessage());
+//            System.exit(1);
+    		return Data;
+        }
+    }
+	
+	private void createEntryOrder(String sOfferID, String sAccountID, int iAmount, double dRate, String sBuySell, O2GSession mSession) {
+	     O2GRequestFactory factory = mSession.getRequestFactory();
+	     if (factory == null) {
+	         return;
+	     }
+	     O2GValueMap valuemap = factory.createValueMap();
+	     valuemap.setString(O2GRequestParamsEnum.COMMAND, Constants.Commands.CreateOrder);
+	     valuemap.setString(O2GRequestParamsEnum.ORDER_TYPE, Constants.Orders.Entry);
+	     valuemap.setString(O2GRequestParamsEnum.ACCOUNT_ID, sAccountID);          // The identifier of the account the order should be placed for.
+	     valuemap.setString(O2GRequestParamsEnum.OFFER_ID, sOfferID);              // The identifier of the instrument the order should be placed for.
+	     valuemap.setString(O2GRequestParamsEnum.BUY_SELL, sBuySell);              // The order direction (Constants.Buy for buy, Constants.Sell for sell)
+	     valuemap.setDouble(O2GRequestParamsEnum.RATE, dRate);                     // The dRate at which the order must be filled
+	     valuemap.setInt(O2GRequestParamsEnum.AMOUNT, iAmount);                    // The quantity of the instrument to be bought or sold.
+	     O2GRequest request = factory.createOrderRequest(valuemap);
+	     mSession.sendRequest(request);
+	 }
+
+}

@@ -190,7 +190,7 @@ $(document).ready(function() {
 
 					for(var i = 0 ; i < Object.keys(data).length ; i++){
 
-						tableOffers.append("<tr>");
+						tableOffers.append("<tr data-symbol="+data[i]['Instrument']+">");
 
 						var tr = tableOffers.find('tr:nth-child('+(i+1)+')');
 						tr.append('<td>'+(i+1)+'</td>');
@@ -227,15 +227,36 @@ $(document).ready(function() {
 						tr.append('<td>'+data[i]['']+'</td>');
 						tr.append('<td>'+data[i]['']+'</td>');
 						tr.append('<td>'+data[i]['Time']+'</td>');
-
-						// EntryOrder eoOrder				
-						entryOrder();
 					}
+
+					// EntryOrder eoOrder
+					var eoOrder = $('.entryOrder');
+					var eoSelect = eoOrder.find('#eoOrder');
+					eoSelect.change(function(){
+						var data = $(this).val();
+						checkEORate(data);
+					});
+
+					entryOrder();
+
+					// MarketOrder moOrder
+					var moOrder = $('.marketOrder');
+					var moSelect = moOrder.find('#moOrder');
+					moSelect.change(function(){
+						var data = $(this).val();
+						checkMORate(data);
+					});
+
+					marketOrder();
+
+					// init create order
+					createEntryOrder();
+					createMarketOrder();
 				}
 
 				first = 1;
 
-				setTimeout(AllOffers , 0);
+				setTimeout(AllOffers , 100);
 			},
 			error: function (xhr, ajaxOptions, thrownError) {
 				console.log(xhr.status);
@@ -259,6 +280,147 @@ $(document).ready(function() {
 			td = tr.find('td:nth-child(2)').html();
 			eoOrder.append('<option value="'+td+'">'+td+'</option>');
 		}
+
+		checkEORate();
+	}
+
+	function marketOrder(){
+		var tr;
+		var moOrder = $('.marketOrder').find('#moOrder');
+
+		moOrder.empty();
+
+		for(var i = 0 ; i < tableOffers.find('tr').length ; i++){
+			tr = tableOffers.find('tr:nth-child('+(i+1)+')');
+			td = tr.find('td:nth-child(2)').html();
+			moOrder.append('<option value="'+td+'">'+td+'</option>');
+		}
+
+		checkMORate();
+	}
+
+	function checkEORate(eoData){
+		var eoOrder = $('.entryOrder');
+		var eoRate = eoOrder.find('.eoRate');
+
+		if(eoData == null){
+			eoData = eoOrder.find('#eoOrder :selected').val();
+		}
+
+		var data = tableOffers.find('tr[data-symbol="'+eoData+'"]').find('td:nth-child(3)').html();
+
+		eoRate.val(data);
+	}
+
+	function checkMORate(moData){
+		var moOrder = $('.marketOrder');
+		var moRate = moOrder.find('.moRate');
+
+		if(moData == null){
+			moData = moOrder.find('#moOrder :selected').val();
+		}
+
+		var data = tableOffers.find('tr[data-symbol="'+moData+'"]').find('td:nth-child(3)').html();
+
+		moRate.val(data);
+	}
+
+	function createEntryOrder(){
+		var eoOrder = $('.entryOrder');
+		var moOrder = $('.marketOrder');
+
+		var btnOK = eoOrder.find('#ok');
+		var btnCancel = eoOrder.find('#cancel');
+		var btnClose = eoOrder.find('#close');
+
+		var plus = $('#plusEntryOrder');
+
+		plus.on('click' , function(){
+			moOrder.transition({ x: 0 });
+			eoOrder.transition({ x: 280 });
+		});
+
+		btnClose.on('click' , function(){
+			eoOrder.transition({ x: 0 });
+		});
+
+		btnCancel.on('click' , function(){
+			eoOrder.transition({ x: 0 });
+		});
+
+		// console.log(obj_account);
+
+		btnOK.on('click' , function(){
+
+			var obj_account = new Object();
+			obj_account.loadType = "createEntry";
+			obj_account.userId = "D172574180001";
+			obj_account.pwd = "7384";
+			obj_account.con = "Demo";
+			obj_account.amount = (eoOrder.find('.lvEntry').find('#eoAmount').val()*1000);
+			obj_account.rate = eoOrder.find('.lvEntry').find('#eoRate').val();
+			obj_account.buysell = eoOrder.find('.lvEntry').find('.radio input:checked').val();
+			obj_account.instrument = eoOrder.find('.lvEntry').find('#eoOrder :selected').val();
+			console.log(obj_account);
+
+			$.ajax({
+				async: false,
+				url: "http://localhost:8080/ForexConnectAPI/AjaxCreateEntry",
+				type: 'POST',
+				dataType: 'json',
+				data: JSON.stringify(obj_account),
+				contentType: 'application/json',
+				mimeType: 'application/json',
+				success: function (msg) {
+					console.log(msg)
+					if (msg['msg'] == "success") {
+						// 正確
+						eoOrder.transition({ x: 0 });
+						alert(msg['data']);
+					} else if (msg['msg'] == "fail") {
+						// 錯誤
+						eoOrder.transition({ x: 0 });
+						alert(msg['data']);
+					}else{
+						console.log("發生不知名錯誤!");
+					}
+				},
+				error: function (xhr, ajaxOptions, thrownError) {
+					console.log(xhr.status);
+					console.log(xhr.statusText);
+					console.log(xhr.responseText);
+					return false;
+				}
+			});
+		});
+	}
+
+	function createMarketOrder(){
+		var eoOrder = $('.entryOrder');
+		var moOrder = $('.marketOrder');
+
+		var btnOK = moOrder.find('#ok');
+		var btnCancel = moOrder.find('#cancel');
+		var btnClose = moOrder.find('#close');
+
+		var plus = $('#plusMarketOrder');
+
+		plus.on('click' , function(){
+			eoOrder.transition({ x: 0 });
+			moOrder.transition({ x: 280 });
+		});
+
+		btnClose.on('click' , function(){
+			moOrder.transition({ x: 0 });
+		});
+
+		btnCancel.on('click' , function(){
+			moOrder.transition({ x: 0 });
+		});
+
+		btnOK.on('click' , function(){
+
+		});
 	}
 
 	function Round(value , num) {

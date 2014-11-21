@@ -106,7 +106,7 @@
 							<div class="icon"><i class="icon-edit"></i></div>
 							<div class="text">開倉部位</div>
 							<div class="list"><i class="icon-th-list"></i></div>
-							<div class="plus"><i class="icon-plus"></i></div>
+							<div class="plus" id="plusCloseOrder"><i class="icon-plus">平倉</i></div>
 						</div>
 						<div class="allTable content">
 							<table class="table">
@@ -177,6 +177,87 @@
 					<a href="/">SuperTrade</a> &copy; copyright 2014. all rights reserved.
 				</p>
 			</div>
+			<div class="closePositions">
+				<div class="col-sm-12 cpHeader">
+					<div class="title">平倉部位</div>
+					<div class="close" id="close"><i class="icon-cancel"></i></div>
+				</div>
+				<div class="col-sm-12 cpContent">
+					<div class="level lvEntry">
+						<div class="title">平倉資訊</div>
+						<div class="optLabel">
+							<div class="col-sm-5">
+								<label for="cpOrder" class="text">商品：</label>
+							</div>
+							<div class="col-sm-7">
+								<select class="cpOrder" id="cpOrder">
+									<!-- content -->
+								</select>
+							</div>
+						</div>
+						<div class="optLabel">
+							<div class="col-sm-5">
+								<label for="cpAmount" class="text">數量(K)：</label>
+							</div>
+							<div class="col-sm-7">
+								<input type="number" value="5" class="cpAmount" id="cpAmount">
+							</div>
+						</div>
+						<div class="optLabel">
+							<div class="col-sm-5">
+								<label for="cpRate" class="text">匯率：</label>
+							</div>
+							<div class="col-sm-7">
+								<input type="number"  class="cpRate" id="cpRate" disabled="true">
+							</div>
+						</div>
+						<div class="optLabel">
+							<div class="col-sm-5">
+								<label for="cpOrderType" class="text">成交種類：</label>
+							</div>
+							<div class="col-sm-7">
+								<select class="cpOrderType" id="cpOrderType">
+									<option value="market">市價</option>
+									<option value="other">設定範圍</option>
+								</select>
+							</div>
+						</div>
+						<div class="optLabel">
+							<div class="col-sm-12">
+								<input type="number" class="cpNum" id="cpNum" disabled="true">
+							</div>
+						</div>
+						<div class="optLabel">
+							<div class="col-sm-5">
+								<label for="cpTimeInForce" class="text">有效期：</label>
+							</div>
+							<div class="col-sm-7">
+								<select class="cpTimeInForce" id="cpTimeInForce">
+									<option value="IOC">IOC</option>
+									<option value="GTC">GTC</option>
+									<option value="FOK">FOK</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="level lvCommit">
+						<div class="title">備註</div>
+						<div class="optLabel">
+							<div class="col-sm-12">
+								<div class="commit">Positions of the same currency pair will be closed out on a first in first out basis</div>
+							</div>
+						</div>
+					</div>
+					<div class="level lvSubmit">
+						<div class="optLabel">
+							<div class="col-sm-12">
+								<button class="btn-danger cancel" id="cancel">取消</button>
+								<button class="btn-primary ok" id="ok">確定</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 
 		<!-- ********** JS IM ********** -->
@@ -195,6 +276,7 @@
 		<script type="text/javascript" src="assets/js/plugin/holder.js"></script>
 		<script type="text/javascript" src="assets/js/plugin/jquery.localisation.js"></script>
 		<script type="text/javascript" src="assets/js/plugin/jquery.nicescroll.min.js"></script>
+		<script type="text/javascript" src="assets/js/plugin/jquery.transit.min.js"></script>
 		<!-- ********** JS Main ********** -->
 		<script type="text/javascript" src="assets/js/orders.js"></script>
 

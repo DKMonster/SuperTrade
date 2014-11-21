@@ -1,0 +1,109 @@
+package com.supertrade.dkmonster;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import com.fxcore2.Constants;
+import com.fxcore2.O2GRequest;
+import com.fxcore2.O2GRequestFactory;
+import com.fxcore2.O2GRequestParamsEnum;
+import com.fxcore2.O2GSession;
+import com.fxcore2.O2GTableManager;
+import com.fxcore2.O2GTableManagerMode;
+import com.fxcore2.O2GTransport;
+import com.fxcore2.O2GValueMap;
+
+public class CreateEntryOrder {
+	
+	static Map<String, Object> responseData = new HashMap<String, Object>();
+
+	public static Map<String, Object> main(String[] args) {
+	    
+        // Connection and session variables
+        String mUserID = "";
+        int mAmount;
+        double mRate;
+        String mBuySell = "";
+        String mPassword = "";
+        String mURL = "";
+        String mConnection = "";
+        String mDBName = "";
+        String mPin = "";
+        O2GSession mSession = null;
+        String mInstrument = "";
+        
+        // Check for correct number of arguments
+        if (args.length < 8) {
+            System.out.println("Not Enough Parameters!");
+            System.out.println("USAGE: [instrument] [user ID] [password] [URL] [connection] [session ID (if needed)] [pin (if needed)]");
+            System.exit(1);
+        }
+        
+        // Get command line arguments
+        mInstrument = args[0];
+        mAmount = Integer.parseInt(args[1]);
+        mRate = Double.parseDouble(args[2]);
+        mBuySell = args[3];
+        mUserID = args[4];
+        mPassword = args[5];
+        mURL = args[6];
+        mConnection = args[7];
+        if (args.length > 8) {
+            mDBName = args[8];
+        }
+        if (args.length > 9) {
+            mPin = args[9];
+        }
+        
+        // Create a session, subscribe to session listener, login, get offers, logout
+        try {
+            mSession = O2GTransport.createSession();
+            SessionStatusListener statusListener = new SessionStatusListener(mSession, mDBName, mPin);
+            mSession.subscribeSessionStatus(statusListener);
+            
+            mSession.useTableManager(O2GTableManagerMode.YES, null);
+            
+            mSession.login(mUserID, mPassword, mURL, mConnection);
+            while (!statusListener.isConnected() && !statusListener.hasError()) {
+                    Thread.sleep(50);
+            }
+                        
+            if (!statusListener.hasError()) {
+                
+                O2GTableManager manager = mSession.getTableManager();
+                createEntryOrder(mInstrument, mUserID , mAmount , mRate , mBuySell , mSession);
+                                                
+                mSession.logout();
+                while (!statusListener.isDisconnected()) {
+                    Thread.sleep(50);
+                }
+            }
+            mSession.unsubscribeSessionStatus(statusListener);            
+            mSession.dispose();
+    		return responseData;
+        } catch (Exception e) {
+            System.out.println ("Exception: " + e.getMessage());
+//            System.exit(1);
+    		return responseData;
+        }
+    }
+	
+	private static void createEntryOrder(String sOfferID, String sAccountID, int iAmount, double dRate, String sBuySell, O2GSession mSession) {
+	     O2GRequestFactory factory = mSession.getRequestFactory();
+	     if (factory == null) {
+	         return;
+	     }
+	     O2GValueMap valuemap = factory.createValueMap();
+	     valuemap.setString(O2GRequestParamsEnum.COMMAND, Constants.Commands.CreateOrder);
+	     valuemap.setString(O2GRequestParamsEnum.ORDER_TYPE, Constants.Orders.Entry);
+	     valuemap.setString(O2GRequestParamsEnum.ACCOUNT_ID, sAccountID);          // The identifier of the account the order should be placed for.
+	     valuemap.setString(O2GRequestParamsEnum.OFFER_ID, sOfferID);              // The identifier of the instrument the order should be placed for.
+	     valuemap.setString(O2GRequestParamsEnum.BUY_SELL, sBuySell);              // The order direction (Constants.Buy for buy, Constants.Sell for sell)
+	     valuemap.setDouble(O2GRequestParamsEnum.RATE, dRate);                     // The dRate at which the order must be filled
+	     valuemap.setInt(O2GRequestParamsEnum.AMOUNT, iAmount);                    // The quantity of the instrument to be bought or sold.
+	     O2GRequest request = factory.createOrderRequest(valuemap);
+	     mSession.sendRequest(request);
+	     responseData.put("msg","success");
+	 }
+
+}

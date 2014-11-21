@@ -1,0 +1,87 @@
+package com.supertrade.dkmonster;
+
+public class getAccount {
+	private String loadType;
+	private String userId , pwd , url = "http://www.fxcorporate.com/Hosts.jsp" , con , instrument;
+	private String amount;
+	private String rate;
+	private String buySell;
+	//getters & setters 
+	
+	public String getRate(){
+		return rate;
+	}
+	
+	public void setRate(String rate){
+		this.rate = rate;
+	}
+	
+	public String getBuySell(){
+		return buySell;
+	}
+	
+	public void setBuySell(String buySell){
+		this.buySell = buySell;
+	}
+	
+	public String getAmount(){
+		return amount;
+	}
+	
+	public void setAmount(String amount){
+		this.amount = amount;
+	}
+	
+	public String getloadType(){
+		return loadType;
+	}
+	
+	public void setloadType(String loadType){
+		this.loadType = loadType;
+	}
+	
+	public String getUserId(){
+		return userId;
+	}
+	
+	public void setUserId(String userId){
+		this.userId = userId;
+	}
+	
+	public String getPwd(){
+		return pwd;
+	}
+	
+	public void setPwd(String pwd){
+		this.pwd = pwd;
+	}
+	
+	public String getUrl(){
+		return url;
+	}
+	
+	public void setUrl(String url){
+		this.url = url;
+	}
+	
+	public String getCon(){
+		return con;
+	}
+	
+	public void setCon(String con){
+		this.con = con;
+	}
+	
+	public String getInstrument(){
+		return instrument;
+	}
+	
+	public void setInstrument(String instrument){
+		this.instrument = instrument;
+	}
+	
+	@Override
+	public String toString(){
+		return "{\"userId\":\"" + userId + "\", \"pwd\":\"" + pwd + "\", \"url\":\"" + url + "\", \"con\":\"" + con + "\"}";
+	}
+}

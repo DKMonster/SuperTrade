@@ -106,7 +106,8 @@
 							<div class="icon"><i class="icon-edit"></i></div>
 							<div class="text">報價視窗</div>
 							<div class="list"><i class="icon-th-list"></i></div>
-							<div class="plus"><i class="icon-plus"></i></div>
+							<div class="plus" id="plusEntryOrder"><i class="icon-plus">掛單</i></div>
+							<div class="plus" id="plusMarketOrder"><i class="icon-plus">市價單</i></div>
 						</div>
 						<div class="content">
 							<table class="table">
@@ -142,10 +143,10 @@
 			<div class="entryOrder">
 				<div class="col-sm-12 eoHeader">
 					<div class="title">建立掛單</div>
-					<div class="close"><i class="icon-cancel"></i></div>
+					<div class="close" id="close"><i class="icon-cancel"></i></div>
 				</div>
 				<div class="col-sm-12 eoContent">
-					<div class="level">
+					<div class="level lvEntry">
 						<div class="title">掛單資訊</div>
 						<div class="optLabel">
 							<div class="col-sm-5">
@@ -169,17 +170,17 @@
 						</div>
 						<div class="optLabel">
 							<div class="col-sm-6">
-								<label for="eoSellBuy" class="text">賣出/買進：</label>
+								<label for="eoSellBuy" class="text3">賣出/買進：</label>
 							</div>
 							<div class="col-sm-3">
 								<label class="radio">
-										<input type="radio" name="eoSBRadio" value="sell">
+										<input type="radio" name="eoSBRadio" value="S" checked>
 										Sell
 								</label>
 							</div>
 							<div class="col-sm-3">
 								<label class="radio">
-										<input type="radio" name="eoSBRadio" value="buy">
+										<input type="radio" name="eoSBRadio" value="B">
 										Buy
 								</label>
 							</div>
@@ -189,7 +190,7 @@
 								<label for="eoAmount" class="text">數量(K)：</label>
 							</div>
 							<div class="col-sm-7">
-								<input type="number"  class="eoAmount" id="eoAmount">
+								<input type="number" value="5" class="eoAmount" id="eoAmount">
 							</div>
 						</div>
 						<div class="optLabel">
@@ -208,17 +209,246 @@
 								<p class="eoUsdMr" id="eoUsdMr">160.00</p>
 							</div>
 						</div>
+						<div class="optLabel">
+							<div class="col-sm-5">
+								<label for="eoRate" class="text">匯率：</label>
+							</div>
+							<div class="col-sm-7">
+								<input type="number"  class="eoRate" id="eoRate">
+							</div>
+						</div>
+						<div class="optLabel">
+							<div class="col-sm-5">
+								<label for="eoTimeInForce" class="text">有效期：</label>
+							</div>
+							<div class="col-sm-7">
+								<select class="eoTimeInForce" id="eoTimeInForce">
+									<option value="DAY">DAY</option>
+									<option value="GTC">GTC</option>
+								</select>
+							</div>
+						</div>
 					</div>
-					<div class="level">
-						<div class="title">止損</div>
-						<div class="optLabel"></div>
+					<div class="level lvStop">
+						<div class="title">
+							<label class="stop">
+								<input type="checkbox" value="true">
+								止損
+							</label>
+						</div>
+						<div class="optLabel">
+							<div class="col-sm-5">
+								<label for="eoRate" class="text">匯率：</label>
+							</div>
+							<div class="col-sm-7">
+								<input type="number"  class="eoRate" id="eoRate" disabled="true">
+							</div>
+						</div>
+						<div class="optLabel">
+							<div class="col-sm-5">
+								<label for="eoTrailign" class="text">移動止損：</label>
+							</div>
+							<div class="col-sm-7">
+								<select class="eoTrailign" id="eoTrailign" disabled="true">
+									<option value="None">沒有</option>
+									<option value="dynamic">Dynamic</option>
+									<option value="fixed">Fixed</option>
+								</select>
+							</div>
+						</div>
+						<div class="optLabel">
+							<div class="col-sm-12">
+								<input type="number" class="eoNum" id="eoNum" disabled="true">
+							</div>
+						</div>
 					</div>
-					<div class="level">
-						<div class="title">限價</div>
-						<div class="optLabel"></div>
+					<div class="level lvLimit">
+						<div class="title">
+							<label class="limit">
+								<input type="checkbox" value="true">
+								限價
+							</label>
+						</div>
+						<div class="optLabel">
+							<div class="col-sm-5">
+								<label for="eoRate" class="text">匯率：</label>
+							</div>
+							<div class="col-sm-7">
+								<input type="number"  class="eoRate" id="eoRate" disabled="true">
+							</div>
+						</div>
 					</div>
-					<div class="level">
-						<div class="optLabel"></div>
+					<div class="level lvSubmit">
+						<div class="optLabel">
+							<div class="col-sm-12">
+								<button class="btn-danger cancel" id="cancel">取消</button>
+								<button class="btn-primary ok" id="ok">確定</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="marketOrder">
+				<div class="col-sm-12 moHeader">
+					<div class="title">建立市價單</div>
+					<div class="close" id="close"><i class="icon-cancel"></i></div>
+				</div>
+				<div class="col-sm-12 moContent">
+					<div class="level lvEntry">
+						<div class="title">掛單資訊</div>
+						<div class="optLabel">
+							<div class="col-sm-5">
+								<label for="moAccount" class="text">帳戶：</label>
+							</div>
+							<div class="col-sm-7">
+								<select class="moAccount" id="moAccount">
+									<option value="D172574180001">D172574180001</option>
+								</select>
+							</div>
+						</div>
+						<div class="optLabel">
+							<div class="col-sm-5">
+								<label for="moOrder" class="text">商品：</label>
+							</div>
+							<div class="col-sm-7">
+								<select class="moOrder" id="moOrder">
+									<!-- content -->
+								</select>
+							</div>
+						</div>
+						<div class="optLabel">
+							<div class="col-sm-6">
+								<label for="moSellBuy" class="text3">賣出/買進：</label>
+							</div>
+							<div class="col-sm-3">
+								<label class="radio">
+										<input type="radio" name="moSBRadio" value="S" checked>
+										Sell
+								</label>
+							</div>
+							<div class="col-sm-3">
+								<label class="radio">
+										<input type="radio" name="moSBRadio" value="B">
+										Buy
+								</label>
+							</div>
+						</div>
+						<div class="optLabel">
+							<div class="col-sm-5">
+								<label for="moAmount" class="text">數量(K)：</label>
+							</div>
+							<div class="col-sm-7">
+								<input type="number" value="5" class="moAmount" id="moAmount">
+							</div>
+						</div>
+						<div class="optLabel">
+							<div class="col-sm-8">
+								<label for="moPerPip" class="text">按每點計：</label>
+							</div>
+							<div class="col-sm-4">
+								<p class="moPerPip" id="moPerPip">0.43</p>
+							</div>
+						</div>
+						<div class="optLabel">
+							<div class="col-sm-8">
+								<label for="moUsdMr" class="text">保證金要求：</label>
+							</div>
+							<div class="col-sm-4">
+								<p class="moUsdMr" id="moUsdMr">160.00</p>
+							</div>
+						</div>
+						<div class="optLabel">
+							<div class="col-sm-5">
+								<label for="moRate" class="text">匯率：</label>
+							</div>
+							<div class="col-sm-7">
+								<input type="number"  class="moRate" id="moRate">
+							</div>
+						</div>
+						<div class="optLabel">
+							<div class="col-sm-5">
+								<label for="moOrderType" class="text">成交種類：</label>
+							</div>
+							<div class="col-sm-7">
+								<select class="moOrderType" id="moOrderType">
+									<option value="market">市價</option>
+									<option value="other">設定範圍</option>
+								</select>
+							</div>
+						</div>
+						<div class="optLabel">
+							<div class="col-sm-12">
+								<input type="number" class="moNum" id="moNum" disabled="true">
+							</div>
+						</div>
+						<div class="optLabel">
+							<div class="col-sm-5">
+								<label for="moTimeInForce" class="text">有效期：</label>
+							</div>
+							<div class="col-sm-7">
+								<select class="moTimeInForce" id="moTimeInForce">
+									<option value="DAY">DAY</option>
+									<option value="GTC">GTC</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="level lvStop">
+						<div class="title">
+							<label class="stop">
+								<input type="checkbox" value="true">
+								止損
+							</label>
+						</div>
+						<div class="optLabel">
+							<div class="col-sm-5">
+								<label for="moRate" class="text">匯率：</label>
+							</div>
+							<div class="col-sm-7">
+								<input type="number"  class="moRate" id="moRate" disabled="true">
+							</div>
+						</div>
+						<div class="optLabel">
+							<div class="col-sm-5">
+								<label for="moTrailign" class="text">移動止損：</label>
+							</div>
+							<div class="col-sm-7">
+								<select class="moTrailign" id="moTrailign" disabled="true">
+									<option value="None">沒有</option>
+									<option value="dynamic">Dynamic</option>
+									<option value="fixed">Fixed</option>
+								</select>
+							</div>
+						</div>
+						<div class="optLabel">
+							<div class="col-sm-12">
+								<input type="number" class="moRate" id="moRate" disabled="true">
+							</div>
+						</div>
+					</div>
+					<div class="level lvLimit">
+						<div class="title">
+							<label class="limit">
+								<input type="checkbox" value="true">
+								限價
+							</label>
+						</div>
+						<div class="optLabel">
+							<div class="col-sm-5">
+								<label for="moRate" class="text">匯率：</label>
+							</div>
+							<div class="col-sm-7">
+								<input type="number"  class="moRate" id="moRate" disabled="true">
+							</div>
+						</div>
+					</div>
+					<div class="level lvSubmit">
+						<div class="optLabel">
+							<div class="col-sm-12">
+								<button class="btn-danger cancel" id="cancel">取消</button>
+								<button class="btn-primary ok" id="ok">確定</button>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -240,6 +470,7 @@
 		<script type="text/javascript" src="assets/js/plugin/holder.js"></script>
 		<script type="text/javascript" src="assets/js/plugin/jquery.localisation.js"></script>
 		<script type="text/javascript" src="assets/js/plugin/jquery.nicescroll.min.js"></script>
+		<script type="text/javascript" src="assets/js/plugin/jquery.transit.min.js"></script>
 		<!-- ********** JS Main ********** -->
 		<script type="text/javascript" src="assets/js/offers.js"></script>
 

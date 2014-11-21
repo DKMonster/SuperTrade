@@ -16,6 +16,8 @@ public class ResponseListener implements IO2GResponseListener {
     private O2GResponse mResponse = null; 
     private String mRequest = "";
 
+    private boolean mError = false;
+
     // Constructor
     public ResponseListener(O2GSession session, String instrument) {
         mSession = session;

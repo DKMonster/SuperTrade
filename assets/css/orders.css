@@ -594,3 +594,164 @@ html, body {
 .wrapper .footer p a {
   color: white;
 }
+.wrapper .closePositions {
+  position: absolute;
+  left: -280px;
+  top: 50px;
+  width: 280px;
+  height: -webkit-calc(100% - 50px);
+  height: -moz-calc(100% - 50px);
+  height: calc(100% - 50px);
+  background: #eeeeee;
+}
+.wrapper .closePositions .cpHeader {
+  width: 100%;
+  height: 50px;
+  background: #222222;
+  display: block;
+}
+.wrapper .closePositions .cpHeader .title {
+  float: left;
+  padding-left: 5px;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 50px;
+  text-align: left;
+}
+.wrapper .closePositions .cpHeader .close {
+  float: right;
+  padding-right: 5px;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 50px;
+  text-align: left;
+}
+.wrapper .closePositions .cpContent {
+  width: 100%;
+  height: -webkit-calc(100% - 50px);
+  height: -moz-calc(100% - 50px);
+  height: calc(100% - 50px);
+  display: block;
+}
+.wrapper .closePositions .cpContent .level {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin-top: 10px;
+  border: 1px solid #222222;
+}
+.wrapper .closePositions .cpContent .level .title {
+  width: 100px;
+  height: 15px;
+  margin-top: -5px;
+  margin-left: 5px;
+  background: #eeeeee;
+  color: #222222;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 15px;
+  text-align: center;
+}
+.wrapper .closePositions .cpContent .level .optLabel {
+  width: 100%;
+  height: 25px;
+  margin-bottom: 5px;
+  color: #222222;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 25px;
+  text-align: left;
+  display: block;
+}
+.wrapper .closePositions .cpContent .level .optLabel .text {
+  color: #222222;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 25px;
+  text-align: left;
+}
+.wrapper .closePositions .cpContent .level .optLabel .text3 {
+  margin-top: 10px;
+  color: #222222;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 25px;
+  text-align: left;
+}
+.wrapper .closePositions .cpContent .level .optLabel select {
+  width: 100%;
+  height: 20px;
+}
+.wrapper .closePositions .cpContent .level .optLabel input[type="number"] {
+  width: 100%;
+  height: 20px;
+}
+.wrapper .closePositions .cpContent .level .optLabel p {
+  width: 100%;
+  height: 20px;
+  color: #222222;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 25px;
+  text-align: left;
+}
+.wrapper .closePositions .cpContent .level .optLabel .radio {
+  width: 50px;
+  height: 30px;
+  float: left;
+  margin-top: 10px;
+  display: block;
+  color: #222222;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 25px;
+  text-align: left;
+}
+.wrapper .closePositions .cpContent .level .optLabel .radio input {
+  margin-top: 8px;
+}
+.wrapper .closePositions .cpContent .level .optLabel .radio:last-child {
+  float: right;
+}
+.wrapper .closePositions .cpContent .level .optLabel:nth-child(4) {
+  width: 100%;
+  height: 40px;
+}
+.wrapper .closePositions .cpContent .lvCommit .optLabel {
+  width: 100%;
+  height: 75px;
+  display: block;
+  margin-bottom: 5px;
+}
+.wrapper .closePositions .cpContent .lvCommit .optLabel .commit {
+  width: 100%;
+  height: 50px;
+  color: #ff3333;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 25px;
+  text-align: left;
+  display: block;
+}
+.wrapper .closePositions .cpContent .lvSubmit .optLabel {
+  width: 100%;
+  height: 50px;
+  display: block;
+  margin-bottom: 5px;
+}
+.wrapper .closePositions .cpContent .lvSubmit .optLabel button {
+  display: block;
+  width: 30%;
+  height: 30px;
+  line-height: 30px;
+}
+.wrapper .closePositions .cpContent .lvSubmit .optLabel .cancel {
+  margin-top: 10px;
+  float: left;
+}
+.wrapper .closePositions .cpContent .lvSubmit .optLabel .ok {
+  margin-top: 10px;
+  float: right;
+}

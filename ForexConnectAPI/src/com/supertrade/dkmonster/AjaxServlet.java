@@ -32,9 +32,16 @@ public class AjaxServlet extends HttpServlet {
      * @see HttpServlet#HttpServlet()
      */
 
-	Object[] listData;
+	Object[] listData_getOffers;
+	Object[] listData_getTrade;
+	Object[] listData_getNews;
+	
 	int backData = 0;
-	Map<String, Object> responseData = new HashMap<String, Object>();
+	
+	Map<String, Object> responseData_getAccount = new HashMap<String, Object>();
+	Map<String, Object> responseData_getInfo = new HashMap<String, Object>();
+	Map<String, Object> responseData_createEntryOrder = new HashMap<String, Object>();
+	Map<String, Object> responseData_createEntry = new HashMap<String, Object>();
    
    
     public AjaxServlet() {
@@ -70,20 +77,23 @@ public class AjaxServlet extends HttpServlet {
 		response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
         response.setContentType("application/json");
         
-        responseData.clear();
+        responseData_getAccount.clear();
+        responseData_getInfo.clear();
+        responseData_createEntryOrder.clear();        
 
         if(account.getloadType().equals("getAccount")){
         	
         	backData = 1;
         	
-            responseData.put("userId" , account.getUserId());
-            responseData.put("pwd" , account.getPwd());
-            responseData.put("url" , account.getUrl());
-            responseData.put("con" , account.getCon());
+        	responseData_getAccount.put("userId" , account.getUserId());
+        	responseData_getAccount.put("pwd" , account.getPwd());
+        	responseData_getAccount.put("url" , account.getUrl());
+        	responseData_getAccount.put("con" , account.getCon());
+            
             
         }else if(account.getloadType().equals("getInfo")){
         	
-        	backData = 1;
+        	backData = 2;
         	
         	String[] accountData = new String[4];
         	
@@ -92,11 +102,11 @@ public class AjaxServlet extends HttpServlet {
         	accountData[2] = account.getUrl();
         	accountData[3] = account.getCon();
         	
-        	responseData = getInfo.main(accountData);
+        	responseData_getInfo = getInfo.main(accountData);
         
         }else if(account.getloadType().equals("getOffers")){
 
-        	backData = 2;
+        	backData = 3;
         	
         	String[] accountData = new String[5];
         	
@@ -106,11 +116,11 @@ public class AjaxServlet extends HttpServlet {
         	accountData[3] = account.getUrl();
         	accountData[4] = account.getCon();
         	
-        	listData = getOffers.main(accountData);
+        	listData_getOffers = getOffers.main(accountData);
        
         }else if(account.getloadType().equals("getTrade")){
         	
-        	backData = 2;
+        	backData = 4;
         	
         	String[] accountData = new String[4];
         	
@@ -119,10 +129,11 @@ public class AjaxServlet extends HttpServlet {
         	accountData[2] = account.getUrl();
         	accountData[3] = account.getCon();
         	
-        	listData = getTrade.main(accountData);
+        	listData_getTrade = getTrade.main(accountData);
+        	
         }else if(account.getloadType().equals("getNews")){
         	
-        	backData = 2;
+        	backData = 5;
         	
         	String[] accountData = new String[4];
         	
@@ -131,14 +142,40 @@ public class AjaxServlet extends HttpServlet {
         	accountData[2] = account.getUrl();
         	accountData[3] = account.getCon();
         	
-        	listData = getNews.main(accountData);
+        	listData_getNews = getNews.main(accountData);
+        	
+        }else if(account.getloadType().equals("createEntry")){
+        	
+        	backData = 6;
+        	
+        	String[] accountData = new String[8];
+        	
+        	accountData[0] = account.getInstrument();
+        	accountData[1] = account.getAmount();
+        	accountData[2] = account.getbuysell();
+        	accountData[3] = account.getRate();
+        	accountData[4] = account.getUserId();
+            accountData[5] = account.getPwd();
+            accountData[6] = account.getUrl();
+            accountData[7] = account.getCon();
+            
+            responseData_createEntry = createEntry.main(accountData);
+
         }
         
         try {
         	if(backData == 1) {
-            	mapper.writeValue(response.getOutputStream(), responseData);
+            	mapper.writeValue(response.getOutputStream(), responseData_getAccount);
         	}else if(backData == 2) {
-            	mapper.writeValue(response.getOutputStream(), listData);
+            	mapper.writeValue(response.getOutputStream(), responseData_getInfo);
+        	}else if(backData == 3) {
+            	mapper.writeValue(response.getOutputStream(), listData_getOffers);
+        	}else if(backData == 4) {
+            	mapper.writeValue(response.getOutputStream(), listData_getTrade);
+        	}else if(backData == 5) {
+            	mapper.writeValue(response.getOutputStream(), listData_getNews);
+        	}else if(backData == 6) {
+            	mapper.writeValue(response.getOutputStream(), responseData_createEntry);
         	}
         } catch (JsonGenerationException e) {
             // TODO Auto-generated catch block
