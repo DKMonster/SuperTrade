@@ -144,12 +144,11 @@ public class createEntry {
             mSession.unsubscribeSessionStatus(statusListener);
             mSession.unsubscribeResponse(responseListener);
             mSession.dispose();
-    		return responseData;
         } catch (Exception e) {
             System.out.println ("Exception: " + e.getMessage());
 //            System.exit(1);
-    		return responseData;
         }
+		return responseData;
     }
     
     // Get current prices and find order type

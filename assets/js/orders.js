@@ -176,6 +176,43 @@ $(document).ready(function() {
 
 		btnOK.on('click' , function(){
 
+			var obj_account = new Object();
+			obj_account.loadType = "closePositions";
+			obj_account.userId = "D172574180001";
+			obj_account.pwd = "7384";
+			obj_account.con = "Demo";
+			obj_account.instrument = cpOrder.find('.lvEntry').find('#cpOrder :selected').val();
+			console.log(obj_account);
+
+			$.ajax({
+				async: false,
+				url: "http://localhost:8080/ForexConnectAPI/AjaxClosePosition",
+				type: 'POST',
+				dataType: 'json',
+				data: JSON.stringify(obj_account),
+				contentType: 'application/json',
+				mimeType: 'application/json',
+				success: function (msg) {
+					console.log(msg)
+					if (msg['msg'] == "success") {
+						// 正確
+						cpOrder.transition({ x: 0 });
+						alert(msg['data']);
+					} else if (msg['msg'] == "fail") {
+						// 錯誤
+						cpOrder.transition({ x: 0 });
+						alert(msg['data']);
+					}else{
+						console.log("發生不知名錯誤!");
+					}
+				},
+				error: function (xhr, ajaxOptions, thrownError) {
+					console.log(xhr.status);
+					console.log(xhr.statusText);
+					console.log(xhr.responseText);
+					return false;
+				}
+			});
 		});
 	}
 

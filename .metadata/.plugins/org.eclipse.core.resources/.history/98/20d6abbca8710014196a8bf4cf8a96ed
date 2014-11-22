@@ -1,0 +1,202 @@
+package com.supertrade.dkmonster;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.fxcore2.Constants;
+import com.fxcore2.O2GAccountTableRow;
+import com.fxcore2.O2GAccountsTable;
+import com.fxcore2.O2GLoginRules;
+import com.fxcore2.O2GOfferTableRow;
+import com.fxcore2.O2GOffersTable;
+import com.fxcore2.O2GPermissionChecker;
+import com.fxcore2.O2GPermissionStatus;
+import com.fxcore2.O2GRequest;
+import com.fxcore2.O2GRequestFactory;
+import com.fxcore2.O2GRequestParamsEnum;
+import com.fxcore2.O2GSession;
+import com.fxcore2.O2GTableIterator;
+import com.fxcore2.O2GTableManager;
+import com.fxcore2.O2GTableManagerMode;
+import com.fxcore2.O2GTableManagerStatus;
+import com.fxcore2.O2GTableType;
+import com.fxcore2.O2GTradeRow;
+import com.fxcore2.O2GTradeTableRow;
+import com.fxcore2.O2GTradesTable;
+import com.fxcore2.O2GTransport;
+import com.fxcore2.O2GValueMap;
+
+public class closePosition {
+
+    // Connection and session variables
+    static String mUserID = "";
+    static String mPassword = "";
+    static String mURL = "";
+    static String mConnection = "";
+    static String mSessionID = "";
+    static String mPin = "";
+    static O2GSession mSession = null;
+
+    //Position variables
+    static String mInstrument = "";
+
+    static String mAccountID = "";
+    static String mOfferID = "";
+    static int mAmount = 0;
+
+    static List<O2GTradeRow> mTrades;
+	
+	static Map<String, Object> responseData = new HashMap<String, Object>();
+
+    public static Map<String, Object> main(String[] args) throws InterruptedException {
+        // Check for correct number of arguments
+        if (args.length < 5) {
+            System.out.println("Not Enough Parameters!");
+            System.out.println("USAGE: [instrument] [user ID] [password] [URL] [connection] [session ID (if needed)] [pin (if needed)]");
+            System.exit(1);
+        }
+        // Get command line arguments
+        mInstrument = args[0];
+        mUserID = args[1];
+        mPassword = args[2];
+        mURL = args[3];
+        mConnection = args[4];
+        if (args.length > 5) {
+            mSessionID = args[5];
+        }
+        if (args.length > 6) {
+            mPin = args[6];
+        }
+        // Create a session, subscribe to session listener, response listener, login, close position, logout, unsubscribe
+        try {
+            mSession = O2GTransport.createSession();
+            mSession.useTableManager(O2GTableManagerMode.YES, null);
+            CPSessionStatusListener statusListener = new CPSessionStatusListener(mSession, mSessionID, mPin);
+            mSession.subscribeSessionStatus(statusListener);
+            CPTableListener tableListener = new CPTableListener();
+            CPResponseListener responseListener = new CPResponseListener(tableListener);
+            mSession.subscribeResponse(responseListener);
+            if (login(mSession, statusListener, mUserID, mPassword, mURL, mConnection)) {
+                O2GTableManager tableManager = mSession.getTableManager();
+                O2GTableManagerStatus managerStatus = tableManager.getStatus();
+                while (managerStatus == O2GTableManagerStatus.TABLES_LOADING) {
+                    Thread.sleep(50);
+                    managerStatus = tableManager.getStatus();
+                }
+                if (managerStatus == O2GTableManagerStatus.TABLES_LOAD_FAILED) {
+                    System.out.println("Cannot refresh all tables of table manager");
+                    responseData.put("msg", "fail");
+                    responseData.put("data", "Cannot refresh all tables of table manager");
+                    return responseData;
+                }
+                O2GAccountsTable accountsTable = (O2GAccountsTable)tableManager.getTable(O2GTableType.ACCOUNTS);
+                O2GAccountTableRow account = null;
+                if (accountsTable.size() > 0) {
+                    account = accountsTable.getRow(0); // The first account
+                    mAccountID = account.getAccountID();
+                    mAmount = account.getBaseUnitSize();
+                    O2GOffersTable offersTable = (O2GOffersTable)tableManager.getTable(O2GTableType.OFFERS);
+                    O2GTableIterator iterator = new O2GTableIterator();
+                    O2GOfferTableRow offer = offersTable.getNextRowByColumnValue("Instrument", mInstrument, iterator);
+                    if(offer != null) {
+                        mOfferID = offer.getOfferID();
+                        O2GTradesTable tradesTable = (O2GTradesTable)tableManager.getTable(O2GTableType.TRADES); 
+                        O2GTableIterator tradesIterator = new O2GTableIterator();
+                        O2GTradeTableRow trade = tradesTable.getNextRowByColumnValue("OfferID", offer.getOfferID(), tradesIterator);
+                        if (trade != null) {
+                            tableListener.subscribeTableListener(tableManager);
+                            System.out.format("Balance: %.2f Equity: %.2f%n", account.getBalance(), account.getEquity());
+                            if (closePosition(mSession, trade, tableListener)) {
+                                Thread.sleep(1000);
+                                account = accountsTable.getRow(0);
+                                System.out.format("Balance: %.2f Equity: %.2f%n", account.getBalance(), account.getEquity());
+                            }
+                            tableListener.unsubscribeTableListener(tableManager);
+                        } else {
+                            System.out.println("There is no trade to close");
+                        }
+                    } else {
+                        System.out.println("Cannot find offer for specified instrument: " + mInstrument);
+                    }
+                } else {
+                    System.out.println("Cannot find an account");
+                }
+                logout(mSession, statusListener);
+            }
+            mSession.unsubscribeSessionStatus(statusListener);
+            mSession.unsubscribeResponse(responseListener);
+            mSession.dispose();
+        } catch (Exception e) {
+            System.out.println ("Exception: " + e.getMessage());
+            System.exit(1);
+        }
+        return responseData;
+    }
+
+    private static boolean login(O2GSession session, CPSessionStatusListener listener, String userID, String password, String url, String connection) throws InterruptedException {
+        boolean result = false;
+        session.login(userID, password, url, connection);
+        while (true) {
+            listener.waitEvents();
+            if (listener.isConnected()) {
+                result = true;
+                break;
+            }
+            if (listener.hasError()){
+                System.out.println("Connection failed");
+                result = false;
+                break;
+            }
+        }
+        return result;
+    }
+
+    private static boolean logout(O2GSession session, CPSessionStatusListener listener) throws InterruptedException {
+        boolean result = false;
+        session.logout();
+        while (true) {
+            listener.waitEvents();
+            if (listener.isDisconnected()) {
+                result = true;
+                break;
+            }
+        }
+        return result;
+    }
+
+    private static boolean closePosition(O2GSession session, O2GTradeRow tradeRow, CPTableListener tableListener) throws InterruptedException {
+        boolean result;
+        O2GRequestFactory requestFactory = session.getRequestFactory();
+        if (requestFactory == null) {
+            System.out.println("Cannot create request factory");
+            return false;
+        }
+        O2GLoginRules loginRules = session.getLoginRules();
+        O2GPermissionChecker permissionChecker = loginRules.getPermissionChecker();
+        O2GValueMap valuemap = requestFactory.createValueMap();
+        valuemap.setString(O2GRequestParamsEnum.COMMAND, "CreateOrder");
+        valuemap.setString(O2GRequestParamsEnum.ACCOUNT_ID, tradeRow.getAccountID());
+        valuemap.setString(O2GRequestParamsEnum.OFFER_ID, tradeRow.getOfferID());
+        valuemap.setString(O2GRequestParamsEnum.BUY_SELL, tradeRow.getBuySell().equals(Constants.Buy) ? Constants.Sell : Constants.Buy); 
+        valuemap.setString(O2GRequestParamsEnum.CUSTOM_ID, "CloseMarketOrder");
+        valuemap.setInt(O2GRequestParamsEnum.AMOUNT, tradeRow.getAmount());
+        if (permissionChecker.canCreateMarketCloseOrder(mInstrument) != O2GPermissionStatus.PERMISSION_ENABLED) {
+            valuemap.setString(O2GRequestParamsEnum.ORDER_TYPE, Constants.Orders.TrueMarketOpen); // in USA you need to use "OM" to close a position.
+        } else {
+            valuemap.setString(O2GRequestParamsEnum.ORDER_TYPE, Constants.Orders.TrueMarketClose);
+            valuemap.setString(O2GRequestParamsEnum.TRADE_ID, tradeRow.getTradeID());
+        }
+        O2GRequest request = requestFactory.createOrderRequest(valuemap);
+        if (request != null) {
+            tableListener.setRequestID(request.getRequestId());
+            session.sendRequest(request);
+            tableListener.waitEvents();
+            result = true;
+        } else {
+            System.out.println(requestFactory.getLastError());
+            result = false;
+        }
+        return result;
+    }
+}

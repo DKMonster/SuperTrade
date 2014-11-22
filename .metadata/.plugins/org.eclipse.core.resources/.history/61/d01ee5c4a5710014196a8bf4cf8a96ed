@@ -1,0 +1,227 @@
+package com.supertrade.dkmonster;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import com.fxcore2.*;
+
+public class createEntry {
+    
+    //Entry order variables    
+    static String mInstrument = "";
+    static int mAmount = 0;
+    static String mOfferID = "";
+    static String mAccountID = "";
+    static String mBuySell = "";
+    static String mOrderType = Constants.Orders.Entry;
+    static boolean mHasAccount = false;
+    static boolean mHasOffer = false;
+    static boolean isPriceInvalid = false;
+    static double mRate = 0.0d; 
+    static O2GAccountRow account = null;
+    static O2GSession mSession = null;
+	
+	static Map<String, Object> responseData = new HashMap<String, Object>();
+    
+    public static Map<String, Object> main(String[] args) {
+    
+        // Connection and session variables
+        String mUserID = "";
+        String mPassword = "";
+        String mURL = "";
+        String mConnection = "";
+        String mDBName = "";
+        String mPin = "";       
+        
+        // Check for correct number of arguments
+        if (args.length < 8) {
+            System.out.println("Not Enough Parameters!");
+            System.out.println("USAGE: [instrument] [amount] [buysell] [rate] [user ID] [password] [URL] [connection] [session ID (if needed)] [pin (if needed)]");
+            System.exit(1);
+        }
+        
+        // Get command line arguments
+        mInstrument = args[0];
+        if (mInstrument.equals("")||mInstrument.equals("{INSTRUMENT}")) {
+            System.out.println("You must specify a valid instrument.");
+            System.exit(1);
+        }
+        try {
+            mAmount = Integer.parseInt(args[1].trim());
+        } catch (NumberFormatException e) {
+            System.out.println("Amount must be a number: " + e.getMessage());
+            System.exit(1);
+        }
+        mBuySell = args[2];
+        if (!mBuySell.equals("B") && !mBuySell.equals("S")) {
+            System.out.println("Please specify a valid operation. [B]uy or [S]ell");
+            System.exit(1);
+        }       
+        try {
+            mRate = Double.parseDouble(args[3].trim());
+        } catch (NumberFormatException e) {
+            System.out.println("Rate must be a number: " + e.getMessage());
+            System.exit(1);
+        }
+        mUserID = args[4];
+        mPassword = args[5];
+        mURL = args[6];
+        mConnection = args[7];
+        if (args.length > 8) {
+            mDBName = args[8];
+        }
+        if (args.length > 9) {
+            mPin = args[9];
+        }
+        System.out.println(mInstrument);
+        System.out.println(mAmount);
+        System.out.println(mBuySell);
+        System.out.println(mRate);
+        
+        // Create a session, subscribe to session listener, login, create entry limit order, logout
+        try {
+            mSession = O2GTransport.createSession();
+            mSession.useTableManager(O2GTableManagerMode.YES, null);
+            CESessionStatusListener statusListener = new CESessionStatusListener(mSession, mDBName, mPin);
+            mSession.subscribeSessionStatus(statusListener);
+            CEResponseListener responseListener = new CEResponseListener();
+            mSession.subscribeResponse(responseListener);
+            mSession.login(mUserID, mPassword, mURL, mConnection);
+            while (!statusListener.isConnected() && !statusListener.hasError()) {
+                    Thread.sleep(50);
+            }
+            if (!statusListener.hasError()) {
+                O2GTableManager tableManager = mSession.getTableManager();
+                while (tableManager.getStatus() == O2GTableManagerStatus.TABLES_LOADING)
+                    Thread.sleep(50);
+                if (tableManager.getStatus() == O2GTableManagerStatus.TABLES_LOADED)
+                {
+                    O2GAccountsTable accountsTable = (O2GAccountsTable)tableManager.getTable(O2GTableType.ACCOUNTS);                    
+                    getAccount(accountsTable); 
+                    if (mHasAccount) {
+                        O2GOffersTable offersTable = (O2GOffersTable)tableManager.getTable(O2GTableType.OFFERS);                        
+                        getOffer(offersTable);
+                    }
+                    if (!(isPriceInvalid) && (mHasOffer)) {
+                        O2GRequestFactory requestFactory = mSession.getRequestFactory();
+                        if (requestFactory != null) {
+                            O2GValueMap valueMap = requestFactory.createValueMap();
+                            valueMap.setString(O2GRequestParamsEnum.COMMAND, "CreateOrder");
+                            valueMap.setString(O2GRequestParamsEnum.ORDER_TYPE, mOrderType);
+                            valueMap.setString(O2GRequestParamsEnum.ACCOUNT_ID, mAccountID); 
+                            valueMap.setString(O2GRequestParamsEnum.OFFER_ID, mOfferID); 
+                            valueMap.setString(O2GRequestParamsEnum.BUY_SELL, mBuySell);
+                            valueMap.setDouble(O2GRequestParamsEnum.RATE, mRate);                       
+                            valueMap.setInt(O2GRequestParamsEnum.AMOUNT, mAmount); 
+                            valueMap.setString(O2GRequestParamsEnum.CUSTOM_ID, "EntryOrder"); 
+                            O2GRequest request = requestFactory.createOrderRequest(valueMap);
+                            O2GOrdersTable ordersTable = (O2GOrdersTable)tableManager.getTable(O2GTableType.ORDERS);                        
+                            CETableListener tableListener = new CETableListener();
+                            tableListener.setRequest(request.getRequestId());
+                            ordersTable.subscribeUpdate(O2GTableUpdateType.INSERT, tableListener);
+                            mSession.sendRequest(request);
+                            Thread.sleep(1000);
+                            ordersTable.unsubscribeUpdate(O2GTableUpdateType.INSERT, tableListener);
+                            if (!responseListener.hasError()) {
+                                System.out.println("You have successfully created an entry order for " + mInstrument + " instrument.\n");
+                                responseData.put("msg", "success");
+                                responseData.put("data", "You have successfully created an entry order for " + mInstrument + " instrument.\n");
+                            } else {
+                                System.out.println("Your request to create an entry order for " + mInstrument + " instrument has failed.\n");
+                                responseData.put("msg", "fail");
+                                responseData.put("data", "Your request to create an entry order for " + mInstrument + " instrument has failed.\n");
+                            }
+                        }
+                    }            
+                }
+                else
+                    System.out.println("Tables refreshing failed");
+                mSession.logout();
+                while (!statusListener.isDisconnected()) {
+                    Thread.sleep(50);
+                }
+            }
+            mSession.unsubscribeSessionStatus(statusListener);
+            mSession.unsubscribeResponse(responseListener);
+            mSession.dispose();
+    		return responseData;
+        } catch (Exception e) {
+            System.out.println ("Exception: " + e.getMessage());
+//            System.exit(1);
+    		return responseData;
+        }
+    }
+    
+    // Get current prices and find order type
+    public static void getOffer(O2GOffersTable table) {
+        double bid = 0.0d;
+        double ask = 0.0d;
+        double pointSize =0.0d;
+        int condDistEntryLimit = 0;
+        int condDistEntryStop = 0;
+        for (int i = 0; i < table.size(); i++) {
+            O2GOfferRow offer = table.getRow(i);
+            if (mInstrument.equals(offer.getInstrument())) {
+                mOfferID = offer.getOfferID();
+                mHasOffer = true;
+                bid = offer.getBid();
+                ask = offer.getAsk();
+                pointSize = offer.getPointSize();
+                
+                // Get minimal distances for entry stop and entry limit orders and find order type
+                O2GLoginRules loginRules = mSession.getLoginRules();
+                O2GTradingSettingsProvider tradingSettingsProvider = loginRules.getTradingSettingsProvider();
+                condDistEntryLimit = tradingSettingsProvider.getCondDistEntryLimit(mInstrument);
+                condDistEntryStop = tradingSettingsProvider.getCondDistEntryStop(mInstrument);
+                
+                if (mBuySell.equals("B")) {
+                    if (((int)(Math.rint(Math.abs(mRate - ask)/pointSize)) <= condDistEntryLimit) ||
+                        ((int)(Math.rint(Math.abs(mRate - ask)/pointSize)) <= condDistEntryStop)) {
+                        System.out.println("Your buy entry order price is too close to market." +
+                                           " No action will be taken.");
+
+                        responseData.put("msg", "fail");
+                        responseData.put("data", "Your buy entry order price is too close to market." +
+                                " No action will be taken.");
+                        isPriceInvalid = true;
+                        break;
+                    }
+                } else {
+                    if (((int)(Math.rint(Math.abs(mRate - bid)/pointSize)) <= condDistEntryStop) ||
+                        ((int)(Math.rint(Math.abs(mRate - bid)/pointSize)) <= condDistEntryLimit)) {
+                        System.out.println("Your sell entry order price is too close to market." +
+                                           " No action will be taken.");
+                        responseData.put("msg", "fail");
+                        responseData.put("data", "Your sell entry order price is too close to market." +
+                                " No action will be taken.");
+                        isPriceInvalid = true;
+                        break;
+                    }   
+                }              
+                break;
+            }
+        } 
+        if (!mHasOffer) {
+            System.out.println("You specified invalid instrument. No action will be taken.");
+        }                   
+    }
+    
+    // Get account for trade
+    public static void getAccount(O2GAccountsTable table) {
+        String accountID = "";
+        String accountKind = "";
+        for (int i = 0; i < table.size(); i++) {
+            O2GAccountTableRow account = table.getRow(i);
+            accountID = account.getAccountID();
+            accountKind = account.getAccountKind();
+            if (accountKind.equals("32")||accountKind.equals("36")) {
+                mAccountID = accountID;
+                mHasAccount = true;
+                break;
+            }        
+        }
+        if (!mHasAccount) {
+            System.out.println("You don't have any accounts available for trading. No action will be taken.");
+        }                  
+    }
+}
