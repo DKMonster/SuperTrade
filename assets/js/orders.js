@@ -52,6 +52,9 @@ $(document).ready(function() {
 	// 開倉部位
 	OpenPositions();
 
+	// 訂單
+	getOrder();
+
 	function OpenPositions(){
 		var obj_account = new Object();
 		obj_account.loadType = "getTrade";
@@ -81,7 +84,7 @@ $(document).ready(function() {
 							'<td>'+(i+1)+'</td>'+
 							'<td>'+data[i]['TradeID']+'</td>'+
 							'<td>'+data[i]['AccountID']+'</td>'+
-							'<td>'+data[i]['']+'</td>'+
+							'<td>'+data[i]['Instrument']+'</td>'+
 							'<td>'+(data[i]['Amount']/1000)+'</td>'+
 							'<td>'+data[i]['BuySell']+'</td>'+
 							'<td>'+Round(data[i]['OpenRate'],3)+'</td>'+
@@ -125,12 +128,13 @@ $(document).ready(function() {
 	function closeOrder(){
 		var tr;
 		var cpOrder = $('.closePositions').find('#cpOrder');
+		var tr_length = tableOrders.find('tbody tr').length;
 
 		cpOrder.empty();
 
-		for(var i = 0 ; i < tableOrders.find('tr').length ; i++){
+		for(var i = 0 ; i < tr_length ; i++){
 			tr = tableOrders.find('tr:nth-child('+(i+1)+')');
-			td = tr.find('td:nth-child(2)').html();
+			td = tr.find('td:nth-child(4)').html();
 			cpOrder.append('<option value="'+td+'">'+td+'</option>');
 		}
 
@@ -193,7 +197,7 @@ $(document).ready(function() {
 				contentType: 'application/json',
 				mimeType: 'application/json',
 				success: function (msg) {
-					console.log(msg)
+					console.log(msg);
 					if (msg['msg'] == "success") {
 						// 正確
 						cpOrder.transition({ x: 0 });
@@ -214,6 +218,36 @@ $(document).ready(function() {
 				}
 			});
 		});
+	}
+
+	function getOrder(){
+
+			var obj_account = new Object();
+			obj_account.loadType = "getOrders";
+			obj_account.userId = "D172574180001";
+			obj_account.pwd = "7384";
+			obj_account.con = "Demo";
+
+			// console.log(obj_account);
+
+			$.ajax({
+				async: false,
+				url: "http://localhost:8080/ForexConnectAPI/AjaxGetOrder",
+				type: 'POST',
+				dataType: 'json',
+				data: JSON.stringify(obj_account),
+				contentType: 'application/json',
+				mimeType: 'application/json',
+				success: function (msg) {
+					console.log(msg);
+				},
+				error: function (xhr, ajaxOptions, thrownError) {
+					console.log(xhr.status);
+					console.log(xhr.statusText);
+					console.log(xhr.responseText);
+					return false;
+				}
+			});
 	}
 
 	function Round(value , num) {

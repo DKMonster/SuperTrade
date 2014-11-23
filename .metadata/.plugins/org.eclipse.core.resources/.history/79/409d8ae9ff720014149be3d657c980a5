@@ -1,0 +1,125 @@
+package com.supertrade.dkmonster;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import com.fxcore2.*;
+
+public class getOrder {
+	
+	static Map<String, Object> responseData = new HashMap<String, Object>();
+
+	public static Map<String, Object> main(String[] args) {
+        // Check for correct number of arguments
+        if (args.length < 4) {
+            System.out.println("Not Enough Parameters!");
+            System.out.println("USAGE: [user ID] [password] [URL] [connection] [session ID (if needed)] [pin (if needed)]");
+            System.exit(1);
+        }
+
+		// Connection and session variables
+        String mUserID = "";
+        String mPassword = "";
+        String mURL = "";
+        String mConnection = "";
+        String mDBName = "";
+        String mPin = "";  
+
+        O2GSession mSession = null;
+
+        // Check for correct number of arguments
+        if (args.length < 4) {
+            System.out.println("Not Enough Parameters!");
+            System.out.println("USAGE: [user ID] [password] [URL] [connection] [session ID (if needed)] [pin (if needed)]");
+            System.exit(1);
+        }
+
+        // Get command line arguments
+        mUserID = args[0];
+        mPassword = args[1];
+        mURL = args[2];
+        mConnection = args[3];
+        if (args.length > 4) {
+            mDBName = args[4];
+        }
+        if (args.length > 5) {
+            mPin = args[5];
+        }
+        
+        
+	}
+	
+	public static void getOrders(O2GSession session, ResponseListener responseListener) {
+        try {
+            O2GLoginRules loginRules = session.getLoginRules();
+ 
+           // Check if Orders table is loaded automatically
+            if (loginRules != null && loginRules.isTableLoadedByDefault(O2GTableType.ORDERS)) {
+ 
+               // If table is loaded, use getTableRefreshResponse method
+                O2GResponse ordersResponse = loginRules.getTableRefreshResponse(O2GTableType.ORDERS);
+                O2GResponseReaderFactory responseFactory = session.getResponseReaderFactory();
+                if (responseFactory == null) {
+                    return;
+                }
+                O2GOrdersTableResponseReader ordersReader = responseFactory.createOrdersTableReader(ordersResponse);
+                for (int i = 0; i < ordersReader.size(); i++) {
+                    O2GOrderRow order = ordersReader.getRow(i);
+                    System.out.println(" This is a loaded order: \nOrderID = " + order.getOrderID() +
+                                   " Amount = " +  order.getAmount() +
+                                   " BuySell= " + order.getBuySell());
+                }
+            } else {
+ 
+               // If table is not loaded, use createRefreshTableRequestByAccount method
+                O2GRequestFactory requestFactory = session.getRequestFactory();
+                if (requestFactory != null) {
+                    O2GRequest request = requestFactory.createRefreshTableRequestByAccount(O2GTableType.ORDERS, mAccountID);
+                    responseListener.setRequest(request.getRequestId());
+                    session.sendRequest(request);
+                    Thread.sleep(1000);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Exception in getOrders().\n\t " + e.getMessage());
+        }
+    }
+ 
+    // Implementation of IO2GResponseListener interface public method onRequestCompleted
+    public void onRequestCompleted(String requestID, O2GResponse response) {
+        if (requestID.equals(mRequestID)) {
+            O2GResponseReaderFactory readerFactory = mSession.getResponseReaderFactory();
+            if (readerFactory == null) {
+                return;
+            }
+            O2GOrdersTableResponseReader reader = readerFactory.createOrdersTableReader(response);
+            for (int i = 0; i < reader.size(); i++) {
+                O2GOrderRow order = reader.getRow(i);
+                System.out.println(" This is a response to your request: \nOrderID = " + order.getOrderID() +
+                                   " Amount = " +  order.getAmount() +
+                                   " BuySell= " + order.getBuySell());
+            }
+        }
+    }
+ 
+ 
+    // Implementation of IO2GResponseListener interface public method onTablesUpdates
+    public void onTablesUpdates(O2GResponse response) {
+        O2GResponseReaderFactory factory = mSession.getResponseReaderFactory();
+        if (factory == null) {
+            return;
+        }
+        O2GTablesUpdatesReader updatesReader = factory.createTablesUpdatesReader(response);
+        for (int i = 0; i < updatesReader.size(); i++) {
+            O2GTableType tableType = updatesReader.getUpdateTable(i);
+            if (tableType == O2GTableType.ORDERS) {
+                O2GOrderRow order = updatesReader.getOrderRow(i);
+                System.out.println(" This is a live update: \nOrderID = " + order.getOrderID() +
+                                   " Amount = " +  order.getAmount() +
+                                   " BuySell= " + order.getBuySell());
+            }
+        }
+ 
+    }
+
+}

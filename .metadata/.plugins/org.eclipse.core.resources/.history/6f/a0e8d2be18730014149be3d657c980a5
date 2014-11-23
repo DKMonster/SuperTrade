@@ -1,0 +1,22 @@
+package com.supertrade.dkmonster;
+
+import com.fxcore2.*;
+
+public class getOffer {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+	    
+        // Connection and session variables
+        String mUserID = "";
+        String mPassword = "";
+        String mURL = "";
+        String mConnection = "";
+        String mDBName = "";
+        String mPin = "";
+        O2GSession mSession = null;
+        String mInstrument = "";
+
+	}
+
+}

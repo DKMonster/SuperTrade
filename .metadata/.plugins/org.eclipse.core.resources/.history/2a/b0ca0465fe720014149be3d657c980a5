@@ -1,0 +1,26 @@
+package com.supertrade.dkmonster;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import com.fxcore2.O2GSession;
+
+public class getOrder {
+
+    // Connection and session variables
+    static String mUserID = "";
+    static String mPassword = "";
+    static String mURL = "";
+    static String mConnection = "";
+    static String mSessionID = "";
+    static String mPin = "";
+    static O2GSession mSession = null;
+	
+	static Map<String, Object> responseData = new HashMap<String, Object>();
+
+	public static Map<String, Object> main(String[] args) {
+		// TODO Auto-generated method stub
+		return responseData;
+	}
+
+}

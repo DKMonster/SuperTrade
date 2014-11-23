@@ -5,7 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.fxcore2.O2GOfferTableRow;
+import com.fxcore2.O2GOffersTable;
 import com.fxcore2.O2GSession;
+import com.fxcore2.O2GTableIterator;
 import com.fxcore2.O2GTableManager;
 import com.fxcore2.O2GTableManagerMode;
 import com.fxcore2.O2GTableManagerStatus;
@@ -76,6 +79,7 @@ public class getTrade {
 
                     // Get an instance of the O2GTradesTable
                     O2GTradesTable tradeTable = (O2GTradesTable)tableManager.getTable(O2GTableType.TRADES);
+                    O2GOffersTable offersTable = (O2GOffersTable)tableManager.getTable(O2GTableType.OFFERS);
  
                     // Get row level information
                     Data = new Map[tradeTable.size()];
@@ -84,28 +88,19 @@ public class getTrade {
                         O2GTradeTableRow trade = tradeTable.getRow(i);
                         responseData.put("TradeID" , trade.getTradeID());
                         responseData.put("AccountID", trade.getAccountID());
-                        responseData.put("AccountName", trade.getAccountName());
-                        responseData.put("AccountKind", trade.getAccountKind());
-                        responseData.put("OfferID", trade.getOfferID());
                         responseData.put("Amount", trade.getAmount());
                         responseData.put("BuySell", trade.getBuySell());
                         responseData.put("OpenRate", trade.getOpenRate());
-                        responseData.put("OpenTime", trade.getOpenTime());
-                        responseData.put("OpenQuoteID", trade.getOpenQuoteID());
-                        responseData.put("OpenOrderID", trade.getOpenOrderID());
-                        responseData.put("OpenOrderReqID", trade.getOpenOrderReqID());
-                        responseData.put("OpenOrderRequestTXT", trade.getOpenOrderRequestTXT());
+                        responseData.put("OpenTime", String.valueOf(trade.getOpenTime().getTime()));
                         responseData.put("Commission", trade.getCommission());
                         responseData.put("RolloverInterest", trade.getRolloverInterest());
-                        responseData.put("TradeIDOrigin", trade.getTradeIDOrigin());
                         responseData.put("UsedMargin", trade.getUsedMargin());
-                        responseData.put("ValueDate", trade.getValueDate());
-                        responseData.put("Parties", trade.getParties());
                         responseData.put("Close", trade.getClose());
                         responseData.put("GrossPL", trade.getGrossPL());
-                        responseData.put("Limit", trade.getLimit());
                         responseData.put("PL", trade.getPL());
-                        responseData.put("Stop", trade.getStop());
+                        O2GTableIterator offersIterator = new O2GTableIterator();
+                        O2GOfferTableRow offer = offersTable.getNextRowByColumnValue("OfferID", trade.getOfferID(), offersIterator);
+                        responseData.put("Instrument" , offer.getInstrument());
                         Data[i] = responseData;
 //                        System.out.println(Data[i]);
                     }

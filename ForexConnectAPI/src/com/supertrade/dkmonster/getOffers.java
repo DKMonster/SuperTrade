@@ -136,7 +136,7 @@ public class getOffers {
                     responseData.put("InstrumentType" , offer.getInstrumentType());
                     responseData.put("ContractMultiplier" , offer.getContractMultiplier());
                     responseData.put("ValueDate" , offer.getValueDate());
-                    responseData.put("Time" , offer.getTime());
+                    responseData.put("Time" , String.valueOf(offer.getTime().getTime()));
 //                    System.out.println(responseData);
                     Data[i] = responseData;
 //                    System.out.println(Data[i]);

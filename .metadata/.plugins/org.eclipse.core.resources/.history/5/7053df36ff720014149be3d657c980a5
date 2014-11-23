@@ -1,0 +1,79 @@
+package com.supertrade.dkmonster;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import com.fxcore2.*;
+
+public class getOrder {
+
+    // Connection and session variables
+    String mUserID = "";
+    String mPassword = "";
+    String mURL = "";
+    String mConnection = "";
+    String mDBName = "";
+    String mPin = "";
+    O2GSession mSession = null;
+	
+	static Map<String, Object> responseData = new HashMap<String, Object>();
+
+	public static Map<String, Object> main(String[] args) throws InterruptedException {
+        // Check for correct number of arguments
+        if (args.length < 4) {
+            System.out.println("Not Enough Parameters!");
+            System.out.println("USAGE: [user ID] [password] [URL] [connection] [session ID (if needed)] [pin (if needed)]");
+            System.exit(1);
+        }
+        // Get command line arguments
+        mUserID = args[0];
+        mPassword = args[1];
+        mURL = args[2];
+        mConnection = args[3];
+        if (args.length > 4) {
+            mSessionID = args[4];
+        }
+        if (args.length > 5) {
+            mPin = args[5];
+        }
+        // Create a session, subscribe to session listener, login, get offers, logout
+        try {
+            mSession = O2GTransport.createSession();
+            SessionStatusListener statusListener = new SessionStatusListener(mSession, mDBName, mPin);
+            mSession.subscribeSessionStatus(statusListener);
+            ResponseListener responseListener = new ResponseListener(mSession,mInstrument);
+            mSession.subscribeResponse(responseListener);
+            mSession.login(mUserID, mPassword, mURL, mConnection);
+            while (!statusListener.isConnected() && !statusListener.hasError()) {
+                    Thread.sleep(50);
+            }
+            
+            if (!statusListener.hasError()) {
+                getOrders(mSession);
+                if (!mInstrument.equals("{INSTRUMENT}") && !mInstrument.equals("")) {
+                    O2GRequestFactory requestFactory = mSession.getRequestFactory();
+                    if (requestFactory != null) {
+                        mSession.sendRequest(requestFactory.createRefreshTableRequest(O2GTableType.OFFERS));
+                        Thread.sleep(10000);
+                    }
+                }   
+                mSession.logout();
+                while (!statusListener.isDisconnected()) {
+                    Thread.sleep(50);
+                }
+            }
+            mSession.unsubscribeSessionStatus(statusListener);
+            mSession.unsubscribeResponse(responseListener);
+            mSession.dispose();
+        } catch (Exception e) {
+            System.out.println ("Exception: " + e.getMessage());
+//            System.exit(1);
+        }
+	}
+	
+	public static void getOrders(O2GSession session) { 
+		
+	}
+	}
+
+}

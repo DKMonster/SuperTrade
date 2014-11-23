@@ -1,0 +1,76 @@
+package com.supertrade.dkmonster;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import com.fxcore2.*;
+
+public class getOrder {
+
+    // Connection and session variables
+    static String mUserID = "";
+    static String mPassword = "";
+    static String mURL = "";
+    static String mConnection = "";
+    static String mSessionID = "";
+    static String mPin = "";
+    static O2GSession mSession = null;
+	
+	static Map<String, Object> responseData = new HashMap<String, Object>();
+
+	public static Map<String, Object> main(String[] args) throws InterruptedException {
+        // Check for correct number of arguments
+        if (args.length < 4) {
+            System.out.println("Not Enough Parameters!");
+            System.out.println("USAGE: [user ID] [password] [URL] [connection] [session ID (if needed)] [pin (if needed)]");
+            System.exit(1);
+        }
+        // Get command line arguments
+        mUserID = args[0];
+        mPassword = args[1];
+        mURL = args[2];
+        mConnection = args[3];
+        if (args.length > 4) {
+            mSessionID = args[4];
+        }
+        if (args.length > 5) {
+            mPin = args[5];
+        }
+        
+		return responseData;
+	}
+	
+    private static boolean login(O2GSession session, SessionStatusListener listener, String userID, String password, String url, String connection) throws InterruptedException {
+        boolean result = false;
+        session.login(userID, password, url, connection);
+        while (true) {
+            listener.waitEvents();
+            if (listener.isConnected()) {
+                result = true;
+                break;
+            }
+            if (listener.hasError()){
+                System.out.println("Connection failed");
+                responseData.put("msg", "fail");
+                responseData.put("data", "Connection failed");
+                result = false;
+                break;
+            }
+        }
+        return result;
+    }
+
+    private static boolean logout(O2GSession session, SessionStatusListener listener) throws InterruptedException {
+        boolean result = false;
+        session.logout();
+        while (true) {
+            listener.waitEvents();
+            if (listener.isDisconnected()) {
+                result = true;
+                break;
+            }
+        }
+        return result;
+    }
+
+}

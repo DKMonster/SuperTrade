@@ -65,10 +65,9 @@ public class AjaxClosePosition extends HttpServlet {
         responseData.clear();
         if(account.getloadType().equals("closePositions")){
         	
-        	String[] accountData = new String[8];
+        	String[] accountData = new String[5];
 
-//        	accountData[0] = account.getInstrument();
-        	accountData[0] = "EUR/JPY";
+        	accountData[0] = account.getInstrument();
         	accountData[1] = account.getUserId();
             accountData[2] = account.getPwd();
             accountData[3] = account.getUrl();

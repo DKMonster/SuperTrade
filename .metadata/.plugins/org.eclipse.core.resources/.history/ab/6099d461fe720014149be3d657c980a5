@@ -1,0 +1,15 @@
+package com.supertrade.dkmonster;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class getOrder {
+	
+	static Map<String, Object> responseData = new HashMap<String, Object>();
+
+	public static Map<String, Object> main(String[] args) {
+		// TODO Auto-generated method stub
+		return responseData;
+	}
+
+}

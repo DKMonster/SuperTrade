@@ -545,6 +545,9 @@ html, body {
   font-weight: bold;
   text-align: center;
 }
+.wrapper .content .orders .table_info .content thead th:last-child {
+  min-width: 250px;
+}
 .wrapper .content .orders .table_info .content tbody td {
   text-align: center;
   height: 30px;

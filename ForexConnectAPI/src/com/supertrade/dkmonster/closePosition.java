@@ -115,12 +115,18 @@ public class closePosition {
                             tableListener.unsubscribeTableListener(tableManager);
                         } else {
                             System.out.println("There is no trade to close");
+                            responseData.put("msg", "fail");
+                            responseData.put("data", "There is no trade to close");
                         }
                     } else {
                         System.out.println("Cannot find offer for specified instrument: " + mInstrument);
+                        responseData.put("msg", "fail");
+                        responseData.put("data", "Cannot find offer for specified instrument: " + mInstrument);
                     }
                 } else {
                     System.out.println("Cannot find an account");
+                    responseData.put("msg", "fail");
+                    responseData.put("data", "Cannot find an account");
                 }
                 logout(mSession, statusListener);
             }
@@ -145,6 +151,8 @@ public class closePosition {
             }
             if (listener.hasError()){
                 System.out.println("Connection failed");
+                responseData.put("msg", "fail");
+                responseData.put("data", "Connection failed");
                 result = false;
                 break;
             }
@@ -170,6 +178,8 @@ public class closePosition {
         O2GRequestFactory requestFactory = session.getRequestFactory();
         if (requestFactory == null) {
             System.out.println("Cannot create request factory");
+            responseData.put("msg", "fail");
+            responseData.put("data", "Cannot create request factory");
             return false;
         }
         O2GLoginRules loginRules = session.getLoginRules();

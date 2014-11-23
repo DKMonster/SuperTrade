@@ -59,7 +59,7 @@ $(document).ready(function() {
 		obj_account.con = "Demo";
 
 		$.ajax({
-			url: "http://localhost:8080/ForexConnectAPI/AjaxServlet",
+			url: "http://localhost:8080/ForexConnectAPI/AjaxGetOffer",
 			type: 'POST',
 			dataType: 'json',
 			data: JSON.stringify(obj_account),
@@ -69,6 +69,8 @@ $(document).ready(function() {
 				var bid = [];
 				var ask = [];
 				var ans = [];
+
+				// console.log(data);
 
 				if(first != 0){
 
@@ -176,7 +178,7 @@ $(document).ready(function() {
 						tr.find('td:nth-child('+(7)+')').html(Round(data[i]['Low'],3));
 						tr.find('td:nth-child('+(8)+')').html(Round(data[i]['SellInterest'],2));
 						tr.find('td:nth-child('+(9)+')').html(Round(data[i]['BuyInterest'],2));
-						tr.find('td:nth-child('+(10)+')').html(data[i]['']);
+						tr.find('td:nth-child('+(10)+')').html(data[i]['PipCost']);
 						tr.find('td:nth-child('+(11)+')').html(data[i]['']);
 						tr.find('td:nth-child('+(12)+')').html(data[i]['Time']);
 
@@ -190,7 +192,7 @@ $(document).ready(function() {
 
 					for(var i = 0 ; i < Object.keys(data).length ; i++){
 
-						tableOffers.append("<tr data-symbol="+data[i]['Instrument']+">");
+						tableOffers.append("<tr data-symbol="+data[i]['Instrument']+" data-perpie="+data[i]['PipCost']+">");
 
 						var tr = tableOffers.find('tr:nth-child('+(i+1)+')');
 						tr.append('<td>'+(i+1)+'</td>');
@@ -224,7 +226,7 @@ $(document).ready(function() {
 						tr.append('<td>'+Round(data[i]['Low'],3)+'</td>');
 						tr.append('<td>'+Round(data[i]['SellInterest'],2)+'</td>');
 						tr.append('<td>'+Round(data[i]['BuyInterest'],2)+'</td>');
-						tr.append('<td>'+data[i]['']+'</td>');
+						tr.append('<td>'+data[i]['PipCost']+'</td>');
 						tr.append('<td>'+data[i]['']+'</td>');
 						tr.append('<td>'+data[i]['Time']+'</td>');
 					}
@@ -237,6 +239,12 @@ $(document).ready(function() {
 						checkEORate(data);
 					});
 
+					var eoAmount = eoOrder.find('#eoAmount');
+					eoAmount.change(function(){
+						var data = $(this).val();
+						checkEOPerPip(data);
+					});
+
 					entryOrder();
 
 					// MarketOrder moOrder
@@ -245,6 +253,12 @@ $(document).ready(function() {
 					moSelect.change(function(){
 						var data = $(this).val();
 						checkMORate(data);
+					});
+
+					var moAmount = moOrder.find('#moAmount');
+					moAmount.change(function(){
+						var data = $(this).val();
+						checkMOPerPip(data);
 					});
 
 					marketOrder();
@@ -312,6 +326,18 @@ $(document).ready(function() {
 		eoRate.val(data);
 	}
 
+	function checkEOPerPip(eoData){
+		var eoOrder = $('.entryOrder');
+		var eoPerPip = eoOrder.find('#eoPerPip');
+		var eoSymbol = eoOrder.find('#eoOrder :selected').val();
+		if(eoData == null){
+			eoData = eoOrder.find('#eoPerPip').val();
+		}
+
+		var data = tableOffers.find('tr[data-symbol="'+eoSymbol+'"]').data('perpie');
+		eoPerPip.text(Round(data*eoData,2));
+	}
+
 	function checkMORate(moData){
 		var moOrder = $('.marketOrder');
 		var moRate = moOrder.find('.moRate');
@@ -323,6 +349,18 @@ $(document).ready(function() {
 		var data = tableOffers.find('tr[data-symbol="'+moData+'"]').find('td:nth-child(3)').html();
 
 		moRate.val(data);
+	}
+
+	function checkMOPerPip(moData){
+		var moOrder = $('.marketOrder');
+		var moPerPip = moOrder.find('#moPerPip');
+		var moSymbol = moOrder.find('#moOrder :selected').val();
+		if(moData == null){
+			moData = moOrder.find('#moPerPip').val();
+		}
+
+		var data = tableOffers.find('tr[data-symbol="'+moSymbol+'"]').data('perpie');
+		moPerPip.text(Round(data*moData,2));
 	}
 
 	function createEntryOrder(){
