@@ -101,6 +101,77 @@
 					<div class="setting"><i class="icon-cog"></i></div>
 				</div>
 				<div class="orders" id="orders">
+					<div class="table_menu" id="table_menu">
+						<ul>
+							<!-- <li class="active" info="account"><a href="#">帳戶</a></li> -->
+							<li info="order"><a href="#">訂單</a></li>
+							<li info="openpositions"><a href="#">開倉</a></li>
+							<li info="summary"><a href="#">總結</a></li>
+							<li info="closepositions"><a href="#">平倉</a></li>
+							<li info="actions"><a href="#">指令</a></li>
+						</ul>
+					</div>
+					<!-- <div class="table_info account active" id="table_info">
+						<div class="title">
+							<div class="icon"><i class="icon-edit"></i></div>
+							<div class="text">帳戶資訊</div>
+						</div>
+						<div class="allTable content">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>帳號</th>
+										<th>淨值</th>
+										<th>當日盈虧</th>
+										<th>佔用保證金</th>
+										<th>可用保證金</th>
+										<th>可用保證金百分比</th>
+										<th>佔用維持保證金</th>
+										<th>可用維持保證金</th>
+										<th>可用維持保證金百分比</th>
+										<th>總盈/虧</th>
+										<th>補倉</th>
+										<th>類型</th>
+									</tr>
+								</thead>
+								<tbody>
+								
+								</tbody>
+							</table>
+						</div>
+					</div> -->
+					<div class="table_info order" id="table_info">
+						<div class="title">
+							<div class="icon"><i class="icon-edit"></i></div>
+							<div class="text">訂單</div>
+							<div class="list"><i class="icon-th-list"></i></div>
+							<div class="plus"><i class="icon-plus"></i></div>
+						</div>
+						<div class="allTable content">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>掛單號碼</th>
+										<th>帳號</th>
+										<th>掛單</th>
+										<th>狀態</th>
+										<th>商品</th>
+										<th>數量(K)</th>
+										<th>賣出</th>
+										<th>買進</th>
+										<th>止損</th>
+										<th>限價</th>
+										<th>時間</th>
+										<th>到期時間</th>
+									</tr>
+								</thead>
+								<tbody>
+									<!-- content -->
+								</tbody>
+							</table>
+						</div>
+					</div>
 					<div class="table_info openpositions" id="table_info">
 						<div class="title">
 							<div class="icon"><i class="icon-edit"></i></div>
@@ -124,7 +195,7 @@
 										<th>總盈虧</th>
 										<th>佣金</th>
 										<th>過夜利息</th>
-										<th>占用保證金</th>
+										<th>佔占用保證金</th>
 										<th>時間</th>
 									</tr>
 								</thead>
@@ -152,9 +223,8 @@
 										<th>平均賣價</th>
 										<th>買入平倉</th>
 										<th>賣出平倉</th>
-										<th>平娟買價</th>
+										<th>平均買價</th>
 										<th>買進數量(K)</th>
-										<th>買進盈虧(K)</th>
 										<th>買進盈虧</th>
 										<th>數量(K)</th>
 										<th>總盈虧</th>
@@ -165,39 +235,56 @@
 									</tr>
 								</thead>
 								<tbody>
-									<!-- content -->
+									
 								</tbody>
 							</table>
 						</div>
 					</div>
-					<div class="table_info order" id="table_info">
+					<div class="table_info closepositions" id="table_info">
 						<div class="title">
 							<div class="icon"><i class="icon-edit"></i></div>
-							<div class="text">訂單</div>
-							<div class="list"><i class="icon-th-list"></i></div>
-							<div class="plus"><i class="icon-plus"></i></div>
+							<div class="text">已平倉部位</div>
 						</div>
 						<div class="allTable content">
 							<table class="table">
 								<thead>
 									<tr>
 										<th>#</th>
+										<th>成交單據</th>
+										<th>帳號</th>
 										<th>商品</th>
-										<th>賣出盈/虧</th>
-										<th>賣出數量(K)</th>
-										<th>平均賣價</th>
-										<th>買入平倉</th>
-										<th>賣出平倉</th>
-										<th>平娟買價</th>
-										<th>買進數量(K)</th>
-										<th>買進盈虧(K)</th>
-										<th>買進盈虧</th>
 										<th>數量(K)</th>
-										<th>總盈虧</th>
-										<th>淨盈虧</th>
-										<th>淨止損</th>
-										<th>淨移動止損</th>
-										<th>淨限價</th>
+										<th>賣/買</th>
+										<th>開市價</th>
+										<th>收市價</th>
+										<th>盈/虧</th>
+										<th>總盈/虧</th>
+										<th>佣金</th>
+										<th>過夜利息</th>
+										<th>開倉時間</th>
+										<th>平倉時間</th>
+									</tr>
+								</thead>
+								<tbody>
+									<!-- content -->
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="table_info actions" id="table_info">
+						<div class="title">
+							<div class="icon"><i class="icon-edit"></i></div>
+							<div class="text">指令</div>
+						</div>
+						<div class="allTable content">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>指令</th>
+										<th>發出時間</th>
+										<th>完成時間</th>
+										<th>註解</th>
 									</tr>
 								</thead>
 								<tbody>

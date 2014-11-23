@@ -8,15 +8,15 @@ $(document).ready(function() {
 
 	var content = $('#content');
 	var orders = content.find('#orders');
-	var allTable = content.find('.allTable');
-	var openpositions = content.find('.openpositions');
-	var tableOrders = openpositions.find('.content');
+
+	// var table_account = orders.find('.account');
+	var table_order = orders.find('.order');
+	var table_openPositions = orders.find('.openpositions');
+	var table_summary = orders.find('.summary');
+	var table_closePositions = orders.find('.closepositions');
+	var table_actions = orders.find('.actions');
 
 	var first = 0;
-	
-	tableOrders.niceScroll({
-		cursorwidth: 10
-	});
 
 	$.ajax({
 		async: true,
@@ -49,21 +49,41 @@ $(document).ready(function() {
 		s_date.html(msg['user_login_date']);
 	}
 
+	// 選單
+	tableMenu();
+
 	// 開倉部位
 	OpenPositions();
 
 	// 訂單
 	getOrder();
 
+	function tableMenu(){
+		var table_menu = $('#table_menu');
+		var table_info = $('.table_info');
+		var liMenu = table_menu.find('li');
+
+		liMenu.on('click' , function(){
+			that = $(this);
+
+			liMenu.removeClass('active');
+			table_info.removeClass('active');
+
+			var info = that.attr('info');
+			that.addClass('active');
+			content.find('.'+info+'').addClass('active');
+		});
+	}
+
 	function OpenPositions(){
 		var obj_account = new Object();
-		obj_account.loadType = "getTrade";
+		obj_account.loadType = "getOpenPositions";
 		obj_account.userId = "D172574180001";
 		obj_account.pwd = "7384";
 		obj_account.con = "Demo";
 
 		$.ajax({
-			url: "http://localhost:8080/ForexConnectAPI/AjaxServlet",
+			url: "http://localhost:8080/ForexConnectAPI/AjaxOpenPositions",
 			type: 'POST',
 			dataType: 'json',
 			data: JSON.stringify(obj_account),
@@ -71,7 +91,7 @@ $(document).ready(function() {
 			mimeType: 'application/json',
 			success: function(data) {
 
-				var tbody = tableOrders.find('tbody');
+				var tbody = table_openPositions.find('tbody');
 
 				// console.log(data);
 
@@ -128,12 +148,12 @@ $(document).ready(function() {
 	function closeOrder(){
 		var tr;
 		var cpOrder = $('.closePositions').find('#cpOrder');
-		var tr_length = tableOrders.find('tbody tr').length;
+		var tr_length = table_openPositions.find('tbody tr').length;
 
 		cpOrder.empty();
 
 		for(var i = 0 ; i < tr_length ; i++){
-			tr = tableOrders.find('tr:nth-child('+(i+1)+')');
+			tr = table_openPositions.find('tr:nth-child('+(i+1)+')');
 			td = tr.find('td:nth-child(4)').html();
 			cpOrder.append('<option value="'+td+'">'+td+'</option>');
 		}
@@ -149,11 +169,11 @@ $(document).ready(function() {
 			cpData = cpOrder.find('#cpOrder :selected').val();
 		}
 
-		var data = tableOrders.find('tr[data-id="'+cpData+'"]').find('td:nth-child(8)').html();
+		var data = table_openPositions.find('tr[data-id="'+cpData+'"]').find('td:nth-child(8)').html();
 
 		cpRate.val(data);
 
-		id = tableOrders.find('tr[data-id="'+cpData+'"]').data('id');
+		id = table_openPositions.find('tr[data-id="'+cpData+'"]').data('id');
 		cpOrder.attr("data-id",id);
 	}
 
@@ -238,8 +258,54 @@ $(document).ready(function() {
 				data: JSON.stringify(obj_account),
 				contentType: 'application/json',
 				mimeType: 'application/json',
-				success: function (msg) {
-					console.log(msg);
+				success: function (data) {
+					console.log(data);
+					tbody = table_order.find('tbody');
+
+					// console.log(data);
+
+					// init
+					tbody.empty();
+
+					for(var i = 0 ; i < data.length ; i++){
+						if(data[i]['BuySell'] == "B"){
+							tbody.append(
+								'<tr data-id="'+data[i]['TradeID']+'">'+
+									'<td>'+(i+1)+'</td>'+
+									'<td>'+data[i]['TradeID']+'</td>'+
+									'<td>'+data[i]['AccountID']+'</td>'+
+									'<td>'+data[i]['Type']+'</td>'+
+									'<td>'+data[i]['Status']+'</td>'+
+									'<td>'+data[i]['Instrument']+'</td>'+
+									'<td>'+(data[i]['Amount']/1000)+'</td>'+
+									'<td></td>'+
+									'<td>'+data[i]['Rate']+'</td>'+
+									'<td>'+data[i]['Stop']+'</td>'+
+									'<td>'+data[i]['Limit']+'</td>'+
+									'<td>'+data[i]['StatusTime']+'</td>'+
+									'<td>'+data[i]['ExpireDate']+'</td>'+
+								'</tr>'
+								);
+						}else{
+							tbody.append(
+								'<tr data-id="'+data[i]['TradeID']+'">'+
+									'<td>'+(i+1)+'</td>'+
+									'<td>'+data[i]['TradeID']+'</td>'+
+									'<td>'+data[i]['AccountID']+'</td>'+
+									'<td>'+data[i]['Type']+'</td>'+
+									'<td>'+data[i]['Status']+'</td>'+
+									'<td>'+data[i]['Instrument']+'</td>'+
+									'<td>'+(data[i]['Amount']/1000)+'</td>'+
+									'<td>'+data[i]['Rate']+'</td>'+
+									'<td></td>'+
+									'<td>'+data[i]['Stop']+'</td>'+
+									'<td>'+data[i]['Limit']+'</td>'+
+									'<td>'+data[i]['StatusTime']+'</td>'+
+									'<td>'+data[i]['ExpireDate']+'</td>'+
+								'</tr>'
+								);
+						}
+					}
 				},
 				error: function (xhr, ajaxOptions, thrownError) {
 					console.log(xhr.status);

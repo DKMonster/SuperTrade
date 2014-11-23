@@ -35,6 +35,8 @@ $s-menu-h: 100%
 $c-title-h: 50px
 $c-content-h: 100%
 
+$table-menu-w: 100%
+
 $slider-title-border: 1px solid #fff
 
 /* ----------- base setting ----------- */
@@ -206,11 +208,50 @@ html , body
 			padding: 10px
 			background: #222
 
-			.table_info
-				+w-h(100% , 100%)
+			.table_menu
+				+w-h(100% , 20%)
 				padding: 10px
 				display: block
 				float: left
+
+				ul
+					+w-h(100% , 100%)
+					padding: 10px
+
+					li
+						+w-h($table-menu-w/5 , 50px)
+						+topShadow()
+						+leftShadow()
+						+rightShadow()
+						+bottomShadow()
+						+baseText(#fff , 20px , 700 , 50px , center)
+
+						&:hover
+							cursor: pointer
+							background: #fff
+							+transition(all .20s ease-in-out)
+
+							a
+								color: #222
+
+					li.active
+						background: #fff
+
+						a
+							color: #222
+
+					a
+						+baseText(#fff , 20px , 700 , 50px , center)
+
+
+			.table_info
+				+w-h(100% , 80%)
+				padding: 10px
+				display: none
+				float: left
+
+				&.active
+					display: block
 
 				.title
 					+w-h(100% , $c-title-h)
@@ -258,16 +299,15 @@ html , body
 					thead
 
 						th
+							width: auto
 							color: #fff
 							+leftShadow()
 							+rightShadow()
 							+bottomShadow()
 							min-width: 120px
+							max-width: 280px
 							font-weight: bold
 							text-align: center
-
-						th:last-child
-							min-width: 250px
 
 
 					tbody
@@ -277,6 +317,8 @@ html , body
 							height: 30px
 							color: #fff
 							line-height: 30px
+							min-width: 120px
+							max-width: 280px
 							+bottomShadow()
 							+leftShadow()
 							+rightShadow()

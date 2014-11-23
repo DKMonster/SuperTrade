@@ -1,0 +1,10 @@
+package com.supertrade.dkmonster;
+
+public class getOpenPositions {
+
+	public static Map[] main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

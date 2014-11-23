@@ -2,6 +2,6 @@
 
 	session_start();
 	session_destroy();
-	echo $_SESSION["$type"];
+	echo "clear";
 
 ?>

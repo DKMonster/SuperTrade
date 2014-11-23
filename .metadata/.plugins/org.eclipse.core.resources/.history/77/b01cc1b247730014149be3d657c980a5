@@ -188,6 +188,9 @@ public class createEntry {
                 } else {
                     if (((int)(Math.rint(Math.abs(mRate - bid)/pointSize)) <= condDistEntryStop) ||
                         ((int)(Math.rint(Math.abs(mRate - bid)/pointSize)) <= condDistEntryLimit)) {
+                    	System.out.println((int)(Math.rint(Math.abs(mRate - bid)/pointSize)));
+                    	System.out.println(condDistEntryStop);
+                    	System.out.println(condDistEntryLimit);
                     	
                         System.out.println("Your sell entry order price is too close to market." +
                                            " No action will be taken.");

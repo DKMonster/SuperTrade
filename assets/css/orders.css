@@ -438,12 +438,76 @@ html, body {
   padding: 10px;
   background: #222222;
 }
-.wrapper .content .orders .table_info {
+.wrapper .content .orders .table_menu {
   width: 100%;
-  height: 100%;
+  height: 20%;
   padding: 10px;
   display: block;
   float: left;
+}
+.wrapper .content .orders .table_menu ul {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+}
+.wrapper .content .orders .table_menu ul li {
+  width: 20%;
+  height: 50px;
+  border-top: 1px solid rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
+  -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
+  border-left: 1px solid rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  -moz-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  border-right: 1px solid rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  -moz-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
+  -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 50px;
+  text-align: center;
+}
+.wrapper .content .orders .table_menu ul li:hover {
+  cursor: pointer;
+  background: white;
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+.wrapper .content .orders .table_menu ul li:hover a {
+  color: #222222;
+}
+.wrapper .content .orders .table_menu ul li.active {
+  background: white;
+}
+.wrapper .content .orders .table_menu ul li.active a {
+  color: #222222;
+}
+.wrapper .content .orders .table_menu ul a {
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 50px;
+  text-align: center;
+}
+.wrapper .content .orders .table_info {
+  width: 100%;
+  height: 80%;
+  padding: 10px;
+  display: none;
+  float: left;
+}
+.wrapper .content .orders .table_info.active {
+  display: block;
 }
 .wrapper .content .orders .table_info .title {
   width: 100%;
@@ -528,6 +592,7 @@ html, body {
   overflow: hidden;
 }
 .wrapper .content .orders .table_info .content thead th {
+  width: auto;
   color: white;
   border-left: 1px solid rgba(0, 0, 0, 0.3);
   -webkit-box-shadow: -1px 0 0 rgba(255, 255, 255, 0.05) inset;
@@ -542,17 +607,17 @@ html, body {
   -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
   min-width: 120px;
+  max-width: 280px;
   font-weight: bold;
   text-align: center;
-}
-.wrapper .content .orders .table_info .content thead th:last-child {
-  min-width: 250px;
 }
 .wrapper .content .orders .table_info .content tbody td {
   text-align: center;
   height: 30px;
   color: white;
   line-height: 30px;
+  min-width: 120px;
+  max-width: 280px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.3);
   -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
   -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
