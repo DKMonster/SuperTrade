@@ -5,7 +5,24 @@ public class getAccount {
 	private String userId , pwd , url = "http://www.fxcorporate.com/Hosts.jsp" , con , instrument;
 	private String amount,rate,buysell, offerid;
 	private String login,password,connection;
+	private String accountId , orderId;
 	//getters & setters 
+	
+	public String getAccountId(){
+		return accountId;
+	}
+	
+	public void setAccountId(String accountId){
+		this.accountId = accountId;
+	}
+	
+	public String getOrderId(){
+		return orderId;
+	}
+	
+	public void setOrderId(String orderId){
+		this.orderId = orderId;
+	}
 	
 	public String getofferid(){
 		return offerid;

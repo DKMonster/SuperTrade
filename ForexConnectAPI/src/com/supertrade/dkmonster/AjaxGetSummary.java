@@ -27,7 +27,7 @@ public class AjaxGetSummary extends HttpServlet {
      * @see HttpServlet#HttpServlet()
      */
 	
-	static Map<String, Object> responseData = new HashMap<String, Object>();
+	Object[] listData;
 	
     public AjaxGetSummary() {
         super();
@@ -62,8 +62,6 @@ public class AjaxGetSummary extends HttpServlet {
 		response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
         response.setContentType("application/json");
         
-        responseData.clear();
-        
         if(account.getloadType().equals("getSummary")){
         	
         	String[] accountData = new String[4];
@@ -73,12 +71,12 @@ public class AjaxGetSummary extends HttpServlet {
             accountData[2] = account.getUrl();
             accountData[3] = account.getCon();
             
-            responseData = getInfo.main(accountData);
+            listData = getSummary.main(accountData);
 
         }
         
         try {
-            mapper.writeValue(response.getOutputStream(), responseData);
+            mapper.writeValue(response.getOutputStream(), listData);
         } catch (JsonGenerationException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

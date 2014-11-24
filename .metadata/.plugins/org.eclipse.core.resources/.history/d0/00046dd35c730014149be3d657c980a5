@@ -1,0 +1,14 @@
+package com.supertrade.dkmonster;
+
+import java.util.Map;
+
+public class getSummary {
+
+	static Map[] Data;
+
+	public static Map[] main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

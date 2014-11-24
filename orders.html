@@ -135,7 +135,7 @@
 									</tr>
 								</thead>
 								<tbody>
-								
+
 								</tbody>
 							</table>
 						</div>
@@ -144,8 +144,8 @@
 						<div class="title">
 							<div class="icon"><i class="icon-edit"></i></div>
 							<div class="text">訂單</div>
-							<div class="list"><i class="icon-th-list"></i></div>
-							<div class="plus"><i class="icon-plus"></i></div>
+							<div class="trash"><i class="icon-trash"></i></div>
+							<div class="edit"><i class="icon-edit"></i></div>
 						</div>
 						<div class="allTable content">
 							<table class="table">
@@ -176,8 +176,7 @@
 						<div class="title">
 							<div class="icon"><i class="icon-edit"></i></div>
 							<div class="text">開倉部位</div>
-							<div class="list"><i class="icon-th-list"></i></div>
-							<div class="plus" id="plusCloseOrder"><i class="icon-plus">平倉</i></div>
+							<div class="plus plusCloseOrder" id="plusCloseOrder"><i class="icon-plus">平倉</i></div>
 						</div>
 						<div class="allTable content">
 							<table class="table">
@@ -209,8 +208,7 @@
 						<div class="title">
 							<div class="icon"><i class="icon-edit"></i></div>
 							<div class="text">總結</div>
-							<div class="list"><i class="icon-th-list"></i></div>
-							<div class="plus"><i class="icon-plus"></i></div>
+							<div class="plus plusCloseOrder" id="plusCloseOrder"><i class="icon-plus">平倉</i></div>
 						</div>
 						<div class="allTable content">
 							<table class="table">
@@ -229,9 +227,9 @@
 										<th>數量(K)</th>
 										<th>總盈虧</th>
 										<th>淨盈虧</th>
-										<th>淨止損</th>
+										<!-- <th>淨止損</th>
 										<th>淨移動止損</th>
-										<th>淨限價</th>
+										<th>淨限價</th> -->
 									</tr>
 								</thead>
 								<tbody>
@@ -368,6 +366,101 @@
 						<div class="optLabel">
 							<div class="col-sm-12">
 								<div class="commit">Positions of the same currency pair will be closed out on a first in first out basis</div>
+							</div>
+						</div>
+					</div>
+					<div class="level lvSubmit">
+						<div class="optLabel">
+							<div class="col-sm-12">
+								<button class="btn-danger cancel" id="cancel">取消</button>
+								<button class="btn-primary ok" id="ok">確定</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="editOrder">
+				<div class="col-sm-12 eoHeader">
+					<div class="title">修改訂單</div>
+					<div class="close" id="close"><i class="icon-cancel"></i></div>
+				</div>
+				<div class="col-sm-12 eoContent">
+					<div class="level lvEntry">
+						<div class="title">訂單資訊</div>
+						<div class="optLabel">
+							<div class="col-sm-5">
+								<label for="eoOrder" class="text">訂單編號：</label>
+							</div>
+							<div class="col-sm-7">
+								<select class="eoOrder" id="eoOrder">
+									<!-- content -->
+								</select>
+							</div>
+						</div>
+						<div class="optLabel">
+							<div class="col-sm-5">
+								<label for="eoAmount" class="text">數量(K)：</label>
+							</div>
+							<div class="col-sm-7">
+								<input type="number" value="5" class="eoAmount" id="eoAmount">
+							</div>
+						</div>
+						<div class="optLabel">
+							<div class="col-sm-5">
+								<label for="eoRate" class="text">匯率：</label>
+							</div>
+							<div class="col-sm-7">
+								<input type="number"  class="eoRate" id="eoRate" disabled="true">
+							</div>
+						</div>
+					</div>
+					<div class="level lvSubmit">
+						<div class="optLabel">
+							<div class="col-sm-12">
+								<button class="btn-danger cancel" id="cancel">取消</button>
+								<button class="btn-primary ok" id="ok">確定</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="removeOrder">
+				<div class="col-sm-12 reHeader">
+					<div class="title">刪除訂單</div>
+					<div class="close" id="close"><i class="icon-cancel"></i></div>
+				</div>
+				<div class="col-sm-12 reContent">
+					<div class="level lvEntry">
+						<div class="title">訂單資訊</div>
+						<div class="optLabel">
+							<div class="col-sm-5">
+								<label for="reOrder" class="text">訂單編號：</label>
+							</div>
+							<div class="col-sm-7">
+								<select class="reOrder" id="reOrder">
+									<!-- content -->
+								</select>
+							</div>
+						</div>
+						<div class="optLabel">
+							<div class="col-sm-5">
+								<label for="reAmount" class="text">數量(K)：</label>
+							</div>
+							<div class="col-sm-7">
+								<input type="number" value="5" class="reAmount" id="reAmount">
+							</div>
+						</div>
+						<div class="optLabel">
+							<div class="col-sm-5">
+								<label for="reRate" class="text">匯率：</label>
+							</div>
+							<div class="col-sm-7">
+								<input type="number"  class="reRate" id="reRate" disabled="true">
+							</div>
+						</div>
+						<div class="optLabel">
+							<div class="col-sm-12">
+								<label for="reOrder" class="text">確認要刪除訂單？</label>
 							</div>
 						</div>
 					</div>

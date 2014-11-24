@@ -545,7 +545,7 @@ html, body {
   line-height: 50px;
   text-align: left;
 }
-.wrapper .content .orders .table_info .title .plus, .wrapper .content .orders .table_info .title .list {
+.wrapper .content .orders .table_info .title .edit, .wrapper .content .orders .table_info .title .trash, .wrapper .content .orders .table_info .title .plus {
   float: right;
   padding-right: 10px;
   padding-left: 10px;
@@ -559,7 +559,7 @@ html, body {
   line-height: 50px;
   text-align: left;
 }
-.wrapper .content .orders .table_info .title .plus:hover, .wrapper .content .orders .table_info .title .list:hover {
+.wrapper .content .orders .table_info .title .edit:hover, .wrapper .content .orders .table_info .title .trash:hover, .wrapper .content .orders .table_info .title .plus:hover {
   color: #222222;
   background: white;
   cursor: pointer;
@@ -820,6 +820,328 @@ html, body {
   float: left;
 }
 .wrapper .closePositions .cpContent .lvSubmit .optLabel .ok {
+  margin-top: 10px;
+  float: right;
+}
+.wrapper .editOrder {
+  position: absolute;
+  left: -280px;
+  top: 50px;
+  width: 280px;
+  height: -webkit-calc(100% - 50px);
+  height: -moz-calc(100% - 50px);
+  height: calc(100% - 50px);
+  background: #eeeeee;
+}
+.wrapper .editOrder .eoHeader {
+  width: 100%;
+  height: 50px;
+  background: #222222;
+  display: block;
+}
+.wrapper .editOrder .eoHeader .title {
+  float: left;
+  padding-left: 5px;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 50px;
+  text-align: left;
+}
+.wrapper .editOrder .eoHeader .close {
+  float: right;
+  padding-right: 5px;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 50px;
+  text-align: left;
+}
+.wrapper .editOrder .eoContent {
+  width: 100%;
+  height: -webkit-calc(100% - 50px);
+  height: -moz-calc(100% - 50px);
+  height: calc(100% - 50px);
+  display: block;
+}
+.wrapper .editOrder .eoContent .level {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin-top: 10px;
+  border: 1px solid #222222;
+}
+.wrapper .editOrder .eoContent .level .title {
+  width: 100px;
+  height: 15px;
+  margin-top: -5px;
+  margin-left: 5px;
+  background: #eeeeee;
+  color: #222222;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 15px;
+  text-align: center;
+}
+.wrapper .editOrder .eoContent .level .optLabel {
+  width: 100%;
+  height: 25px;
+  margin-bottom: 5px;
+  color: #222222;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 25px;
+  text-align: left;
+  display: block;
+}
+.wrapper .editOrder .eoContent .level .optLabel .text {
+  color: #222222;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 25px;
+  text-align: left;
+}
+.wrapper .editOrder .eoContent .level .optLabel .text3 {
+  margin-top: 10px;
+  color: #222222;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 25px;
+  text-align: left;
+}
+.wrapper .editOrder .eoContent .level .optLabel select {
+  width: 100%;
+  height: 20px;
+}
+.wrapper .editOrder .eoContent .level .optLabel input[type="number"] {
+  width: 100%;
+  height: 20px;
+}
+.wrapper .editOrder .eoContent .level .optLabel p {
+  width: 100%;
+  height: 20px;
+  color: #222222;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 25px;
+  text-align: left;
+}
+.wrapper .editOrder .eoContent .level .optLabel .radio {
+  width: 50px;
+  height: 30px;
+  float: left;
+  margin-top: 10px;
+  display: block;
+  color: #222222;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 25px;
+  text-align: left;
+}
+.wrapper .editOrder .eoContent .level .optLabel .radio input {
+  margin-top: 8px;
+}
+.wrapper .editOrder .eoContent .level .optLabel .radio:last-child {
+  float: right;
+}
+.wrapper .editOrder .eoContent .level .optLabel:nth-child(4) {
+  width: 100%;
+  height: 40px;
+}
+.wrapper .editOrder .eoContent .lvCommit .optLabel {
+  width: 100%;
+  height: 75px;
+  display: block;
+  margin-bottom: 5px;
+}
+.wrapper .editOrder .eoContent .lvCommit .optLabel .commit {
+  width: 100%;
+  height: 50px;
+  color: #ff3333;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 25px;
+  text-align: left;
+  display: block;
+}
+.wrapper .editOrder .eoContent .lvSubmit .optLabel {
+  width: 100%;
+  height: 50px;
+  display: block;
+  margin-bottom: 5px;
+}
+.wrapper .editOrder .eoContent .lvSubmit .optLabel button {
+  display: block;
+  width: 30%;
+  height: 30px;
+  line-height: 30px;
+}
+.wrapper .editOrder .eoContent .lvSubmit .optLabel .cancel {
+  margin-top: 10px;
+  float: left;
+}
+.wrapper .editOrder .eoContent .lvSubmit .optLabel .ok {
+  margin-top: 10px;
+  float: right;
+}
+.wrapper .removeOrder {
+  position: absolute;
+  left: -280px;
+  top: 50px;
+  width: 280px;
+  height: -webkit-calc(100% - 50px);
+  height: -moz-calc(100% - 50px);
+  height: calc(100% - 50px);
+  background: #eeeeee;
+}
+.wrapper .removeOrder .reHeader {
+  width: 100%;
+  height: 50px;
+  background: #222222;
+  display: block;
+}
+.wrapper .removeOrder .reHeader .title {
+  float: left;
+  padding-left: 5px;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 50px;
+  text-align: left;
+}
+.wrapper .removeOrder .reHeader .close {
+  float: right;
+  padding-right: 5px;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 50px;
+  text-align: left;
+}
+.wrapper .removeOrder .reContent {
+  width: 100%;
+  height: -webkit-calc(100% - 50px);
+  height: -moz-calc(100% - 50px);
+  height: calc(100% - 50px);
+  display: block;
+}
+.wrapper .removeOrder .reContent .level {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin-top: 10px;
+  border: 1px solid #222222;
+}
+.wrapper .removeOrder .reContent .level .title {
+  width: 100px;
+  height: 15px;
+  margin-top: -5px;
+  margin-left: 5px;
+  background: #eeeeee;
+  color: #222222;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 15px;
+  text-align: center;
+}
+.wrapper .removeOrder .reContent .level .optLabel {
+  width: 100%;
+  height: 25px;
+  margin-bottom: 5px;
+  color: #222222;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 25px;
+  text-align: left;
+  display: block;
+}
+.wrapper .removeOrder .reContent .level .optLabel .text {
+  color: #222222;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 25px;
+  text-align: left;
+}
+.wrapper .removeOrder .reContent .level .optLabel .text3 {
+  margin-top: 10px;
+  color: #222222;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 25px;
+  text-align: left;
+}
+.wrapper .removeOrder .reContent .level .optLabel select {
+  width: 100%;
+  height: 20px;
+}
+.wrapper .removeOrder .reContent .level .optLabel input[type="number"] {
+  width: 100%;
+  height: 20px;
+}
+.wrapper .removeOrder .reContent .level .optLabel p {
+  width: 100%;
+  height: 20px;
+  color: #222222;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 25px;
+  text-align: left;
+}
+.wrapper .removeOrder .reContent .level .optLabel .radio {
+  width: 50px;
+  height: 30px;
+  float: left;
+  margin-top: 10px;
+  display: block;
+  color: #222222;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 25px;
+  text-align: left;
+}
+.wrapper .removeOrder .reContent .level .optLabel .radio input {
+  margin-top: 8px;
+}
+.wrapper .removeOrder .reContent .level .optLabel .radio:last-child {
+  float: right;
+}
+.wrapper .removeOrder .reContent .level .optLabel:nth-child(4) {
+  width: 100%;
+  height: 40px;
+}
+.wrapper .removeOrder .reContent .lvCommit .optLabel {
+  width: 100%;
+  height: 75px;
+  display: block;
+  margin-bottom: 5px;
+}
+.wrapper .removeOrder .reContent .lvCommit .optLabel .commit {
+  width: 100%;
+  height: 50px;
+  color: #ff3333;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 25px;
+  text-align: left;
+  display: block;
+}
+.wrapper .removeOrder .reContent .lvSubmit .optLabel {
+  width: 100%;
+  height: 50px;
+  display: block;
+  margin-bottom: 5px;
+}
+.wrapper .removeOrder .reContent .lvSubmit .optLabel button {
+  display: block;
+  width: 30%;
+  height: 30px;
+  line-height: 30px;
+}
+.wrapper .removeOrder .reContent .lvSubmit .optLabel .cancel {
+  margin-top: 10px;
+  float: left;
+}
+.wrapper .removeOrder .reContent .lvSubmit .optLabel .ok {
   margin-top: 10px;
   float: right;
 }
